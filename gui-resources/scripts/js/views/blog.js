@@ -1,5 +1,5 @@
 'use strict';
-define(['backbone', 'dust', 'text!themes/base/blog.tmpl', 'dust'], function(Backbone, dust, blogTmpl) {
+define(['backbone', 'dust', 'text!themes/base/blog.tmpl'], function(Backbone, dust, blogTmpl) {
     return Backbone.View.extend({
         initialize: function() {
             dust.loadSource(dust.compile(blogTmpl, 'blog'));
