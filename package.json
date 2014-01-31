@@ -1,0 +1,37 @@
+{
+  "name": "backbone-node-liveblog",
+  "description": "A Backbone implementation of Liveblog Embed",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.4.8",
+    "requirejs": "2.1.10",
+    "text": "requirejs/text",
+    "underscore": "1.5.2",
+    "backbone": "1.1.0",
+    "dustjs-linkedin": "2.3.1",
+    "docco": "0.6.2",
+    "request": "2.33.0",
+    "lodash": "2.4.1"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-docco": "~0.3.2"
+  },
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nistormihai/plugin-liveblog-embed-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nistormihai/plugin-liveblog-embed-server/issues"
+  },
+  "homepage": "https://github.com/nistormihai/plugin-liveblog-embed-server"
+}
