@@ -1,20 +1,24 @@
 'use strict';
-define(['backbone', 'collections/posts', 'views/blog', 'text!templates/base.tmpl', 'dust'], function(Backbone, Posts, BlogView, BaseTmpl, dust) {
+define([
+    'backbone',
+    'dust',
+    'collections/posts',
+    'views/blog',
+    'text!themes/base/base.tmpl'], function(Backbone, dust, Posts, BlogView, baseTmpl) {
     return Backbone.Router.extend({
         'routes': {
             '*path': 'default'
         },
         'initialize': function() {
-            return dust.loadSource(dust.compile(BaseTmpl, 'base'));
+            dust.loadSource(dust.compile(baseTmpl, 'base'));
         },
         'default': function(path) {
-            var blogView, posts;
-            posts = new Posts();
-            blogView = new BlogView({
+            var posts = new Posts();
+            var blogView = new BlogView({
                 collection: posts,
                 el: '.liveblog'
             });
-            return posts.fetch();
+            posts.fetch();
         }
     });
 });

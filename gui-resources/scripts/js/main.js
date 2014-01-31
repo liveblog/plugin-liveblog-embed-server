@@ -1,12 +1,12 @@
 'use strict';
 require.config({
     paths: {
-        jquery: '../bower_components/jquery/jquery.min',
-        underscore: '../node_modules/underscore/underscore-min',
-        backbone: '../node_modules/backbone/backbone-min',
-        dust: '../node_modules/dustjs-linkedin/dist/dust-full.min',
-        text: '../node_modules/text/text',
-        templates: '../templates'
+        jquery: 'bower_components/jquery/jquery.min',
+        underscore: '../../../node_modules/lodash/dist/lodash.min',
+        backbone: '../../../node_modules/backbone/backbone-min',
+        dust: '../../../node_modules/dustjs-linkedin/dist/dust-full.min',
+        text: '../../../node_modules/text/text',
+        themes: '../../../gui-themes'
     },
     shim: {
         underscore: {
@@ -22,12 +22,13 @@ require.config({
     }
 });
 
-require(['jquery', 'backbone', 'router', 'appConfig'], function($, Backbone, Router) {
-    return $(function() {
-        var router;
-        router = new Router();
-        return Backbone.history.start({
-            pushState: true
+require(['jquery', 'backbone', 'appConfig'], function($, Backbone, appConfig) {
+    $(function() {
+        window.liveblog = appConfig.liveblog;
+        // Router can't be required before liveblog global variable is defined
+        requirejs(['router'], function(Router){
+            new Router();
+            Backbone.history.start({ pushState: true });
         });
     });
 });

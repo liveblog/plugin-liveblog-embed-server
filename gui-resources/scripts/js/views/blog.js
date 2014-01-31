@@ -1,27 +1,26 @@
 'use strict';
-define(['backbone', 'text!templates/blog.tmpl', 'dust'], function(Backbone, BlogTmpl, dust) {
+define(['backbone', 'dust', 'text!themes/base/blog.tmpl', 'dust'], function(Backbone, dust, blogTmpl) {
     return Backbone.View.extend({
         initialize: function() {
-            dust.loadSource(dust.compile(BlogTmpl, 'blog'));
+            dust.loadSource(dust.compile(blogTmpl, 'blog'));
             this.listenTo(this.collection, 'reset', this.render);
             this.listenTo(this.collection, 'sync', this.render);
-            return this.listenTo(this.collection, 'change', this.render);
+            this.listenTo(this.collection, 'change', this.render);
         },
         render: function() {
-            var context, self;
-            self = this;
-            context = {
+            var self = this;
+            var ctx = {
                 'notice': 'This was rendered from the frontend',
                 'length': this.collection.length,
                 'posts': this.collection.toJSON(),
                 'post': function(chunk, context, bodies) {
                     return chunk.map(function(chunk) {
-                        return chunk.render(bodies.block, context).end();
+                        chunk.render(bodies.block, context).end();
                     });
                 }
             };
-            return dust.render('blog', context, function(err, out) {
-                return self.$el.html(out);
+            dust.render('blog', ctx, function(err, out) {
+                self.$el.html(out);
             });
         }
     });
