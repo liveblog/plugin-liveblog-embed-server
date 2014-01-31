@@ -26,7 +26,7 @@ require(['jquery', 'backbone', 'appConfig'], function($, Backbone, appConfig) {
     $(function() {
         window.liveblog = appConfig.liveblog;
         // Router can't be required before liveblog global variable is defined
-        requirejs(['router'], function(Router){
+        require(['router'], function(Router){
             new Router();
             Backbone.history.start({ pushState: true });
         });
