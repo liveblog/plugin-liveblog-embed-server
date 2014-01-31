@@ -1,0 +1,15 @@
+{>base/}
+{<content}
+  <div class="liveblog">
+    {notice}
+    <p>There are {length} posts</p>
+    {#posts}
+      <ul>
+        {#post}
+          <li>Author: {AuthorName}, Content: {Content}</li>
+        {/post}
+      </ul>
+    {/posts}
+  </div>
+  <script src="build/app.min.js"></script>
+{/content}
