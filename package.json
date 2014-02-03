@@ -7,7 +7,6 @@
     "express": "3.4.8",
     "requirejs": "2.1.10",
     "text": "requirejs/text",
-    "underscore": "1.5.2",
     "backbone": "1.1.0",
     "dustjs-linkedin": "2.3.1",
     "docco": "0.6.2",

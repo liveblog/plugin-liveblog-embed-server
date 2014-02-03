@@ -1,15 +1,15 @@
 {>base/}
 {<content}
-  <div class="liveblog">
-    {notice}
-    <p>There are {length} posts</p>
-    {#posts}
-      <ul>
-        {#post}
-          <li>Author: {AuthorName}, Content: {Content}</li>
-        {/post}
-      </ul>
-    {/posts}
-  </div>
-  <script src="build/app.min.js"></script>
+    <div class="liveblog">
+        {notice}
+        <p>There are {length} posts</p>
+        {#posts}
+            <ul>
+                {#post}
+                    <li>Author: {AuthorName}, Content: {Content}</li>
+                {/post}
+            </ul>
+        {/posts}
+    </div>
+    <script data-main="gui-resources/scripts/js/main" src="node_modules/requirejs/require.js"></script>
 {/content}

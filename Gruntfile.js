@@ -6,11 +6,11 @@ module.exports = function(grunt) {
         requirejs: {
             compile: {
                 options: {
-                    mainConfigFile: 'js/main.js',
-                    baseUrl: 'js/',
-                    name: '../bower_components/almond/almond',
-                    include: ['main'],
-                    out: 'build/app.min.js'
+                    mainConfigFile: 'gui-resources/scripts/js/main.js',
+                    baseUrl: 'gui-resources/scripts/js/',
+                    name: 'main',
+                    out: 'build/app.min.js',
+                    findNestedDependencies: true
                 }
             }
         },
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-docco');
 
     grunt.registerTask('default', ['requirejs']);
-    
+
 
     grunt.registerTask('install-bower', 'install the frontend dependencies', function() {
             var exec = require('child_process').exec;
