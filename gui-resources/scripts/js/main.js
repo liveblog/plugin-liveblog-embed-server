@@ -5,7 +5,7 @@ require.config({
         underscore: '../../../node_modules/lodash/dist/lodash.min',
         backbone: '../../../node_modules/backbone/backbone-min',
         dust: '../../../node_modules/dustjs-linkedin/dist/dust-full.min',
-        text: '../../../node_modules/text/text',
+        tmpl: 'core/require/tmpl',
         themes: '../../../gui-themes'
     },
     shim: {

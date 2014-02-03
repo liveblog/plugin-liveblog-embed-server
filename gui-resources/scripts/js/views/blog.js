@@ -1,8 +1,7 @@
 'use strict';
-define(['backbone', 'dust', 'text!themes/base/blog.tmpl'], function(Backbone, dust, blogTmpl) {
+define(['backbone', 'dust', 'tmpl!themes/base/blog'], function(Backbone, dust) {
     return Backbone.View.extend({
         initialize: function() {
-            dust.loadSource(dust.compile(blogTmpl, 'blog'));
             this.listenTo(this.collection, 'reset', this.render);
             this.listenTo(this.collection, 'sync', this.render);
             this.listenTo(this.collection, 'change', this.render);
@@ -19,7 +18,7 @@ define(['backbone', 'dust', 'text!themes/base/blog.tmpl'], function(Backbone, du
                     });
                 }
             };
-            dust.render('blog', ctx, function(err, out) {
+            dust.render('themes/base/blog', ctx, function(err, out) {
                 self.$el.html(out);
             });
         }

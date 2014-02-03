@@ -15,11 +15,16 @@ requirejs.config({
     paths: {
         themes: '../../../gui-themes'
     },
+    map: {
+        '*': {
+            'dust': 'core/dust/core'
+        }
+    },
     packages: [
         {
-            name: 'text',
-            location: '../../../node_modules/text',
-            main: 'text.js'
+            name: 'tmpl',
+            location: 'core/require',
+            main: 'tmpl.js'
         }
     ],
     nodeRequire: require
@@ -32,15 +37,14 @@ requirejs(['appConfig'], function(appConfig){
     requirejs([
         'models/blog',
         'collections/posts',
-        'text!themes/base/blog.tmpl',
-        'text!themes/base/base.tmpl'
-        ], function(Blog, Posts, blogTmpl, baseTmpl) {
+        'tmpl!themes/base/blog',
+        'tmpl!themes/base/base'
+        ], function(Blog, Posts) {
+
 
         liveblog.objects = {
             blog: new Blog()
         };
-
-        dust.loadSource(dust.compile(baseTmpl, 'base'));
 
         /*jshint maxcomplexity:false */
         app.get('/', function(req, res) {
@@ -57,8 +61,7 @@ requirejs(['appConfig'], function(appConfig){
                             });
                         }
                     };
-                    dust.loadSource(dust.compile(blogTmpl, 'blog'));
-                    dust.render('blog', ctx, function(err, out) {
+                    dust.render('themes/base/blog', ctx, function(err, out) {
                         if (err){
                             console.log('Error parsing template ' + err);
                         } else {
