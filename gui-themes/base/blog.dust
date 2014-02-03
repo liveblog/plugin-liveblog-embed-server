@@ -1,4 +1,4 @@
-{>base/}
+{>"themes/base/base"/}
 {<content}
     <div class="liveblog">
         {notice}

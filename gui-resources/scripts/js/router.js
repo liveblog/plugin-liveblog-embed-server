@@ -4,13 +4,10 @@ define([
     'dust',
     'collections/posts',
     'views/blog',
-    'text!themes/base/base.tmpl'], function(Backbone, dust, Posts, BlogView, baseTmpl) {
+    'tmpl!themes/base/base'], function(Backbone, dust, Posts, BlogView) {
     return Backbone.Router.extend({
         'routes': {
             '*path': 'default'
-        },
-        'initialize': function() {
-            dust.loadSource(dust.compile(baseTmpl, 'base'));
         },
         'default': function(path) {
             var posts = new Posts();
