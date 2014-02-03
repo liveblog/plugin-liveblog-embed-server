@@ -24,12 +24,12 @@ define(['dust'], function(dust) {
             callback(fs.readFileSync(path, 'utf8'));
         };
     } else if ((typeof window !== "undefined" && window.navigator && window.document) || typeof importScripts !== "undefined") {
-        require(['jquery', 'core/jquery/xdomainrequest'], function($){
-            fetchText = function (url, callback) {
-                /*!
-                 * If dataType is requested as text then it fails due to some cdm issues with ie
-                 * so request it as json and in error method if is a json parsing issue we are good to go.
-                 */
+        fetchText = function (url, callback) {
+            /*!
+             * If dataType is requested as text then it fails due to some cdm issues with ie
+             * so request it as json and in error method if is a json parsing issue we are good to go.
+             */
+            require(['jquery', 'core/jquery/xdomainrequest'], function($){
                 $.ajax({
                     //dataType: 'json',
                     url: url,
@@ -43,9 +43,9 @@ define(['dust'], function(dust) {
                         callback(data);
                     }
                 });
-            };
-            // end browser.js adapters
-        });
+            });
+        };
+        // end browser.js adapters
     }
 
     return {
