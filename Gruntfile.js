@@ -21,15 +21,21 @@ module.exports = function(grunt) {
                     output: 'docs/'
                 }
             }
+        },
+        jshint: {
+            // Exclude files from linting using .jshintignore file
+            options: {
+                jshintrc: '.jshintrc'
+            },
+            all: {
+                src: ['Gruntfile.js', 'gui-resources/scripts/js/**/*.js']
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-requirejs');
-
     grunt.loadNpmTasks('grunt-docco');
-
-    grunt.registerTask('default', ['requirejs']);
-
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.registerTask('install-bower', 'install the frontend dependencies', function() {
             var exec = require('child_process').exec;
@@ -51,4 +57,5 @@ module.exports = function(grunt) {
             fs.chmodSync('.git/hooks/pre-commit', '755');
         });
 
+    grunt.registerTask('default', ['jshint:all','requirejs']);
 };
