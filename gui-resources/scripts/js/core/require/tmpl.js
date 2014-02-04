@@ -4,8 +4,8 @@
  * see: http://github.com/jrburke/require-cs for details
  */
 
-/*jslint */
-/*global define, window, process, require */
+/* jshint maxcomplexity: false, expr: true */
+/* global define, window, process, require */
 
 define(['dust'], function(dust) {
     'use strict';
@@ -15,7 +15,7 @@ define(['dust'], function(dust) {
         buildMap = {};
     dust || (dust = exports);
 
-    if (typeof process !== "undefined" &&
+    if (typeof process !== 'undefined' &&
                process.versions &&
                !!process.versions.node) {
         //Using special require.nodeRequire, something added by r.js.
@@ -23,7 +23,7 @@ define(['dust'], function(dust) {
         fetchText = function (path, callback) {
             callback(fs.readFileSync(path, 'utf8'));
         };
-    } else if ((typeof window !== "undefined" && window.navigator && window.document) || typeof importScripts !== "undefined") {
+    } else if ((typeof window !== 'undefined' && window.navigator && window.document) || typeof importScripts !== 'undefined') {
         fetchText = function (url, callback) {
             /*!
              * If dataType is requested as text then it fails due to some cdm issues with ie
@@ -34,7 +34,7 @@ define(['dust'], function(dust) {
                     //dataType: 'json',
                     url: url,
                     error: function(xhr, textStatus, errorThrown){
-                        if(textStatus == 'parsererror'){
+                        if(textStatus === 'parsererror'){
                             callback(xhr.responseText);
                         }
                     },
@@ -53,7 +53,7 @@ define(['dust'], function(dust) {
         write: function (pluginName, name, write) {
             if (buildMap.hasOwnProperty(name)) {
                 var text = buildMap[name];
-                write.asModule(pluginName + "!" + name, text);
+                write.asModule(pluginName + '!' + name, text);
             }
         },
 
@@ -63,11 +63,11 @@ define(['dust'], function(dust) {
                 //text = i18n_parse(text);
 				//Do dust transform.
                 try {
-                  text = "define(['dust'],function(dust){"+dust.compile(text, name)+" return {render: function(context, callback) {return dust.render('"+name+"', context, callback)}}})";
+                    text = 'define(["dust"],function(dust){'+dust.compile(text, name)+' return {render: function(context, callback) {return dust.render("'+name+'", context, callback)}}})';
                 }
                 catch (err) {
-                  err.message = "In " + path + ", " + err.message;
-                  throw(err);
+                    err.message = 'In ' + path + ', ' + err.message;
+                    throw(err);
                 }
 
                 //Hold on to the transformed text if a build.
@@ -79,7 +79,7 @@ define(['dust'], function(dust) {
                 //sourceURL trick, so skip it if enabled.
                 /*@if (@_jscript) @else @*/
                 // if (!config.isBuild) {
-                //     text += "\r\n//@ sourceURL=" + path;
+                //     text += '\r\n//@ sourceURL=' + path;
                 // }
                 /*@end@*/
                 load.fromText('tmpl!' + name, text);
