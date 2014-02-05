@@ -13,7 +13,8 @@ app.configure(function() {
 
 requirejs.config({
     paths: {
-        themes: '../../../gui-themes'
+        themeBase: '../../../gui-themes/themes/base',
+        theme: '../../../gui-themes/themes/zeit'
     },
     map: {
         '*': {
@@ -37,8 +38,8 @@ requirejs(['appConfig'], function(appConfig){
     requirejs([
         'models/blog',
         'collections/posts',
-        'tmpl!themes/base/blog',
-        'tmpl!themes/base/base'
+        'tmpl!themeBase/container',
+        'tmpl!theme/container'
     ], function(Blog, Posts) {
 
 
@@ -51,17 +52,17 @@ requirejs(['appConfig'], function(appConfig){
             request(liveblog.app.url, function(error, response, data) {
                 if (!error && response.statusCode === 200) {
                     liveblog.objects.posts = new Posts(JSON.parse(data), { parse: true });
-                    var ctx = {
-                        'notice': 'This was rendered from the backend',
-                        'length': liveblog.objects.posts.length,
-                        'posts': liveblog.objects.posts.toJSON(),
-                        'post': function(chunk, context, bodies) {
-                            return chunk.map(function(chunk) {
-                                chunk.render(bodies.block, context).end();
-                            });
-                        }
-                    };
-                    dust.render('themes/base/blog', ctx, function(err, out) {
+                    //var ctx = {
+                        //'notice': 'This was rendered from the backend',
+                        //'length': liveblog.objects.posts.length,
+                        //'posts': liveblog.objects.posts.toJSON(),
+                        //'post': function(chunk, context, bodies) {
+                            //return chunk.map(function(chunk) {
+                                //chunk.render(bodies.block, context).end();
+                            //});
+                        //}
+                    //};
+                    dust.render('theme/container', {}, function(err, out) {
                         if (err){
                             console.log('Error parsing template ' + err);
                         } else {

@@ -4,7 +4,7 @@ define([
     'dust',
     'collections/posts',
     'views/blog',
-    'tmpl!themes/base/base'
+    'tmpl!themeBase/container'
 ], function(Backbone, dust, Posts, BlogView) {
     return Backbone.Router.extend({
         'routes': {
