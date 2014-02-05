@@ -6,7 +6,8 @@ require.config({
         backbone: '../../../node_modules/backbone/backbone-min',
         dust: '../../../node_modules/dustjs-linkedin/dist/dust-full.min',
         tmpl: 'core/require/tmpl',
-        themes: '../../../gui-themes'
+        themeBase: '../../../gui-themes/themes/base',
+        theme: '../../../gui-themes/themes/zeit'
     },
     shim: {
         underscore: {
