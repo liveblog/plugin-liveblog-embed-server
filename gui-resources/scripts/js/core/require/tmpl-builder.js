@@ -4,21 +4,19 @@
  * see: http://github.com/jrburke/require-cs for details
  */
 
-/*jslint */
-/*global define, window, XMLHttpRequest, importScripts, Packages, java,
-  ActiveXObject, process, require */
+/* jshint maxcomplexity: false, expr: true */
+/* global define, Packages, java, process, require */
 
 define(['dust'], function(dust) {
     'use strict';
-    var fs, getXhr,
-        progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
+    var fs,
         fetchText = function () {
             throw new Error('Environment unsupported.');
         },
         buildMap = {};
     dust || (dust = exports);
 
-    if (typeof process !== "undefined" &&
+    if (typeof process !== 'undefined' &&
                process.versions &&
                !!process.versions.node) {
         //Using special require.nodeRequire, something added by r.js.
@@ -29,9 +27,9 @@ define(['dust'], function(dust) {
     } else if (typeof Packages !== 'undefined') {
         //Why Java, why is this so awkward?
         fetchText = function (path, callback) {
-            var encoding = "utf-8",
+            var encoding = 'utf-8',
                 file = new java.io.File(path),
-                lineSeparator = java.lang.System.getProperty("line.separator"),
+                lineSeparator = java.lang.System.getProperty('line.separator'),
                 input = new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(file), encoding)),
                 stringBuffer, line,
                 content = '';
@@ -42,7 +40,7 @@ define(['dust'], function(dust) {
                 // Byte Order Mark (BOM) - The Unicode Standard, version 3.0, page 324
                 // http://www.unicode.org/faq/utf_bom.html
 
-                // Note that when we use utf-8, the BOM should appear as "EF BB BF", but it doesn't due to this bug in the JDK:
+                // Note that when we use utf-8, the BOM should appear as 'EF BB BF', but it doesn't due to this bug in the JDK:
                 // http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=4508058
                 if (line && line.length() && line.charAt(0) === 0xfeff) {
                     // Eat the BOM, since we've already found the encoding on this file,
@@ -70,7 +68,7 @@ define(['dust'], function(dust) {
         write: function (pluginName, name, write) {
             if (buildMap.hasOwnProperty(name)) {
                 var text = buildMap[name];
-                write.asModule(pluginName + "!" + name, text);
+                write.asModule(pluginName + '!' + name, text);
             }
         },
 
@@ -80,11 +78,11 @@ define(['dust'], function(dust) {
                 //text = i18n_parse(text);
                 //Do dust transform.
                 try {
-                  text = "define(['dust'],function(dust){"+dust.compile(text, name)+" return {render: function(context, callback) {return dust.render('"+name+"', context, callback)}}})";
+                    text = 'define(["dust"],function(dust){'+dust.compile(text, name)+' return {render: function(context, callback) {return dust.render("'+name+'", context, callback)}}})';
                 }
                 catch (err) {
-                  err.message = "In " + path + ", " + err.message;
-                  throw(err);
+                    err.message = 'In ' + path + ', ' + err.message;
+                    throw(err);
                 }
 
                 //Hold on to the transformed text if a build.
@@ -96,7 +94,7 @@ define(['dust'], function(dust) {
                 //sourceURL trick, so skip it if enabled.
                 /*@if (@_jscript) @else @*/
                 if (!config.isBuild) {
-                    text += "\r\n//@ sourceURL=" + path;
+                    text += '\r\n//@ sourceURL=' + path;
                 }
                 /*@end@*/
 

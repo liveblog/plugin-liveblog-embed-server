@@ -39,7 +39,7 @@ requirejs(['appConfig'], function(appConfig){
         'collections/posts',
         'tmpl!themes/base/blog',
         'tmpl!themes/base/base'
-        ], function(Blog, Posts) {
+    ], function(Blog, Posts) {
 
 
         liveblog.objects = {
