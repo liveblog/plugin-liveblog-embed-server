@@ -2,7 +2,7 @@
 require.config({
     paths: {
         jquery: 'bower_components/jquery/jquery.min',
-        underscore: '../../../node_modules/lodash/dist/lodash.min',
+        lodash: '../../../node_modules/lodash/dist/lodash.min',
         backbone: '../../../node_modules/backbone/backbone-min',
         dust: '../../../node_modules/dustjs-linkedin/dist/dust-full.min',
         tmpl: 'core/require/tmpl',
@@ -10,11 +10,8 @@ require.config({
         theme: '../../../gui-themes/themes/zeit'
     },
     shim: {
-        underscore: {
-            exports: '_'
-        },
         backbone: {
-            deps: ['underscore', 'jquery'],
+            deps: ['lodash', 'jquery'],
             exports: 'Backbone'
         },
         dust: {
