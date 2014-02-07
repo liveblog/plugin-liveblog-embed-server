@@ -25,10 +25,17 @@ module.exports = function(grunt) {
         jshint: {
             // Exclude files from linting using .jshintignore file
             options: {
-                jshintrc: '.jshintrc'
+                jshintrc: true,
+                ignores: ['gui-resources/scripts/js/bower_components/**']
             },
             all: {
                 src: ['Gruntfile.js', 'gui-resources/scripts/js/**/*.js']
+            }
+        },
+        watch: {
+            all: {
+                files: ['<%= jshint.all.src %>'],
+                tasks: ['jshint:all']
             }
         }
     });
@@ -36,6 +43,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-docco');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('install-bower', 'install the frontend dependencies', function() {
             var exec = require('child_process').exec;
