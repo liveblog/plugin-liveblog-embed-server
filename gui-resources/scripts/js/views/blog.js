@@ -1,26 +1,20 @@
 'use strict';
-define(['backbone', 'dust', 'tmpl!theme/container'], function(Backbone, dust) {
-    return Backbone.View.extend({
-        initialize: function() {
-            this.listenTo(this.collection, 'reset', this.render);
-            this.listenTo(this.collection, 'sync', this.render);
-            this.listenTo(this.collection, 'change', this.render);
+define([
+    'views/baseView',
+    'views/posts',
+    'tmpl!theme/container'
+], function(BaseView, PostsView) {
+
+    return BaseView.extend({
+        template: 'theme/container',
+
+        initialize: function(){
+            var collection = this.model.get('publishedPosts');
+            this.setView('.liveblog-postlist', new PostsView({ collection: collection }));
         },
-        render: function() {
-            var self = this;
-            //var ctx = {
-                //'notice': 'This was rendered from the frontend',
-                //'length': this.collection.length,
-                //'posts': this.collection.toJSON(),
-                //'post': function(chunk, context, bodies) {
-                    //return chunk.map(function(chunk) {
-                        //chunk.render(bodies.block, context).end();
-                    //});
-                //}
-            //};
-            dust.render('theme/container', {}, function(err, out) {
-                self.$el.html(out);
-            });
+
+        serialize: function(){
+            return this.model.toJSON();
         }
     });
 });
