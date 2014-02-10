@@ -40,10 +40,8 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.loadNpmTasks('grunt-docco');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
+    // Load all grunt task declared in package.json
+    require('load-grunt-tasks')(grunt);
 
     grunt.registerTask('install-bower', 'install the frontend dependencies', function() {
             var exec = require('child_process').exec;

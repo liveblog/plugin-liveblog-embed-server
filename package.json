@@ -17,7 +17,8 @@
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-docco": "~0.3.2",
-    "grunt-contrib-watch": "~0.5.3"
+    "grunt-contrib-watch": "~0.5.3",
+    "load-grunt-tasks": "~0.3.0"
   },
   "main": "Gruntfile.js",
   "scripts": {
