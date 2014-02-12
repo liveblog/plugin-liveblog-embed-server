@@ -30,12 +30,26 @@ module.exports = function(grunt) {
             },
             all: {
                 src: ['Gruntfile.js', 'gui-resources/scripts/js/**/*.js']
+            },
+            nolibs: {
+                src: ['Gruntfile.js', 'gui-resources/scripts/js/**/*.js', '!gui-resources/scripts/js/core/**/*.js']
+            },
+            libs: {
+                src: ['gui-resources/scripts/js/core/**/*.js']
             }
         },
         watch: {
             all: {
                 files: ['<%= jshint.all.src %>'],
                 tasks: ['jshint:all']
+            },
+            nolibs: {
+                files: ['<%= jshint.nolibs.src %>'],
+                tasks: ['jshint:nolibs']
+            },
+            libs: {
+                files: ['<%= jshint.libs.src %>'],
+                tasks: ['jshint:libs']
             }
         }
     });
