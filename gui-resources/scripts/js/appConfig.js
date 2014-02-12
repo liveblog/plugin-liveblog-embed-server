@@ -26,7 +26,9 @@ define([], function(){
         }
     };
 
-    config.liveblog.app.url = config.liveblog.app.servers.protocol + config.liveblog.app.servers.rest + '/resources/LiveDesk/Blog/1/Post/Published/?X-Filter=Type,Meta,Author.Source.Type.Key,Author.Source.IsModifiable,Author.Source.Name&limit=1000';
+    config.liveblog.app.url = config.liveblog.app.servers.protocol + config.liveblog.app.servers.rest + '/resources/LiveDesk/Blog/1/Post/Published/?limit=20';
+
+    //config.liveblog.app.url = 'http://liveblog16.sd-test.sourcefabric.org/resources/LiveDesk/Blog/1/Post/Published/?limit=20';
 
     return config;
 });
