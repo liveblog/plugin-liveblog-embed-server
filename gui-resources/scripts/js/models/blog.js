@@ -1,4 +1,11 @@
 'use strict';
-define(['backbone'], function(Backbone) {
-    return Backbone.Model.extend({});
+define([
+    'backbone',
+    'collections/posts'
+], function(Backbone, Posts) {
+    return Backbone.Model.extend({
+        defaults: {
+            publishedPosts: new Posts()
+        }
+    });
 });

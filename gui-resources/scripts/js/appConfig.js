@@ -26,7 +26,7 @@ define([], function(){
         }
     };
 
-    config.liveblog.app.url = config.liveblog.app.servers.protocol + config.liveblog.app.servers.rest + '/resources/LiveDesk/Blog/1/Post/Published/?X-Filter=*&limit=1000';
+    config.liveblog.app.url = config.liveblog.app.servers.protocol + config.liveblog.app.servers.rest + '/resources/LiveDesk/Blog/1/Post/Published/?X-Filter=Type,Meta,Author.Source.Type.Key,Author.Source.IsModifiable,Author.Source.Name&limit=1000';
 
     return config;
 });
