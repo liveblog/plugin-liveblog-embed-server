@@ -20,7 +20,6 @@ define([
             var data = this.model.toJSON();
             //TODO: Use the right template here (theme or themeBase)
             data.baseItem = 'themeBase/item/base';
-            data.frontendServer = liveblog.frontendServer;
             return data;
         },
 

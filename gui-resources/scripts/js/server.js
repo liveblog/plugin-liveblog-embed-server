@@ -46,12 +46,17 @@ requirejs(['appConfig'], function(appConfig){
 
 
         var objects = {
-            blog: new Blog()
+            blog: new Blog(),
+            posts: new Posts()
         };
 
         /*jshint maxcomplexity:false */
         app.get('/', function(req, res) {
-            request(liveblog.app.url, function(error, response, data) {
+            var options = {
+                url: liveblog.app.url,
+                headers: objects.posts.headers
+            };
+            request(options, function(error, response, data) {
                 if (!error && response.statusCode === 200) {
                     objects.posts = new Posts(JSON.parse(data), { parse: true });
                     objects.blog.set('publishedPosts', objects.posts);
