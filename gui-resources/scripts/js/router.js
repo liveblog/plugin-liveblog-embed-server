@@ -12,7 +12,7 @@ define([
         },
         'default': function(path) {
             var blog = new Blog();
-            var blogView = new BlogView({ model: blog, el: 'body' });
+            var blogView = new BlogView({ model: blog, el: '#here' });
             blog.get('publishedPosts').fetch();
             blogView.render();
         }
