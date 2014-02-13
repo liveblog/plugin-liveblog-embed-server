@@ -30,20 +30,32 @@ module.exports = function(grunt) {
             },
             all: {
                 src: ['Gruntfile.js', 'gui-resources/scripts/js/**/*.js']
+            },
+            nolibs: {
+                src: ['Gruntfile.js', 'gui-resources/scripts/js/**/*.js', '!gui-resources/scripts/js/core/**/*.js']
+            },
+            libs: {
+                src: ['gui-resources/scripts/js/core/**/*.js']
             }
         },
         watch: {
             all: {
                 files: ['<%= jshint.all.src %>'],
                 tasks: ['jshint:all']
+            },
+            nolibs: {
+                files: ['<%= jshint.nolibs.src %>'],
+                tasks: ['jshint:nolibs']
+            },
+            libs: {
+                files: ['<%= jshint.libs.src %>'],
+                tasks: ['jshint:libs']
             }
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.loadNpmTasks('grunt-docco');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
+    // Load all grunt task declared in package.json
+    require('load-grunt-tasks')(grunt);
 
     grunt.registerTask('install-bower', 'install the frontend dependencies', function() {
             var exec = require('child_process').exec;
