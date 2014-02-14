@@ -59,7 +59,10 @@ module.exports = function(grunt) {
                 files: ['gui-resources/scripts/js/**/*.js'],
                 tasks: ['express:dev'],
                 options: {
-                    spawn: false,
+                    // According to express docu, 'spawn: false' is needed for the
+                    // server to reload, but if we use it the browser is reloaded
+                    // before the server is ready
+                    //spawn: false,
                     livereload: true
                 }
             },
