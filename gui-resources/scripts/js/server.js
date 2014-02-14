@@ -3,12 +3,16 @@
 var requirejs = require('requirejs'),
     express = require('express'),
     dust    = require('dustjs-linkedin'),
-    request = require('request');
+    path      = require('path'),
+    request   = require('request');
 
 var app = express();
 
 app.configure(function() {
-    app.use(express['static'](__dirname + '/../../..'));
+    app.use(express['static'](path.join(__dirname, '..', '..', '..', 'gui-resources')));
+    app.use(express['static'](path.join(__dirname, '..', '..', '..', 'gui-themes')));
+    app.use('/scripts/js/node_modules',
+                express['static'](path.join(__dirname, '..', '..', '..', 'node_modules')));
 });
 
 requirejs.config({
