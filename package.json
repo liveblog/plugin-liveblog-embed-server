@@ -20,7 +20,9 @@
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-docco": "~0.3.2",
     "grunt-contrib-watch": "~0.5.3",
-    "load-grunt-tasks": "~0.3.0"
+    "load-grunt-tasks": "~0.3.0",
+    "grunt-express-server": "~0.4.11",
+    "grunt-open": "~0.2.3"
   },
   "main": "Gruntfile.js",
   "scripts": {

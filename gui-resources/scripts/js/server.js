@@ -2,6 +2,7 @@
 
 var requirejs = require('requirejs'),
     express = require('express'),
+    dust    = require('dustjs-linkedin'),
     request = require('request');
 
 var app = express();
@@ -12,6 +13,7 @@ app.configure(function() {
 
 requirejs.config({
     paths: {
+        index: '../../index',
         themeBase: '../../../gui-themes/themes/base',
         theme: '../../../gui-themes/themes/zeit/desktop'
     },
@@ -41,9 +43,9 @@ requirejs(['appConfig'], function(appConfig){
         'views/post_baseTemplates',
         'views/post_templates',
         'tmpl!themeBase/container',
-        'tmpl!theme/container'
+        'tmpl!theme/container',
+        'tmpl!index'
     ], function(Blog, Posts, BlogView) {
-
 
         var objects = {
             blog: new Blog(),
@@ -62,8 +64,19 @@ requirejs(['appConfig'], function(appConfig){
                     objects.blog.set('publishedPosts', objects.posts);
 
                     objects.blogView = new BlogView({ model: objects.blog });
-                    res.send(objects.blogView.render().$el.html());
 
+                    var html = objects.blogView.render().$el.html();
+
+                    var ctx = {
+                        'content': function(chunk) {
+                            return chunk.map(function(chunk){
+                                chunk.end(html);
+                            });
+                        }
+                    };
+                    dust.render('index', ctx, function(err,out){
+                        res.send(out);
+                    });
                 } else {
                     console.log('Error in request: ' + error);
                 }

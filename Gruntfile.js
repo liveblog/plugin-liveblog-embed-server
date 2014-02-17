@@ -3,6 +3,45 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        docco: {
+            debug: {
+                src: ['test/**/*.js'],
+                options: {
+                    output: 'docs/'
+                }
+            }
+        },
+
+        express: {
+            dev: {
+                options: {
+                    script: 'gui-resources/scripts/js/server.js',
+                    port: 3000
+                }
+            }
+        },
+
+        jshint: {
+            options: {
+                ignores: ['gui-resources/scripts/js/bower_components/**']
+            },
+            own: {
+                src: ['Gruntfile.js', 'gui-resources/scripts/js/**/*.js', '!gui-resources/scripts/js/core/**/*.js']
+            },
+            libs: {
+                src: ['gui-resources/scripts/js/core/**/*.js']
+            },
+            all: {
+                src: ['Gruntfile.js', 'gui-resources/scripts/js/**/*.js']
+            }
+        },
+
+        open: {
+            dev: {
+                path: 'http://localhost:<%= express.dev.options.port %>'
+            }
+        },
+
         requirejs: {
             compile: {
                 options: {
@@ -14,42 +53,30 @@ module.exports = function(grunt) {
                 }
             }
         },
-        docco: {
-            debug: {
-                src: ['test/**/*.js'],
-                options: {
-                    output: 'docs/'
-                }
-            }
-        },
-        jshint: {
-            // Exclude files from linting using .jshintignore file
-            options: {
-                jshintrc: true,
-                ignores: ['gui-resources/scripts/js/bower_components/**']
-            },
-            all: {
-                src: ['Gruntfile.js', 'gui-resources/scripts/js/**/*.js']
-            },
-            nolibs: {
-                src: ['Gruntfile.js', 'gui-resources/scripts/js/**/*.js', '!gui-resources/scripts/js/core/**/*.js']
-            },
-            libs: {
-                src: ['gui-resources/scripts/js/core/**/*.js']
-            }
-        },
+
         watch: {
-            all: {
-                files: ['<%= jshint.all.src %>'],
-                tasks: ['jshint:all']
+            express: {
+                files: ['gui-resources/scripts/js/**/*.js'],
+                tasks: ['express:dev'],
+                options: {
+                    // According to express docu, 'spawn: false' is needed for the
+                    // server to reload, but if we use it the browser is reloaded
+                    // before the server is ready
+                    //spawn: false,
+                    livereload: true
+                }
             },
-            nolibs: {
-                files: ['<%= jshint.nolibs.src %>'],
-                tasks: ['jshint:nolibs']
+            'hint-own': {
+                files: ['<%= jshint.own.src %>'],
+                tasks: ['jshint:own']
             },
-            libs: {
+            'hint-libs': {
                 files: ['<%= jshint.libs.src %>'],
                 tasks: ['jshint:libs']
+            },
+            'hint-all': {
+                files: ['<%= jshint.all.src %>'],
+                tasks: ['jshint:all']
             }
         }
     });
@@ -77,5 +104,9 @@ module.exports = function(grunt) {
             fs.chmodSync('.git/hooks/pre-commit', '755');
         });
 
-    grunt.registerTask('default', ['jshint:all','requirejs']);
+    grunt.registerTask('server', ['express:dev', 'open:dev', 'watch:express']);
+    grunt.registerTask('lint', ['watch:hint-all']);
+    grunt.registerTask('build', ['jshint:all','requirejs']);
+
+    grunt.registerTask('default', ['express:dev', 'open:dev', 'watch:express']);
 };
