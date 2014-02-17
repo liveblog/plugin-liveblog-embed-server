@@ -1,7 +1,7 @@
 'use strict';
 /* jshint maxcomplexity: false */
 define([
-    'backbone',
+    'backboneCustom',
     'dust',
     'backbone.layoutmanager'
 ], function(Backbone, dust){

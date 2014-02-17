@@ -8,6 +8,7 @@ require.config({
         tmpl:                       'core/require/tmpl',
         underscore:                 'node_modules/lodash/dist/lodash.min',
         backbone:                   'node_modules/backbone/backbone-min',
+        backboneCustom:             'core/backbone/backboneCustom',
         'backbone.layoutmanager':   'node_modules/backbone.layoutmanager/backbone.layoutmanager',
         'dustjs-linkedin':          'node_modules/dustjs-linkedin/dist/dust-full.min',
         moment:                     'node_modules/moment/min/moment.min',

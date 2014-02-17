@@ -17,6 +17,7 @@ app.configure(function() {
 
 requirejs.config({
     paths: {
+        backboneCustom: 'core/backbone/backboneCustom',
         index: '../../index',
         themeBase: '../../../gui-themes/themes/base',
         theme: '../../../gui-themes/themes/zeit/desktop'
@@ -59,7 +60,10 @@ requirejs(['appConfig'], function(appConfig){
         app.get('/', function(req, res) {
             var options = {
                 url: objects.blog.get('publishedPosts').url(),
-                headers: objects.blog.get('publishedPosts').headers
+                headers: {
+                    'X-Format-DateTime': 'yyyy-MM-ddTHH:mm:ss\'Z\'',
+                    'X-Filter': objects.blog.get('publishedPosts').xfilter
+                }
             };
             request(options, function(error, response, data) {
                 if (!error && response.statusCode === 200) {

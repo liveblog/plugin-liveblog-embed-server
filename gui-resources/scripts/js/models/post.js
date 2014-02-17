@@ -1,7 +1,7 @@
 'use strict';
 /* jshint maxcomplexity: false */
 define([
-    'backbone',
+    'backboneCustom',
     'core/utils/helpers',
     'moment'
 ], function(Backbone, helpers, moment) {
