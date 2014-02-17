@@ -23,6 +23,7 @@ module.exports = function(grunt) {
 
         jshint: {
             options: {
+                jshintrc: true,
                 ignores: ['gui-resources/scripts/js/bower_components/**']
             },
             own: {
