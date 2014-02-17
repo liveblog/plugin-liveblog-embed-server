@@ -1,4 +1,5 @@
 'use strict';
+/* jshint maxcomplexity: false */
 define([
     'backbone',
     'dust',
@@ -11,10 +12,14 @@ define([
             '*path': 'default'
         },
         'default': function(path) {
-            var blog = new Blog();
-            var blogView = new BlogView({ model: blog, el: '#here' });
-            blog.get('publishedPosts').fetch();
-            blogView.render();
+            // TODO: Throw error if blog id missing
+            liveblog.id = 1;
+            if (liveblog.id) {
+                var blog = new Blog({ id: liveblog.id });
+                var blogView = new BlogView({ model: blog, el: '#here' });
+                blog.get('publishedPosts').fetch();
+                blogView.render();
+            }
         }
     });
 });

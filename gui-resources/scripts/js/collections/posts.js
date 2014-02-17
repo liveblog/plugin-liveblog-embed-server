@@ -3,8 +3,17 @@
 define(['backbone', 'models/post'], function(Backbone, Post) {
     return Backbone.Collection.extend({
         model: Post,
+
+        initialize: function(models, options){
+            if (options.blogId) {
+                this.blogId = options.blogId;
+            }
+        },
+
         // liveblog is a global variable set in app initialization
-        url: liveblog.app.url,
+        url: function(){
+            return liveblog.app.url + this.blogId + '/Post/Published/';
+        },
 
         headers: {
             'X-Format-DateTime': 'yyyy-MM-ddTHH:mm:ss\'Z\'',
@@ -24,7 +33,10 @@ define(['backbone', 'models/post'], function(Backbone, Post) {
         },
 
         parse: function(data) {
-            return data.PostList;
+            if (data.PostList) {
+                return data.PostList;
+            }
+            return data;
         }
     });
 });

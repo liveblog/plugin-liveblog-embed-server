@@ -26,9 +26,12 @@ define([], function(){
         }
     };
 
-    config.liveblog.app.url = config.liveblog.app.servers.protocol + config.liveblog.app.servers.rest + '/resources/LiveDesk/Blog/1/Post/Published/?limit=20';
+    // TODO: Set id to the real blog, use '1' as a temporary one
+    config.liveblog.id = 1;
 
-    //config.liveblog.app.url = 'http://liveblog16.sd-test.sourcefabric.org/resources/LiveDesk/Blog/1/Post/Published/?limit=20';
+    config.liveblog.app.url = config.liveblog.app.servers.protocol + config.liveblog.app.servers.rest + '/resources/LiveDesk/Blog/';
+
+    //config.liveblog.app.url = 'http://liveblog16.sd-test.sourcefabric.org/resources/LiveDesk/Blog/';
 
     return config;
 });
