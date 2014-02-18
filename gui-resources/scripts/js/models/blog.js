@@ -4,8 +4,10 @@ define([
     'collections/posts'
 ], function(Backbone, Posts) {
     return Backbone.Model.extend({
-        defaults: {
-            publishedPosts: new Posts()
+        url: liveblog.app.url,
+
+        initialize: function() {
+            this.set('publishedPosts', new Posts([], { blogId: this.id }));
         }
     });
 });

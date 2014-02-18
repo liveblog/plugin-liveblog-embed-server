@@ -52,15 +52,14 @@ requirejs(['appConfig'], function(appConfig){
     ], function(Blog, Posts, BlogView) {
 
         var objects = {
-            blog: new Blog(),
-            posts: new Posts()
+            blog: new Blog({ id: liveblog.id })
         };
 
         /*jshint maxcomplexity:false */
         app.get('/', function(req, res) {
             var options = {
-                url: liveblog.app.url,
-                headers: objects.posts.headers
+                url: objects.blog.get('publishedPosts').url(),
+                headers: objects.blog.get('publishedPosts').headers
             };
             request(options, function(error, response, data) {
                 if (!error && response.statusCode === 200) {
