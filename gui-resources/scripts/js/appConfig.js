@@ -17,11 +17,11 @@ define([], function(){
             // if application is splited across diffrent servers.
             servers: {
                 // this is general applied unless is directly specified.
-                protocol: '//',
+                protocol: 'http://',
                 // where is the rest api server
-                rest: 'localhost:8080',
+                rest: '192.168.0.18:8080',
                 // if is needed a separate server for embed.
-                frontend: 'localhost:8080'
+                frontend: '192.168.0.18:8080'
             }
         }
     };

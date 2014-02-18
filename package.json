@@ -2,41 +2,47 @@
   "name": "backbone-node-liveblog",
   "description": "A Backbone implementation of Liveblog Embed",
   "version": "0.0.1",
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/liveblog/plugin-liveblog-embed-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/liveblog/plugin-liveblog-embed-server/issues"
+  },
+  "licenses": [
+    {
+      "type": "GPLv3",
+      "url": "http://www.gnu.org/licenses/gpl-3.0.txt"
+    }
+  ],
+
   "dependencies": {
     "express": "3.4.8",
     "requirejs": "2.1.10",
     "backbone": "1.1.0",
     "backbone.layoutmanager": "~0.9.5",
     "dustjs-linkedin": "2.3.1",
-    "docco": "0.6.2",
     "request": "2.33.0",
     "lodash": "2.4.1",
     "moment": "2.5.1",
     "path": "0.4.9"
   },
+
   "devDependencies": {
+    "docco": "0.6.2",
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-requirejs": "~0.4.1",
-    "grunt-docco": "~0.3.2",
     "grunt-contrib-watch": "~0.5.3",
-    "load-grunt-tasks": "~0.3.0",
+    "grunt-docco": "~0.3.2",
     "grunt-express-server": "~0.4.11",
-    "grunt-open": "~0.2.3"
+    "grunt-open": "~0.2.3",
+    "load-grunt-tasks": "~0.3.0",
+    "load-grunt-config": "~0.7.1"
   },
   "main": "Gruntfile.js",
+  
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/nistormihai/plugin-liveblog-embed-server.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nistormihai/plugin-liveblog-embed-server/issues"
-  },
-  "homepage": "https://github.com/nistormihai/plugin-liveblog-embed-server"
+    "test": "echo \"@TODO: add Travis shell script here: ./travis_build.sh\" && exit 1"
+  }
 }
