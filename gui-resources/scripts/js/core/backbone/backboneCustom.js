@@ -1,45 +1,46 @@
 // Liveblog custom additions to Backbone.js
 /* jshint maxcomplexity:false */
-'use strict';
 define(['backbone'], function(Backbone){
+    'use strict';
 
-    Backbone.oldSync = Backbone.sync;
+    Backbone.defaultSync = Backbone.sync;
 
     Backbone.sync = function(method, model, options) {
 
         if (!options) { options = {}; }
 
         if (method === 'read') {
-
-            // Set headers
+            // Request a date format that all browsers can parse
             options.headers = {
-                // Date format that all browsers can parse
                 'X-Format-DateTime': 'yyyy-MM-ddTHH:mm:ss\'Z\''
             };
 
             if (model.xfilter) {
                 options.headers['X-Filter'] = model.xfilter;
             }
-
-            // Don't use default Backbone.sync for node.js
-            if (typeof process !== 'undefined' &&
-                    process.versions &&
-                    !!process.versions.node) {
-                return Backbone.nodeRequest(method, model, options);
-            }
         }
-        return Backbone.oldSync(method, model, options);
+        return Backbone.defaultSync(method, model, options);
     };
 
-    Backbone.nodeRequest = function(method, model, options) {
+    Backbone.defaultAjax = Backbone.ajax;
+
+    Backbone.ajax = function(options){
+        if (typeof process !== 'undefined' &&
+                process.versions &&
+                !!process.versions.node) {
+            return Backbone.nodeSync(options);
+        }
+        return Backbone.defaultAjax(options);
+    };
+
+    Backbone.nodeSync = function(options) {
 
         var request = require('request');
 
-        options.url = model.url();
+        // Parse response to json
         options.json = true;
 
         // Use options.success and options.errors callbacks
-        // for compatibility with Backbone
         request.get(options, function(error, response, data) {
             if (!error && response.statusCode === 200) {
                 if (options.success) {
