@@ -7,7 +7,7 @@
 /* jshint maxcomplexity: false, expr: true */
 /* global define, window, process, require */
 
-define(['dust', 'core/require/i18n-parse'], function(dust, i18nParse) {
+define(['dust'], function(dust) {
     'use strict';
     var fetchText = function () {
             throw new Error('Environment unsupported.');
@@ -60,8 +60,7 @@ define(['dust', 'core/require/i18n-parse'], function(dust, i18nParse) {
         load: function (name, parentRequire, load, config) {
             var path = parentRequire.toUrl(name + '.dust');
             fetchText(path, function (text) {
-                //console.log(text);
-                text = i18nParse(text);
+                //text = i18n_parse(text);
 				//Do dust transform.
                 try {
                     text = 'define(["dust"],function(dust){'+dust.compile(text, name)+' return {render: function(context, callback) {return dust.render("'+name+'", context, callback)}}})';
