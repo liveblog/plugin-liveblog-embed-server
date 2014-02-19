@@ -6,7 +6,9 @@ define([
     return Backbone.Model.extend({
         xfilter: 'Description, Title, EmbedConfig, Language.Code',
 
-        url: liveblog.app.url,
+        url: function() {
+            return liveblog.app.url + this.id;
+        },
 
         initialize: function() {
             this.set('publishedPosts', new Posts([], { blogId: this.id }));
