@@ -1,7 +1,7 @@
 'use strict';
 /* jshint maxcomplexity: false */
 define([
-    'backbone',
+    'backboneCustom',
     'dust',
     'models/blog',
     'views/blog',
