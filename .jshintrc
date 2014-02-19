@@ -143,11 +143,6 @@
     //     Array.prototype.count = function (value) { return 4; };
     //     // -> Warning: Extending prototype of native object: 'Array'.
     "freeze": true,
-
-    // This option lets you control cyclomatic complexity throughout your code.
-    // Cyclomatic complexity measures the number of linearly independent paths through a program's source code.
-    // Read more about [cyclomatic complexity on Wikipedia](http://en.wikipedia.org/wiki/Cyclomatic_complexity).
-    "maxcomplexity": true,
     
     // This option lets you set the max number of formal parameters allowed per function:
     //     /*jshint maxparams:3 */
@@ -159,6 +154,45 @@
     //     // ...
     //     }
     "maxparams": 5,
+
+    // This option lets you control how nested do you want your blocks to be:
+    //     /*jshint maxdepth:2 */
+    //     function main(meaning) {
+    //         var day = true;
+    //         if (meaning === 42) {
+    //             while (day) {
+    //             shuffle();
+    //                 if (tired) { // JSHint: Blocks are nested too deeply (3).
+    //                     sleep();
+    //                 }
+    //             }
+    //         }
+    //     }
+    "maxdepth": 5,
+
+    // This option lets you set the max number of statements allowed per function:
+
+    //     /*jshint maxstatements:4 */
+    //     function main() {
+    //         var i = 0;
+    //         var j = 0;
+    //         // Function declarations count as one statement. Their bodies
+    //         // don't get taken into account for the outer function.
+    //         function inner() {
+    //             var i2 = 1;
+    //             var j2 = 1;
+    //             return i2 + j2;
+    //         }
+    //         j = i + j;
+    //         return j; // JSHint: Too many statements per function. (5)
+    //     }
+    "maxstatements": 25,
+
+    // This option lets you control cyclomatic complexity throughout your code.
+    // Cyclomatic complexity measures the number of linearly independent paths through a program's source code.
+    // Read more about [cyclomatic complexity on Wikipedia](http://en.wikipedia.org/wiki/Cyclomatic_complexity).
+    "maxcomplexity": 10,
+
 
     "globals": {
         // definitions by requirejs
