@@ -3,10 +3,9 @@
 define([
     'backboneCustom',
     'dust',
-    'models/blog',
     'views/blog',
     'tmpl!themeBase/container'
-], function(Backbone, dust, Blog, BlogView) {
+], function(Backbone, dust, BlogView) {
     return Backbone.Router.extend({
         'routes': {
             '*path': 'default'
@@ -14,12 +13,10 @@ define([
         'default': function(path) {
             // TODO: Throw error if blog id missing
             liveblog.id = 1;
-            if (liveblog.id) {
-                var blog = new Blog({ id: liveblog.id });
-                var blogView = new BlogView({ model: blog, el: '#here' });
-                blog.get('publishedPosts').fetch();
-                blogView.render();
-            }
+
+            var blogView = new BlogView({ el: '#here' });
+            blogView.model.get('publishedPosts').fetch();
+            blogView.render();
         }
     });
 });

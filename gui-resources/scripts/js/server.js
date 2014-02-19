@@ -41,22 +41,17 @@ requirejs(['appConfig'], function(appConfig){
     GLOBAL.liveblog = appConfig.liveblog;
 
     requirejs([
-        'models/blog',
         'views/blog',
         'tmpl!themeBase/container',
         'tmpl!index'
-    ], function(Blog, BlogView) {
-
-        var objects = {
-            blog: new Blog({ id: liveblog.id })
-        };
+    ], function(BlogView) {
 
         /*jshint maxcomplexity:false */
         app.get('/', function(req, res) {
-            objects.blogView = new BlogView({ model: objects.blog });
+            var blogView = new BlogView();
 
             var renderBlog = function(model, response, options) {
-                var html = objects.blogView.render().$el.html();
+                var html = blogView.render().$el.html();
 
                 var ctx = {
                     'content': function(chunk) {
@@ -70,7 +65,7 @@ requirejs(['appConfig'], function(appConfig){
                 });
             };
 
-            objects.blog.get('publishedPosts').fetch({ success: renderBlog });
+            blogView.model.get('publishedPosts').fetch({ success: renderBlog });
         });
 
         var port = 3000;
