@@ -1,0 +1,13 @@
+{
+    "livereload": { "port": 35729 },
+    "server": {
+        "hostname": "localhost",
+        "port": 3000,
+        "protocol": "http://"
+    },
+    "dir": {
+        "script": "gui-resources/scripts/js",
+        "theme": "gui-themes",
+        "build": "build"
+    }
+}
