@@ -27,7 +27,7 @@ grunt server
 Every commit has to have a meaningful commit message in form:
 
 ```
-[JIRA ref] [JIRA Title]
+[JIRA ref] [JIRA Title] or [Tile]
 <empty line>
 [Description]
 ```
