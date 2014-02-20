@@ -17,7 +17,7 @@ define([], function(){
             // if application is splited across diffrent servers.
             servers: {
                 // this is general applied unless is directly specified.
-                protocol: '//',
+                protocol: 'http://',
                 // where is the rest api server
                 rest: 'localhost:8080',
                 // if is needed a separate server for embed.
@@ -26,12 +26,7 @@ define([], function(){
         }
     };
 
-    // TODO: Set id to the real blog, use '1' as a temporary one
-    config.liveblog.id = 1;
-
-    config.liveblog.app.url = config.liveblog.app.servers.protocol + config.liveblog.app.servers.rest + '/resources/LiveDesk/Blog/';
-
-    //config.liveblog.app.url = 'http://liveblog16.sd-test.sourcefabric.org/resources/LiveDesk/Blog/';
+    config.liveblog.app.url = config.liveblog.app.servers.protocol + config.liveblog.app.servers.rest + '/resources/LiveDesk/Blog/1/Post/Published/?X-Filter=Type,Meta,Author.Source.Type.Key,Author.Source.IsModifiable,Author.Source.Name&limit=1000';
 
     return config;
 });

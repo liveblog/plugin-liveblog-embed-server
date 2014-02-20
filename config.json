@@ -2,12 +2,20 @@
     "livereload": { "port": 35729 },
     "server": {
         "hostname": "localhost",
-        "port": 3000,
+        "port": 9000,
         "protocol": "http://"
     },
     "dir": {
         "script": "gui-resources/scripts/js",
         "theme": "gui-themes",
         "build": "build"
+    },
+    "rest": {
+        "hostname": "localhost",
+        "port": 8080,
+        "protocol": "http://",
+        "theme": "default",
+        "id": 1,
+        "limit": 20
     }
 }
