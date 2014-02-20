@@ -13,7 +13,6 @@ define(['backboneCustom', 'models/post'], function(Backbone, Post) {
 
         // liveblog is a global variable set in app initialization
         url: function(){
-            console.log(liveblog.host + '/resources/LiveDesk/Blog/' + this.blogId + '/Post/Published/');
             return liveblog.host + '/resources/LiveDesk/Blog/' + this.blogId + '/Post/Published/';
         },
 
