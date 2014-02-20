@@ -2,7 +2,7 @@
 require.config({
     baseUrl: '/scripts/js/',
     paths: {
-        jquery:                     'bower_components/jquery/jquery.min',
+        jquery:                     'bower_components/jquery/dist/jquery.min',
         json2:                      'bower_components/json2/json2',
         dust:                       'core/dust/core',
         tmpl:                       'core/require/tmpl',
