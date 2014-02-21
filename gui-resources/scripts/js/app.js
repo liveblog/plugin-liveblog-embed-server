@@ -1,4 +1,5 @@
 'use strict';
+/*jshint maxcomplexity:false */
 
 var requirejs = require('requirejs'),
     express   = require('express'),
@@ -48,21 +49,17 @@ requirejs([
     'tmpl!index'
 ], function(Blog, BlogView) {
 
-    /*jshint maxcomplexity:false */
-    app.get('/', function(req, res) {
-        
-        var lconfig = lodash.clone(config.rest);
-        // overide the default configuration parametes with the get query given ones if there are any.
-        lodash.extend(lconfig, req.query);
+    var configLiveblog = function(config){
 
-        var host = lconfig.host || lconfig.hostname;
+        var host = config.host || config.hostname;
         host = host.toLowerCase();
 
-        // If the host wasn't given with protocol ex: http:// or like // 
+        // If the host was given without protocol ex: http:// or //
         //      then add the default protocol and port given in the config.
-        // If the host was given with the protocol assume that is the good one (with port aswell).
+        // If the host was given with a protocol assume that is the good
+        //      one (with port as well).
         if( ( host.substring(0,4) !== 'http' ) || (host.substring(0,2) === '//') ){
-            
+
             // Request node pakage needs a http or https protocol default or won't work
             //  so remove the automated protocol at this step.
             if( host.substring(0,2) === '//' ) {
@@ -70,13 +67,22 @@ requirejs([
             }
             // and the default port if there isn't any.
             if( host.indexOf(':') === -1 ) {
-                host = host + ':' + lconfig.port;
+                host = host + ':' + config.port;
             }
             // and add the default protocol.
-            host = lconfig.protocol + host;
+            host = config.protocol + host;
         }
-        lconfig.host = host;
-        GLOBAL.liveblog = lconfig;
+        config.host = host;
+        return config;
+    };
+
+    app.get('/', function(req, res) {
+
+        // override the default configuration parameters with
+        // the GET query given ones if there are any.
+        GLOBAL.liveblog = configLiveblog(lodash.extend(
+                            lodash.clone(config.rest),
+                            req.query));
 
         var blog = new Blog({ id: liveblog.id }),
             blogView = new BlogView({ model: blog });
