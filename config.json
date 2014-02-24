@@ -16,6 +16,7 @@
         "protocol": "http://",
         "theme": "default",
         "id": 1,
-        "limit": 20
+        "limit": 20,
+        "language": "en"
     }
 }

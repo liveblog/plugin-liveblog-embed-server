@@ -23,20 +23,11 @@ requirejs.config({
         backboneCustom: 'core/backbone/backboneCustom',
         index: '../../index',
         themeBase: '../../../gui-themes/themes/base',
-        theme: '../../../gui-themes/themes/zeit/desktop'
+        theme: '../../../gui-themes/themes/zeit/desktop',
+        dust: 'core/dust',
+        tmpl: 'core/require/tmpl',
+        i18n: 'core/require/i18n'
     },
-    map: {
-        '*': {
-            'dust': 'core/dust/core'
-        }
-    },
-    packages: [
-        {
-            name: 'tmpl',
-            location: 'core/require',
-            main: 'tmpl.js'
-        }
-    ],
     nodeRequire: require
 });
 
@@ -83,25 +74,25 @@ requirejs([
         GLOBAL.liveblog = configLiveblog(lodash.extend(
                             lodash.clone(config.rest),
                             req.query));
+        requirejs(['i18n!livedesk_embed'], function() {
+            var blog = new Blog({ id: liveblog.id }),
+                blogView = new BlogView({ model: blog });
+            var renderBlog = function(model, response, options) {
+                var html = blogView.render().$el.html();
 
-        var blog = new Blog({ id: liveblog.id }),
-            blogView = new BlogView({ model: blog });
-
-        var renderBlog = function(model, response, options) {
-            var html = blogView.render().$el.html();
-
-            var ctx = {
-                'content': function(chunk) {
-                    return chunk.map(function(chunk){
-                        chunk.end(html);
-                    });
-                }
+                var ctx = {
+                    'content': function(chunk) {
+                        return chunk.map(function(chunk){
+                            chunk.end(html);
+                        });
+                    }
+                };
+                dust.render('index', ctx, function(err,out){
+                    res.send(out);
+                });
             };
-            dust.render('index', ctx, function(err,out){
-                res.send(out);
-            });
-        };
 
-        blog.get('publishedPosts').fetch({ success: renderBlog });
+            blog.get('publishedPosts').fetch({ success: renderBlog });
+        });
     });
 });
