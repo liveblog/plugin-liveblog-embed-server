@@ -11,11 +11,12 @@
         "build": "build"
     },
     "rest": {
-        "hostname": "localhost",
+        "hostname": "192.168.0.102",
         "port": 8080,
         "protocol": "http://",
         "theme": "default",
         "id": 1,
-        "limit": 20
+        "limit": 20,
+        "language": "es"
     }
 }

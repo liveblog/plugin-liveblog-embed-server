@@ -4,7 +4,8 @@ require.config({
     paths: {
         jquery:                     'bower_components/jquery/dist/jquery.min',
         json2:                      'bower_components/json2/json2',
-        dust:                       'core/dust/core',
+        dust:                       'core/dust',
+        'jed':                      'node_modules/jed/jed',
         tmpl:                       'core/require/tmpl',
         underscore:                 'node_modules/lodash/dist/lodash.min',
         backbone:                   'node_modules/backbone/backbone-min',
@@ -13,7 +14,8 @@ require.config({
         'dustjs-linkedin':          'node_modules/dustjs-linkedin/dist/dust-full.min',
         moment:                     'node_modules/moment/min/moment.min',
         themeBase:                  '../../themes/base',
-        theme:                      '../../themes/zeit/desktop'
+        theme:                      '../../themes/zeit/desktop',
+        i18n:                       'core/require/i18n'
     },
     shim: {
         json2: {
@@ -33,7 +35,7 @@ require(['jquery', 'backbone', 'appConfig'], function($, Backbone, appConfig) {
     $(function() {
         window.liveblog = appConfig.liveblog;
         // Router can't be required before liveblog global variable is defined
-        require(['router'], function(Router){
+        require(['router', 'i18n!livedesk_embed'], function(Router){
             /*jshint unused: false */
             var router = new Router();
             Backbone.history.start({ pushState: true });

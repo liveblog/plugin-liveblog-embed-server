@@ -23,10 +23,11 @@ define([], function(){
                 // if is needed a separate server for embed.
                 frontend: 'localhost:8080'
             }
-        }
+        },
+        language: 'en'
     };
 
-    config.liveblog.app.url = config.liveblog.app.servers.protocol + config.liveblog.app.servers.rest + '/resources/LiveDesk/Blog/1/Post/Published/?X-Filter=Type,Meta,Author.Source.Type.Key,Author.Source.IsModifiable,Author.Source.Name&limit=1000';
+    config.liveblog.host = config.liveblog.app.servers.protocol + config.liveblog.app.servers.rest;
 
     return config;
 });
