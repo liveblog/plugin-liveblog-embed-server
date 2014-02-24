@@ -58,7 +58,9 @@ define(['backboneCustom', 'core/gettext'], function(Backbone, gt){
                                 Backbone.ajax(this);
                                 return true;
                             }
-                            console.log('We have tried ' + this.retryLimit + ' times and it is still not working. We give in. Sorry.');
+                            if( console ) {
+                                console.log('We have tried ' + this.retryLimit + ' times and it is still not working. We give in. Sorry.');
+                            }
                             return false;
                         }
                     }

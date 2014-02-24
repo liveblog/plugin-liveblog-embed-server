@@ -60,10 +60,7 @@ define(['dust', 'core/require/i18n-parse'], function(dust, i18nParse) {
         load: function (name, parentRequire, load, config) {
             var path = parentRequire.toUrl(name + '.dust');
             fetchText(path, function (text) {
-                //console.log(text);
                 text = i18nParse(text);
-                // if( name === 'themeBase/container')
-                //     console.log(text);
 				//Do dust transform.
                 try {
                     text = 'define(["dust"],function(dust){'+dust.compile(text, name)+' return {render: function(context, callback) {return dust.render("'+name+'", context, callback)}}})';
