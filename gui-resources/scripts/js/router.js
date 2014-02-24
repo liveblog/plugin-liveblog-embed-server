@@ -1,24 +1,30 @@
 'use strict';
-/* jshint maxcomplexity: false */
 define([
     'backboneCustom',
-    'dust',
     'models/blog',
-    'views/blog',
-    'tmpl!themeBase/container'
-], function(Backbone, dust, Blog, BlogView) {
+    'createBlogView'
+], function(Backbone, Blog, createBlogView) {
     return Backbone.Router.extend({
         'routes': {
             '*path': 'default'
         },
         'default': function(path) {
             // TODO: Throw error if blog id missing
+            // TODO: remove the next lines, this should come from the config
             liveblog.id = 1;
+            liveblog.theme = 'zeit';
+
             if (liveblog.id) {
-                var blog = new Blog({ id: liveblog.id });
-                var blogView = new BlogView({ model: blog, el: '#here' });
-                blog.get('publishedPosts').fetch();
-                blogView.render();
+                var blogView,
+                    blog = new Blog({ id: liveblog.id });
+
+                var renderBlog = function(view) {
+                    blogView = view;
+                    blogView.render();
+                    blog.get('publishedPosts').fetch();
+                };
+
+                createBlogView(blog, renderBlog, { el: '#here' });
             }
         }
     });

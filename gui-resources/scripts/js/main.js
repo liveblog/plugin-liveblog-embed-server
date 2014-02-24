@@ -1,6 +1,11 @@
 'use strict';
 require.config({
     baseUrl: '/scripts/js/',
+    config: {
+        'createBlogView': {
+            themesPath:             '../../themes/'
+        }
+    },
     paths: {
         jquery:                     'bower_components/jquery/dist/jquery.min',
         json2:                      'bower_components/json2/json2',
@@ -8,14 +13,14 @@ require.config({
         'jed':                      'node_modules/jed/jed',
         tmpl:                       'core/require/tmpl',
         underscore:                 'node_modules/lodash/dist/lodash.min',
+        lodash:                     'node_modules/lodash/dist/lodash.min',
         backbone:                   'node_modules/backbone/backbone-min',
         backboneCustom:             'core/backbone/backboneCustom',
         'backbone.layoutmanager':   'node_modules/backbone.layoutmanager/backbone.layoutmanager',
         'dustjs-linkedin':          'node_modules/dustjs-linkedin/dist/dust-full.min',
         moment:                     'node_modules/moment/min/moment.min',
-        themeBase:                  '../../themes/base',
-        theme:                      '../../themes/zeit/desktop',
-        i18n:                       'core/require/i18n'
+        i18n:                       'core/require/i18n',
+        themeBase:                  '../../themes/base'
     },
     shim: {
         json2: {
@@ -31,7 +36,11 @@ require.config({
     }
 });
 
-require(['jquery', 'backbone', 'appConfig'], function($, Backbone, appConfig) {
+require([
+    'jquery',
+    'backbone',
+    'appConfig'
+], function($, Backbone, appConfig) {
     $(function() {
         window.liveblog = appConfig.liveblog;
         // Router can't be required before liveblog global variable is defined

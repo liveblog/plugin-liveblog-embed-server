@@ -2,8 +2,7 @@
 /* jshint maxcomplexity: false */
 define([
     'views/baseView',
-    'views/post_baseTemplates',
-    'views/post_templates'
+    'views/post-templates'
 ], function(BaseView) {
 
     return BaseView.extend({
@@ -12,14 +11,12 @@ define([
         el: false,
 
         initialize: function() {
-            //TODO: Use the right template here (theme or themeBase)
-            this.template = 'themeBase' + this.postType();
+            this.setTemplate(this.postType());
         },
 
         serialize: function() {
             var data = this.model.toJSON();
-            //TODO: Use the right template here (theme or themeBase)
-            data.baseItem = 'themeBase/item/base';
+            data.baseItem = this.themedTemplate('item/base') ;
             return data;
         },
 
@@ -30,20 +27,20 @@ define([
             if (post.get('Author').Source.IsModifiable ===  'True' ||
                 post.get('Author').Source.Name === 'internal') {
                 if (post.get('Type').Key === 'advertisement') {
-                    item = '/item/posttype/infomercial';
+                    item = 'item/posttype/infomercial';
                 }
                 else {
-                    item = '/item/posttype/' + post.get('Type').Key;
+                    item = 'item/posttype/' + post.get('Type').Key;
                 }
             }
             else if (post.get('Author').Source.Name === 'google') {
-                item = '/item/source/google/' + post.Meta.type;
+                item = 'item/source/google/' + post.Meta.type;
             }
             else {
                 if (post.get('Author').Source.Name === 'advertisement') {
-                    item = '/item/source/infomercial';
+                    item = 'item/source/infomercial';
                 } else {
-                    item = '/item/source/' + post.get('Author').Source.Name;
+                    item = 'item/source/' + post.get('Author').Source.Name;
                 }
             }
             return item;
