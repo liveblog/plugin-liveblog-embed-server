@@ -4,8 +4,7 @@ var requirejs = require('requirejs'),
     express   = require('express'),
     dust      = require('dustjs-linkedin'),
     path      = require('path'),
-    fs        = require('fs'),
-    lodash    = require('lodash');
+    fs        = require('fs');
 
 var app = module.exports = express();
 
@@ -32,6 +31,12 @@ requirejs.config({
         tmpl:           'core/require/tmpl',
         i18n:           'core/require/i18n',
         themeBase:      themesPath + '/base'
+    },
+    map: {
+        '*': {
+            'lodash': 'lodash.underscore',
+            'underscore': 'lodash.underscore'
+        }
     },
     nodeRequire: require
 });
@@ -75,8 +80,8 @@ requirejs([
 
         // override the default configuration parameters with
         // the GET query given ones if there are any.
-        GLOBAL.liveblog = configLiveblog(lodash.extend(
-                            lodash.clone(config.rest),
+        GLOBAL.liveblog = configLiveblog(_.extend(
+                            _.clone(config.rest),
                             req.query));
 
         requirejs(['i18n!livedesk_embed'], function() {

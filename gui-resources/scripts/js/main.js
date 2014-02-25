@@ -12,8 +12,7 @@ require.config({
         dust:                       'core/dust',
         'jed':                      'node_modules/jed/jed',
         tmpl:                       'core/require/tmpl',
-        underscore:                 'node_modules/lodash/dist/lodash.min',
-        lodash:                     'node_modules/lodash/dist/lodash.min',
+        'lodash.underscore':        'node_modules/lodash/dist/lodash.underscore.min',
         backbone:                   'node_modules/backbone/backbone-min',
         backboneCustom:             'core/backbone/backboneCustom',
         'backbone.layoutmanager':   'node_modules/backbone.layoutmanager/backbone.layoutmanager',
@@ -32,6 +31,12 @@ require.config({
         },
         'dustjs-linkedin': {
             exports: 'dust'
+        }
+    },
+    map: {
+        '*': {
+            'lodash': 'lodash.underscore',
+            'underscore': 'lodash.underscore'
         }
     }
 });
