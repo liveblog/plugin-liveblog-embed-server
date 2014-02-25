@@ -2,18 +2,19 @@
 define([
     'views/baseView',
     'views/posts',
-    'tmpl!theme/container'
+    'tmpl!themeBase/container'
 ], function(BaseView, PostsView) {
 
     return BaseView.extend({
-        template: 'theme/container',
 
-        initialize: function(){
+        initialize: function() {
+            this.setTemplate('container');
+
             var collection = this.model.get('publishedPosts');
             this.setView('.liveblog-postlist', new PostsView({ collection: collection }));
         },
 
-        serialize: function(){
+        serialize: function() {
             return this.model.toJSON();
         }
     });

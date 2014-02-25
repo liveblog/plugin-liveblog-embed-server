@@ -1,12 +1,10 @@
 'use strict';
-/*jshint maxcomplexity:false */
 
 var requirejs = require('requirejs'),
     express   = require('express'),
     dust      = require('dustjs-linkedin'),
     path      = require('path'),
-    fs        = require('fs'),
-    lodash    = require('lodash');
+    fs        = require('fs');
 
 var app = module.exports = express();
 
@@ -18,15 +16,27 @@ app.configure(function() {
                 express['static'](path.join(__dirname, '..', '..', '..', 'node_modules')));
 });
 
+var themesPath = path.join(__dirname, '..', '..', '..', 'gui-themes', 'themes') + '/';
+
 requirejs.config({
+    config: {
+        'createBlogView': {
+            themesPath: themesPath
+        }
+    },
     paths: {
         backboneCustom: 'core/backbone/backboneCustom',
-        index: '../../index',
-        themeBase: '../../../gui-themes/themes/base',
-        theme: '../../../gui-themes/themes/zeit/desktop',
-        dust: 'core/dust',
-        tmpl: 'core/require/tmpl',
-        i18n: 'core/require/i18n'
+        index:          '../../index',
+        dust:           'core/dust',
+        tmpl:           'core/require/tmpl',
+        i18n:           'core/require/i18n',
+        themeBase:      themesPath + '/base'
+    },
+    map: {
+        '*': {
+            'lodash': 'lodash.underscore',
+            'underscore': 'lodash.underscore'
+        }
     },
     nodeRequire: require
 });
@@ -35,10 +45,9 @@ var config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', '..', '
 
 requirejs([
     'models/blog',
-    'views/blog',
-    'tmpl!themeBase/container',
+    'createBlogView',
     'tmpl!index'
-], function(Blog, BlogView) {
+], function(Blog, createBlogView) {
 
     var configLiveblog = function(config){
 
@@ -71,13 +80,21 @@ requirejs([
 
         // override the default configuration parameters with
         // the GET query given ones if there are any.
-        GLOBAL.liveblog = configLiveblog(lodash.extend(
-                            lodash.clone(config.rest),
+        GLOBAL.liveblog = configLiveblog(_.extend(
+                            _.clone(config.rest),
                             req.query));
+
         requirejs(['i18n!livedesk_embed'], function() {
-            var blog = new Blog({ id: liveblog.id }),
-                blogView = new BlogView({ model: blog });
-            var renderBlog = function(model, response, options) {
+
+            // TODO: remove the next lines, this should come from the config
+            liveblog.id = 1;
+            liveblog.theme = 'zeit';
+            liveblog.environment = 'desktop';
+
+            var blogView,
+                blog = new Blog({ id: liveblog.id });
+
+            var renderBlog = function() {
                 var html = blogView.render().$el.html();
 
                 var ctx = {
@@ -87,12 +104,20 @@ requirejs([
                         });
                     }
                 };
+
                 dust.render('index', ctx, function(err,out){
                     res.send(out);
                 });
             };
 
-            blog.get('publishedPosts').fetch({ success: renderBlog });
+            var fetchBlog = function(view){
+                blogView = view;
+                blogView.model.get('publishedPosts').fetch({ success: renderBlog });
+            };
+
+            blog.fetch({success: function(){
+                createBlogView(blog, fetchBlog);
+            }});
         });
     });
 });
