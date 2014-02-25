@@ -10,10 +10,6 @@ define([
         },
         'default': function(path) {
             // TODO: Throw error if blog id missing
-            // TODO: remove the next lines, this should come from the config
-            liveblog.id = 1;
-            liveblog.theme = 'zeit';
-
             if (liveblog.id) {
                 var blogView,
                     blog = new Blog({ id: liveblog.id });
