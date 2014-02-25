@@ -24,7 +24,9 @@ define([
                     blog.get('publishedPosts').fetch();
                 };
 
-                createBlogView(blog, renderBlog, { el: '#here' });
+                blog.fetch({ success: function(){
+                    createBlogView(blog, renderBlog, { el: '#here' });
+                }});
             }
         }
     });
