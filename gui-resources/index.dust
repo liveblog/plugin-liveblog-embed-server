@@ -7,5 +7,15 @@
   <body>
     <div id="here">{content}</div>
     <script src="//localhost:35729/livereload.js"></script>
+    <script>
+        if(window) {
+            window.liveblog = {
+                id: 1,
+                language: 'en',
+                theme: 'zeit',
+                host: 'http://localhost:8080'
+            }
+        };
+    </script>
   </body>
 </html>

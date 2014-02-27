@@ -43,11 +43,9 @@ require.config({
 
 require([
     'jquery',
-    'backbone',
-    'appConfig'
-], function($, Backbone, appConfig) {
+    'backbone'
+], function($, Backbone) {
     $(function() {
-        window.liveblog = appConfig.liveblog;
         // Router can't be required before liveblog global variable is defined
         require(['router', 'i18n!livedesk_embed'], function(Router){
             /*jshint unused: false */
