@@ -10,11 +10,12 @@
         "theme": "gui-themes",
         "build": "build"
     },
-    "rest": {
+    "app": {
         "hostname": "localhost",
         "port": 8080,
         "protocol": "http://",
         "theme": "default",
+        "environment": "desktop",
         "id": 1,
         "limit": 20,
         "language": "en"

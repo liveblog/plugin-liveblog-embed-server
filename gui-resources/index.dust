@@ -10,10 +10,10 @@
     <script>
         if(window) {
             window.liveblog = {
-                id: 1,
-                language: 'en',
-                theme: 'zeit',
-                host: 'http://localhost:9000'
+                id: {liveblog.id},
+                language: '{liveblog.language}',
+                theme: '{liveblog.theme}',
+                host: '{liveblog.host}'
             }
         };
     </script>
