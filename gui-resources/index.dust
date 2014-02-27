@@ -13,7 +13,7 @@
                 id: 1,
                 language: 'en',
                 theme: 'zeit',
-                host: 'http://localhost:8080'
+                host: 'http://localhost:9000'
             }
         };
     </script>
