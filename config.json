@@ -15,7 +15,7 @@
         "port": 8080,
         "protocol": "http://",
         "theme": "default",
-        "enviroment": "desktop",
+        "environment": "desktop",
         "id": 1,
         "limit": 20,
         "language": "en"
