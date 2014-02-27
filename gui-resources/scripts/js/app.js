@@ -81,15 +81,10 @@ requirejs([
         // override the default configuration parameters with
         // the GET query given ones if there are any.
         GLOBAL.liveblog = configLiveblog(_.extend(
-                            _.clone(config.rest),
+                            _.clone(config.app),
                             req.query));
 
         requirejs(['i18n!livedesk_embed'], function() {
-
-            // TODO: remove the next lines, this should come from the config
-            liveblog.id = 1;
-            liveblog.theme = 'zeit';
-            liveblog.environment = 'desktop';
 
             var blogView,
                 blog = new Blog({ id: liveblog.id });
@@ -98,6 +93,7 @@ requirejs([
                 var html = blogView.render().$el.html();
 
                 var ctx = {
+                    'liveblog': liveblog,
                     'content': function(chunk) {
                         return chunk.map(function(chunk){
                             chunk.end(html);
