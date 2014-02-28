@@ -25,12 +25,13 @@ requirejs.config({
         }
     },
     paths: {
-        backboneCustom: 'core/backbone/backboneCustom',
-        index:          '../../index',
-        dust:           'core/dust',
-        tmpl:           'core/require/tmpl',
-        i18n:           'core/require/i18n',
-        themeBase:      themesPath + '/base'
+        backboneCustom:      'core/backbone/backboneCustom',
+        'lodash.underscore': '../../../node_modules/lodash/dist/lodash.underscore',
+        index:               '../../index',
+        dust:                'core/dust',
+        tmpl:                'core/require/tmpl',
+        i18n:                'core/require/i18n',
+        themeBase:           themesPath + '/base'
     },
     map: {
         '*': {
@@ -106,13 +107,13 @@ requirejs([
                 });
             };
 
-            var fetchBlog = function(view){
+            var fetchPosts = function(view) {
                 blogView = view;
                 blogView.model.get('publishedPosts').fetch({ success: renderBlog });
             };
 
-            blog.fetch({success: function(){
-                createBlogView(blog, fetchBlog);
+            blog.fetch({ success: function() {
+                createBlogView(blog, fetchPosts);
             }});
         });
     });
