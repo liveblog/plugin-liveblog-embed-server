@@ -25,13 +25,14 @@ requirejs.config({
         }
     },
     paths: {
-        backboneCustom:      'core/backbone/backboneCustom',
-        'lodash.underscore': '../../../node_modules/lodash/dist/lodash.underscore',
-        index:               '../../index',
-        dust:                'core/dust',
-        tmpl:                'core/require/tmpl',
-        i18n:                'core/require/i18n',
-        themeBase:           themesPath + '/base'
+        backboneCustom: 'core/backbone/backboneCustom',
+        index:          '../../index',
+        dust:           'core/dust',
+        tmpl:           'core/require/tmpl',
+        i18n:           'core/require/i18n',
+        themeBase:      themesPath + '/base',
+        underscore:     '../../../node_modules/lodash/dist/lodash.underscore',
+        'lodash.underscore': '../../../node_modules/lodash/dist/lodash.underscore'
     },
     map: {
         '*': {
@@ -92,7 +93,6 @@ requirejs([
 
             var renderBlog = function() {
                 var html = blogView.render().$el.html();
-
                 var ctx = {
                     'liveblog': liveblog,
                     'content': function(chunk) {

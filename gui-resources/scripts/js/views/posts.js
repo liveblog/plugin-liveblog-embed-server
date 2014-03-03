@@ -1,11 +1,13 @@
 'use strict';
 define([
+    'core/utils',
     'views/baseView',
     'views/post'
-], function(BaseView, PostView) {
-
+], function(Utils, BaseView, PostView) {
+    
     return BaseView.extend({
         initialize: function() {
+            Utils.dispatcher.trigger('initialize.posts-view',this);
             this.listenTo(this.collection, 'reset', this.render);
             this.listenTo(this.collection, 'sync', this.render);
             this.listenTo(this.collection, 'change', this.render);
@@ -20,4 +22,5 @@ define([
             this.insertView(postView);
         }
     });
+
 });

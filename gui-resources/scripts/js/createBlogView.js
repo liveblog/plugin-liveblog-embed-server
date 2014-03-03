@@ -1,14 +1,24 @@
 /* global requirejs */
 define([
     'module',
-    'views/blog'
-], function(module, BlogView) {
+    'underscore',
+    'views/blog',
+    'plugins'
+], function(module, _, BlogView, plugins ) {
     'use strict';
 
     // Set theme and theme file paths.
     // Once the paths are correctly set, load the files,
     //  create the blogView and use it as param for the callback function.
     return function(blog, callback, viewOptions) {
+
+        var core = function(){
+            _.each(plugins, function(fn){
+                fn(blog.get('EmbedConfig'));
+            });
+            var blogView = new BlogView(viewOptions);
+            callback(blogView);
+        };
 
         // Prepare options for view creation
         viewOptions = viewOptions || {};
@@ -31,7 +41,6 @@ define([
             'themeFile',
             'core/utils/find-environment'
         ], function(theme, findEnvironment) {
-
             // If the theme has different environments reset the
             //  path to theme template files and theme config file to use
             //  the ones for the selected environment
@@ -50,12 +59,10 @@ define([
                     }
                 });
                 requirejs(['themeFile'], function() {
-                    var blogView = new BlogView(viewOptions);
-                    callback(blogView);
+                    core();
                 });
             } else {
-                var blogView = new BlogView(viewOptions);
-                callback(blogView);
+                core();
             }
         });
     };

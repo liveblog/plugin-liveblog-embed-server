@@ -1,16 +1,18 @@
 'use strict';
 /* jshint maxcomplexity: false */
 define([
+    'core/utils',
     'views/baseView',
     'views/post-templates'
-], function(BaseView) {
-
+], function(Utils, BaseView) {
+    
     return BaseView.extend({
         // Set el the to top level element from the template
         // instead of default behaviour of inserting a div element.
         el: false,
 
         initialize: function() {
+            Utils.dispatcher.trigger('initialize.post-view',this);
             this.setTemplate(this.postType());
         },
 
@@ -46,4 +48,5 @@ define([
             return item;
         }
     });
+
 });

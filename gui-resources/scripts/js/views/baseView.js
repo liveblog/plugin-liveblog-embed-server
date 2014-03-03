@@ -3,8 +3,9 @@
 define([
     'backboneCustom',
     'dust',
+    'core/utils',
     'backbone.layoutmanager'
-], function(Backbone, dust){
+], function(Backbone, dust, Utils){
     return Backbone.View.extend({
         // Treat all Backbone.View's automatically as
         // Layouts.
@@ -15,6 +16,17 @@ define([
         // fetchTemplate just need to return the registered template name.
         fetchTemplate: function(name) {
             return name;
+        },
+
+        // Backbone events are triggered on the node and causing error.
+        // we use this clientEvents to put events that are only triggered for client.
+        clientEvents: {},
+
+        // Apply the clientEvents as the events for client.
+        initClientEvents: function() {
+            if(Utils.isClient) {
+                this.delegateEvents(this.clientEvents);
+            }
         },
 
         // For a given template file name return the template name registered by dust.
