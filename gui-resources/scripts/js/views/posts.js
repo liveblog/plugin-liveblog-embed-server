@@ -3,27 +3,24 @@ define([
     'core/utils',
     'views/baseView',
     'views/post'
-], function(Utils, BaseView, postViewDef) {
+], function(Utils, BaseView, PostView) {
     
-    return function(){
-        var PostView = postViewDef(),
-            PostsView = BaseView.extend({
-                initialize: function() {
-                    this.listenTo(this.collection, 'reset', this.render);
-                    this.listenTo(this.collection, 'sync', this.render);
-                    this.listenTo(this.collection, 'change', this.render);
-                },
+    return BaseView.extend({
+        initialize: function() {
+            Utils.dispatcher.trigger('initialize.posts-view',this);
+            this.listenTo(this.collection, 'reset', this.render);
+            this.listenTo(this.collection, 'sync', this.render);
+            this.listenTo(this.collection, 'change', this.render);
+        },
 
-                beforeRender: function(manage){
-                    this.collection.forEach(this.renderPost, this);
-                },
+        beforeRender: function(manage){
+            this.collection.forEach(this.renderPost, this);
+        },
 
-                renderPost: function(post){
-                    var postView = new PostView({ model: post });
-                    this.insertView(postView);
-                }
-            });
-        Utils.dispatcher.trigger('class.posts-view',PostsView);
-        return PostsView;
-    };
+        renderPost: function(post){
+            var postView = new PostView({ model: post });
+            this.insertView(postView);
+        }
+    });
+
 });

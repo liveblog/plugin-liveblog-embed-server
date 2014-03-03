@@ -4,7 +4,7 @@ define([
     'underscore',
     'views/blog',
     'plugins'
-], function(module, _, blogViewDef, plugins ) {
+], function(module, _, BlogView, plugins ) {
     'use strict';
 
     // Set theme and theme file paths.
@@ -16,8 +16,7 @@ define([
             _.each(plugins, function(fn){
                 fn(blog.get('EmbedConfig'));
             });
-            var BlogView = blogViewDef(),
-                blogView = new BlogView(viewOptions);
+            var blogView = new BlogView(viewOptions);
             callback(blogView);
         };
 

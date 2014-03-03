@@ -3,11 +3,12 @@ define([
     'plugins',
     'core/utils'
 ], function(plugins, Utils){
+    
     plugins.test = function(config) {
         
-        Utils.dispatcher.on('class.blog-view', function(BlogView){
+        Utils.dispatcher.on('initialize.blog-view', function(BlogView){
 
-            BlogView.domEvents['click #liveblog-test'] = 'testEvent';
+            BlogView.clientEvents['click #liveblog-test'] = 'testEvent';
             BlogView.testEvent = function() {
                 console.log('Test triggered');
             };

@@ -4,32 +4,28 @@ define([
     'views/baseView',
     'views/posts',
     'tmpl!themeBase/container'
-], function(Utils, BaseView, postsViewDef) {
+], function(Utils, BaseView, PostsView) {
 
-    return function(){
+    return BaseView.extend({
 
-        var PostsView = postsViewDef(),
-            BlogView = BaseView.extend({
+        initialize: function() {
+            Utils.dispatcher.trigger('initialize.blog-view', this);
+            this.setTemplate('container');
+            var collection = this.model.get('publishedPosts');
+            this.setView('.liveblog-postlist', new PostsView({ collection: collection }));
+            this.initClientEvent();
+        },
+        afterRender: function(){
 
-                initialize: function() {
-                    this.setTemplate('container');
-                    var collection = this.model.get('publishedPosts');
-                    this.setView('.liveblog-postlist', new PostsView({ collection: collection }));
-                    this.initClientEvent();
-                },
-                afterRender: function(){
+            Utils.dispatcher.trigger('after-render.blog-view', this);
+        },
+        beforeRender: function(){
 
-                    Utils.dispatcher.trigger('after-render.blog-view', this);
-                },
-                beforeRender: function(){
-
-                    Utils.dispatcher.trigger('before-render.blog-view', this);
-                },
-                serialize: function() {
-                    return this.model.toJSON();
-                }
-            });
-        Utils.dispatcher.trigger('class.blog-view', BlogView.prototype);
-        return BlogView;
-    };
+            Utils.dispatcher.trigger('before-render.blog-view', this);
+        },
+        serialize: function() {
+            return this.model.toJSON();
+        }
+    });
+        
 });
