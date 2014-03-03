@@ -19,14 +19,13 @@ define([
         },
 
         // Backbone events are trrigered on the node and causing error.
-        // we use this domEvents to put events that are only triggered for client.
-        domEvents: {},
+        // we use this clientEvents to put events that are only triggered for client.
+        clientEvents: {},
 
-        // Apply the domEvents as the events for client.
-        // This method should be call with __super__ from the inheritor.
-        initialize: function() {
+        // Apply the clientEvents as the events for client.
+        initClientEvent: function() {
             if(Utils.isClient) {
-                this.delegateEvents(this.domEvents);
+                this.delegateEvents(this.clientEvents);
             }
         },
 

@@ -10,12 +10,12 @@ define([
 
         var PostsView = postsViewDef(),
             BlogView = BaseView.extend({
-                domEvents: {},
+
                 initialize: function() {
                     this.setTemplate('container');
                     var collection = this.model.get('publishedPosts');
                     this.setView('.liveblog-postlist', new PostsView({ collection: collection }));
-                    BlogView.__super__.initialize.call(this);
+                    this.initClientEvent();
                 },
                 afterRender: function(){
 

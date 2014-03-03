@@ -12,14 +12,14 @@ define([
     //  create the blogView and use it as param for the callback function.
     return function(blog, callback, viewOptions) {
 
-        function core(){
+        var core = function(){
             _.each(plugins, function(fn){
                 fn(blog.get('EmbedConfig'));
             });
             var BlogView = blogViewDef(),
                 blogView = new BlogView(viewOptions);
             callback(blogView);
-        }
+        };
 
         // Prepare options for view creation
         viewOptions = viewOptions || {};
