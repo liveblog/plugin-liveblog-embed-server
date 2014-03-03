@@ -1,49 +1,54 @@
 'use strict';
 /* jshint maxcomplexity: false */
 define([
+    'core/utils',
     'views/baseView',
     'views/post-templates'
-], function(BaseView) {
+], function(Utils, BaseView) {
+    
+    return function(){
+        var PostView = BaseView.extend({
+            // Set el the to top level element from the template
+            // instead of default behaviour of inserting a div element.
+            el: false,
 
-    return BaseView.extend({
-        // Set el the to top level element from the template
-        // instead of default behaviour of inserting a div element.
-        el: false,
+            initialize: function() {
+                this.setTemplate(this.postType());
+            },
 
-        initialize: function() {
-            this.setTemplate(this.postType());
-        },
+            serialize: function() {
+                var data = this.model.toJSON();
+                data.baseItem = this.themedTemplate('item/base') ;
+                return data;
+            },
 
-        serialize: function() {
-            var data = this.model.toJSON();
-            data.baseItem = this.themedTemplate('item/base') ;
-            return data;
-        },
+            postType: function() {
+                var item,
+                    post = this.model;
 
-        postType: function() {
-            var item,
-                post = this.model;
-
-            if (post.get('Author').Source.IsModifiable ===  'True' ||
-                post.get('Author').Source.Name === 'internal') {
-                if (post.get('Type').Key === 'advertisement') {
-                    item = 'item/posttype/infomercial';
+                if (post.get('Author').Source.IsModifiable ===  'True' ||
+                    post.get('Author').Source.Name === 'internal') {
+                    if (post.get('Type').Key === 'advertisement') {
+                        item = 'item/posttype/infomercial';
+                    }
+                    else {
+                        item = 'item/posttype/' + post.get('Type').Key;
+                    }
+                }
+                else if (post.get('Author').Source.Name === 'google') {
+                    item = 'item/source/google/' + post.Meta.type;
                 }
                 else {
-                    item = 'item/posttype/' + post.get('Type').Key;
+                    if (post.get('Author').Source.Name === 'advertisement') {
+                        item = 'item/source/infomercial';
+                    } else {
+                        item = 'item/source/' + post.get('Author').Source.Name;
+                    }
                 }
+                return item;
             }
-            else if (post.get('Author').Source.Name === 'google') {
-                item = 'item/source/google/' + post.Meta.type;
-            }
-            else {
-                if (post.get('Author').Source.Name === 'advertisement') {
-                    item = 'item/source/infomercial';
-                } else {
-                    item = 'item/source/' + post.get('Author').Source.Name;
-                }
-            }
-            return item;
-        }
-    });
+        });
+        Utils.dispatcher.trigger('class.post-view',PostView);
+        return PostView;
+    };
 });
