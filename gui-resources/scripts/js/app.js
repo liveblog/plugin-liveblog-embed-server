@@ -31,7 +31,14 @@ requirejs.config({
         tmpl:           'core/require/tmpl',
         i18n:           'core/require/i18n',
         themeBase:      themesPath + '/base',
-        underscore:     '../../../node_modules/lodash/dist/lodash.underscore'
+        underscore:     '../../../node_modules/lodash/dist/lodash.underscore',
+        'lodash.underscore': '../../../node_modules/lodash/dist/lodash.underscore'
+    },
+    map: {
+        '*': {
+            'lodash': 'lodash.underscore',
+            'underscore': 'lodash.underscore'
+        }
     },
     nodeRequire: require
 });
@@ -100,13 +107,13 @@ requirejs([
                 });
             };
 
-            var fetchBlog = function(view){
+            var fetchPosts = function(view) {
                 blogView = view;
                 blogView.model.get('publishedPosts').fetch({ success: renderBlog });
             };
 
-            blog.fetch({success: function(){
-                createBlogView(blog, fetchBlog);
+            blog.fetch({ success: function() {
+                createBlogView(blog, fetchPosts);
             }});
         });
     });

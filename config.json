@@ -14,7 +14,7 @@
         "hostname": "localhost",
         "port": 8080,
         "protocol": "http://",
-        "theme": "zeit",
+        "theme": "default",
         "environment": "desktop",
         "id": 1,
         "limit": 20,
