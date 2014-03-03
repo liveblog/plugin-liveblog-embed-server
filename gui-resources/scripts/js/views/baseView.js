@@ -18,12 +18,12 @@ define([
             return name;
         },
 
-        // Backbone events are trrigered on the node and causing error.
+        // Backbone events are triggered on the node and causing error.
         // we use this clientEvents to put events that are only triggered for client.
         clientEvents: {},
 
         // Apply the clientEvents as the events for client.
-        initClientEvent: function() {
+        initClientEvents: function() {
             if(Utils.isClient) {
                 this.delegateEvents(this.clientEvents);
             }
