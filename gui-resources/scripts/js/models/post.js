@@ -1,11 +1,13 @@
 'use strict';
+
 /* jshint maxcomplexity: false */
 define([
-    'backboneCustom',
+    'models/baseModel',
     'core/utils/helpers',
     'moment'
-], function(Backbone, helpers, moment) {
-    return Backbone.Model.extend({
+], function(BaseModel, helpers, moment) {
+
+    return BaseModel.extend({
 
         parse: function(data) {
             if (data.Meta) {
@@ -24,17 +26,17 @@ define([
             if (data.Author.Source.Type.Key === 'smsblog') {
                 data.item = 'source/sms';
             } else {
-                if(data.Author.Source.IsModifiable ===  'True' ||
+                if (data.Author.Source.IsModifiable ===  'True' ||
                         data.Author.Source.Name === 'internal') {
                     data.item = 'posttype/' + data.Type.Key;
                 }
-                else if(data.Type) {
+                else if (data.Type) {
                     data.item = 'source/' + data.Author.Source.Name;
                 }
             }
 
             // TODO: move this to a dust filter
-            if(data.CreatedOn) {
+            if (data.CreatedOn) {
                 var createdOn = moment(data.CreatedOn);
                 // TODO: use locale for date format
                 // & !! check that the content of _('post-date') makes sense for moment.js
@@ -44,7 +46,7 @@ define([
             }
 
             // TODO: move this to a dust filter
-            if(data.PublishedOn) {
+            if (data.PublishedOn) {
                 var publishedOn = moment(data.PublishedOn);
                 // TODO: use locale for date format
                 // & !! check that the content of _('post-date') makes sense for moment.js
@@ -54,11 +56,11 @@ define([
             }
 
             // TODO: We may need to use these lines to update the admin server
-            //if(data.Content && liveblog && liveblog.adminServer && livedesk && livedesk.frontendServer) {
+            //if (data.Content && liveblog && liveblog.adminServer && livedesk && livedesk.frontendServer) {
                 //data.Content = data.Content.replace(liveblog.adminServer, livedesk.frontendServer);
             //}
 
-            if(liveblog && liveblog.frontendServer) {
+            if (liveblog && liveblog.frontendServer) {
                 data.frontendServer = liveblog.frontendServer;
             }
 
@@ -69,12 +71,12 @@ define([
             var annotation = apiAnnotation;
 
             if (annotation) {
-                if(annotation[1] === null) {
+                if (annotation[1] === null) {
                     annotation = annotation[0];
                     annotation = helpers.trimTag(['<br>', '<br />'], annotation);
                 }
                 if (typeof annotation !== 'string') {
-                    if(annotation[0]) {
+                    if (annotation[0]) {
                         var aux = annotation;
                         annotation = {
                             'before': helpers.trimTag(['<br>', '<br />'], aux[0]),

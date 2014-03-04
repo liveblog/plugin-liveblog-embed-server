@@ -1,7 +1,13 @@
 'use strict';
-/* jshint maxcomplexity: false */
-define(['backboneCustom', 'models/post'], function(Backbone, Post) {
-    return Backbone.Collection.extend({
+
+define([
+    'collections/baseCollection',
+    'models/post',
+    'core/utils'
+], function(BaseCollection, Post, utils) {
+
+    return BaseCollection.extend({
+
         model: Post,
 
         xfilter: 'PublishedOn, DeletedOn, Order, Id, ' +
@@ -11,7 +17,8 @@ define(['backboneCustom', 'models/post'], function(Backbone, Post) {
                     'AuthorImage, Meta, ' +
                     'IsPublished, Creator.FullName, Author.Source.Type.Key',
 
-        // liveblog is a global variable set in app initialization
+        pollInterval: 10000,
+
         url: function(){
             return liveblog.host + '/resources/LiveDesk/Blog/' + this.blogId + '/Post/Published/';
         },
@@ -19,6 +26,9 @@ define(['backboneCustom', 'models/post'], function(Backbone, Post) {
         initialize: function(models, options) {
             if (options.blogId) {
                 this.blogId = options.blogId;
+            }
+            if (utils.isClient) {
+                this.startPolling();
             }
         },
 
