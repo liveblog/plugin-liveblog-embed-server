@@ -1,10 +1,16 @@
 'use strict';
+
 define([
-    'backboneCustom',
-    'collections/posts'
-], function(Backbone, Posts) {
-    return Backbone.Model.extend({
+    'models/baseModel',
+    'collections/posts',
+    'core/utils'
+], function(BaseModel, Posts, utils) {
+
+    return BaseModel.extend({
+
         xfilter: 'Description, Title, EmbedConfig, Language.Code',
+
+        pollInterval: 10000,
 
         urlRoot: function(){
             return liveblog.host + '/resources/LiveDesk/Blog/';
@@ -12,6 +18,9 @@ define([
 
         initialize: function() {
             this.set('publishedPosts', new Posts([], { blogId: this.id }));
+            if (utils.isClient) {
+                this.startPolling();
+            }
         },
 
         parse: function(data) {
