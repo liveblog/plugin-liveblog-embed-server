@@ -1,5 +1,7 @@
 {
-    "livereload": { "port": 35729 },
+    "livereload": {
+        "port": 35729
+    },
     "server": {
         "hostname": "localhost",
         "port": 9000,
