@@ -1,6 +1,6 @@
+/* jshint maxcomplexity: false */
 'use strict';
 
-/* jshint maxcomplexity: false */
 define([
     'models/baseModel',
     'core/utils/helpers',

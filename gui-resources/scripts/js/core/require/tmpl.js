@@ -4,7 +4,7 @@
  * see: http://github.com/jrburke/require-cs for details
  */
 
-/* jshint maxcomplexity: false, expr: true */
+/* jshint expr: true */
 /* global define, window, process, require */
 'use strict';
 

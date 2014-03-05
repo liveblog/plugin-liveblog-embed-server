@@ -1,7 +1,7 @@
 'use strict';
 
 define(['backboneCustom', 'core/gettext'], function(Backbone, gt){
-    
+
     var buildMap = {};
         // apiUrl = liveblog.frontendServer,
         // langCode = liveblog.language;
@@ -25,7 +25,6 @@ define(['backboneCustom', 'core/gettext'], function(Backbone, gt){
                     processTime: 400,
                     tryCount : 0,
                     retryLimit : 2,
-                    /*jshint maxcomplexity:false */
                     success: function(data){
                         if (config.isBuild) {
                             buildMap[name] = data;
@@ -42,9 +41,9 @@ define(['backboneCustom', 'core/gettext'], function(Backbone, gt){
                     // so in this case call the urlCached of the internationalization
                     error: function(xhr, textStatus, errorThrown){
                         if(!this.errorTimeout(xhr, textStatus, errorThrown)) {
-                            
+
                             // provide url option in the form of the urlCached
-                            // also apply timeout retries for the urlCached 
+                            // also apply timeout retries for the urlCached
                             options.url = url;
                             options.error =  this.errorTimeout;
                             Backbone.ajax(options);
@@ -67,7 +66,6 @@ define(['backboneCustom', 'core/gettext'], function(Backbone, gt){
                 };
             Backbone.ajax(options);
         },
-        /*jshint maxcomplexity:false */
         write: function(pluginName, moduleName, write){
             if(moduleName in buildMap){
                 var content = buildMap[moduleName];

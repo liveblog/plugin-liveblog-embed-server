@@ -1,5 +1,5 @@
 'use strict';
-/* jshint maxcomplexity: false */
+
 define([], function(){
     var helpers = {};
 

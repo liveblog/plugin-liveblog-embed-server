@@ -13,7 +13,6 @@ define(['core/utils/object-parse'], function(objectParse){
     function parseFunction(fnx, string, callback) {
         var fnxed = new RegExp(fnx+'\\((.*?)(\\);)','gi'),
             formatx = ').format(';
-        /*jshint maxcomplexity:false */
         return string.replace(fnxed, function(str_fn, inside_fn){
             var fstr = '', arr, fparams;
             if(inside_fn.indexOf(formatx)>-1) {

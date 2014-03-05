@@ -1,4 +1,4 @@
-/* jshint strict: false, maxcomplexity: false, forin: false */
+/* jshint strict: false, forin: false */
 /* global XDomainRequest */
 define(['jquery'],function( $ ) {
     $.support.cors = true;
