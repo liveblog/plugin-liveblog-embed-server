@@ -27,5 +27,4 @@ define([
             return this.model.toJSON();
         }
     });
-        
 });

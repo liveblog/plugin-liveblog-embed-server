@@ -3,11 +3,16 @@ define([
     'core/utils',
     'views/baseView',
     'views/post'
-], function(Utils, BaseView, PostView) {
-    
+], function(utils, BaseView, PostView) {
+
     return BaseView.extend({
+
+        syncParams: {
+            thumbSize: 'medium'
+        },
+
         initialize: function() {
-            Utils.dispatcher.trigger('initialize.posts-view',this);
+            utils.dispatcher.trigger('initialize.posts-view', this);
             this.listenTo(this.collection, 'reset', this.render);
             this.listenTo(this.collection, 'sync', this.render);
             this.listenTo(this.collection, 'change', this.render);

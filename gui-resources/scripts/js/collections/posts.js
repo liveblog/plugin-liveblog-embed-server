@@ -10,12 +10,19 @@ define([
 
         model: Post,
 
-        xfilter: 'PublishedOn, DeletedOn, Order, Id, ' +
-                    'CId, Content, CreatedOn, Type, ' +
-                    'AuthorName, Author.Source.Name, ' +
-                    'Author.Source.IsModifiable, ' +
-                    'AuthorImage, Meta, ' +
-                    'IsPublished, Creator.FullName, Author.Source.Type.Key',
+        syncParams: {
+            headers: {
+                'X-Filter': 'PublishedOn, DeletedOn, Order, Id, ' +
+                            'CId, Content, CreatedOn, Type, ' +
+                            'AuthorName, Author.Source.Name, ' +
+                            'Author.Source.IsModifiable, ' +
+                            'AuthorImage, Meta, ' +
+                            'IsPublished, Creator.FullName, Author.Source.Type.Key'
+            },
+            data: {
+                thumbSize: 'medium'
+            }
+        },
 
         pollInterval: 10000,
 
@@ -33,10 +40,22 @@ define([
         },
 
         parse: function(data) {
+            this.filterParams.lastCId    = data.lastCId;
+            this.filterParams.offset     = data.offset;
+            this.filterParams.offsetMore = data.offsetMore;
+            this.filterParams.total      = data.total;
+            this.filterParams.limit      = data.limit;
+
             if (data.PostList) {
                 return data.PostList;
+            } else {
+                delete data.lastCId;
+                delete data.offset;
+                delete data.offsetMore;
+                delete data.total;
+                delete data.limit;
+                return data;
             }
-            return data;
         }
     });
 });
