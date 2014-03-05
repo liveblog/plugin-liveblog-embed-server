@@ -6,9 +6,9 @@
 
 /* jshint maxcomplexity: false, expr: true */
 /* global define, Packages, java, process, require */
+'use strict';
 
 define(['dust'], function(dust) {
-    'use strict';
     var fs,
         fetchText = function () {
             throw new Error('Environment unsupported.');

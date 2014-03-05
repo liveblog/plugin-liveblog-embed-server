@@ -1,5 +1,6 @@
+'use strict';
+
 define(function(){
-    'use strict';
     var twitter = {
         link: {
             anchor: function(str)
