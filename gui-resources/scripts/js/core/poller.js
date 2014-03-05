@@ -46,7 +46,7 @@ define(['underscore'], function(_) {
                     self._delayedPoll();
                 },
                 error: function(model, resp, opt) {
-                    self.stop();
+                    self.stopPolling();
                 }
             });
 
