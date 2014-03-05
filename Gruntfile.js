@@ -8,7 +8,12 @@ module.exports = function(grunt) {
     //     port = server.
 
     // Define basic configuration
-    var config = grunt.file.readJSON('./config.json');
+    var config;
+    try {
+        config = grunt.file.readJSON('./config.json');
+    } catch(e){
+        config = grunt.file.readJSON('./config.sample.json');
+    }
     config.pkg = grunt.file.readJSON('./package.json');
 
     // Load the basic configuration and additional from tasks/options
@@ -21,18 +26,37 @@ module.exports = function(grunt) {
     // Install the jshint pre-commit hook
     grunt.registerTask('install-hook', function () {
         var fs = require('fs');
+        if(!fs.existsSync('.git/hooks/pre-commit')) {
+            try {
+                // my precommit hook is inside the repo as /hooks/pre-commit
+                // copy the hook file to the correct place in the .git directory
+                grunt.file.copy('hooks/pre-commit', '.git/hooks/pre-commit');
 
-        // my precommit hook is inside the repo as /hooks/pre-commit
-        // copy the hook file to the correct place in the .git directory
-        grunt.file.copy('hooks/pre-commit', '.git/hooks/pre-commit');
+                // chmod the file to readable and executable by all
+                fs.chmodSync('.git/hooks/pre-commit', '755');
+            } catch(e) {
+                console.log(e.message);
+            }
+        }
+    });
 
-        // chmod the file to readable and executable by all
-        fs.chmodSync('.git/hooks/pre-commit', '755');
+    // Update the configuration
+    grunt.registerTask('update-config', function () {
+        // read the sample config
+        var configuration = grunt.file.readJSON('./config.sample.json'),
+        // load lodash for merging method
+            _ = require('lodash');
+        // deep extend or aka lodash merge the current config over sample.
+        configuration = _.merge(configuration, config);
+        // we don't need pkg from the current config.
+        delete configuration.pkg;
+        // write file with some beautifications.
+        grunt.file.write('./config.json', JSON.stringify(configuration, null, 4));
     });
 
     grunt.registerTask('server', ['express:dev', 'open:dev', 'watch:express']);
     grunt.registerTask('hint', ['jshint:all']);
     grunt.registerTask('build', ['jshint:all','requirejs']);
 
-    grunt.registerTask('default', ['express:dev', 'open:dev', 'watch:express']);
+    grunt.registerTask('default', ['install-hook','update-config', 'server']);
 };
