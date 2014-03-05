@@ -11,6 +11,8 @@ define([
         // Layouts.
         manage: true,
 
+        flags: {},
+
         // Since templates are loaded by Require.js
         // there is no need to 'fetch' them.
         // fetchTemplate just need to return the registered template name.

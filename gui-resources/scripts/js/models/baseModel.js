@@ -2,14 +2,11 @@
 
 define([
     'backboneCustom',
+    'core/backbone/modelCollectionCommon',
     'core/poller'
-], function(Backbone, poller) {
+], function(Backbone, modelCollectionCommon, poller) {
 
     return Backbone.Model.extend(_.extend({
-
-        poller: function(options) {
-            this.fetch(options);
-        }
-
-    }, poller));
+        // Backbone.Model customizations go here
+    }, modelCollectionCommon, poller));
 });

@@ -8,7 +8,11 @@ define([
 
     return BaseModel.extend({
 
-        xfilter: 'Description, Title, EmbedConfig, Language.Code',
+        syncParams: {
+            headers: {
+                'X-Filter': 'Description, Title, EmbedConfig, Language.Code'
+            }
+        },
 
         pollInterval: 10000,
 

@@ -1,6 +1,8 @@
 // Liveblog custom additions to Backbone.js
-/* jshint maxcomplexity:false */
-define(['backbone'], function(Backbone){
+define([
+    'backbone',
+    'underscore'
+], function(Backbone, _){
     'use strict';
 
     Backbone.defaultSync = Backbone.sync;
@@ -15,9 +17,23 @@ define(['backbone'], function(Backbone){
                 'X-Format-DateTime': 'yyyy-MM-ddTHH:mm:ss\'Z\''
             };
 
-            if (model.xfilter) {
-                options.headers['X-Filter'] = model.xfilter;
-            }
+            // Add parameters provided in model.syncParams.headers
+            // to the request header
+            _.each(model.syncParams.headers, function(value, key) {
+                options.headers[key] = value;
+            });
+
+            // Add parameters provided in model.syncParams.data
+            // as parameters to the request url, unless the same
+            // parameter has been provided as an option in fetch method.
+            // (params in fetch method have precedence over params in
+            // syncParams.data)
+            _.each(model.syncParams.data, function(value, key) {
+                options.data = options.data || {};
+                if (!options.data[key]) {
+                    options.data[key] = value;
+                }
+            });
         }
         return Backbone.defaultSync(method, model, options);
     };
