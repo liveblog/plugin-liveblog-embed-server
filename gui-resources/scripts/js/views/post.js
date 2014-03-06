@@ -3,8 +3,9 @@
 define([
     'core/utils',
     'views/baseView',
+    'dust',
     'views/post-templates'
-], function(Utils, BaseView) {
+], function(Utils, BaseView, dust) {
 
     return BaseView.extend({
         // Set el the to top level element from the template
@@ -18,7 +19,7 @@ define([
 
         serialize: function() {
             var data = this.model.toJSON();
-            data.baseItem = this.themedTemplate('item/base') ;
+            data.baseItem = dust.themed('item/base');
             return data;
         },
 
