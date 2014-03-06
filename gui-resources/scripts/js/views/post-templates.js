@@ -1,3 +1,5 @@
+'use strict';
+
 define([
 	'tmpl!themeBase/item/base',
 	'tmpl!themeBase/item/social-share',

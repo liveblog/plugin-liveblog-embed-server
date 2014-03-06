@@ -4,11 +4,11 @@
  * see: http://github.com/jrburke/require-cs for details
  */
 
-/* jshint maxcomplexity: false, expr: true */
+/* jshint expr: true */
 /* global define, window, process, require */
+'use strict';
 
 define(['dust', 'core/require/i18n-parse'], function(dust, i18nParse) {
-    'use strict';
     var fetchText = function () {
             throw new Error('Environment unsupported.');
         },

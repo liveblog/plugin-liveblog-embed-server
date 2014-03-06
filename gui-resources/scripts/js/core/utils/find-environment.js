@@ -1,5 +1,6 @@
+'use strict';
+
 define(function(){
-    'use strict';
     return function() {
         var ret = 'desktop';
         var isMSIE = /*@cc_on!@*/0;

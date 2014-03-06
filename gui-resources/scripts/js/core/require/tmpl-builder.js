@@ -4,11 +4,11 @@
  * see: http://github.com/jrburke/require-cs for details
  */
 
-/* jshint maxcomplexity: false, expr: true */
+/* jshint expr: true */
 /* global define, Packages, java, process, require */
+'use strict';
 
 define(['dust'], function(dust) {
-    'use strict';
     var fs,
         fetchText = function () {
             throw new Error('Environment unsupported.');

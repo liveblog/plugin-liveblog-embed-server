@@ -1,11 +1,12 @@
 /* global requirejs */
+'use strict';
+
 define([
     'module',
     'underscore',
     'views/blog',
     'plugins'
 ], function(module, _, BlogView, plugins ) {
-    'use strict';
 
     // Set theme and theme file paths.
     // Once the paths are correctly set, load the files,

@@ -1,11 +1,11 @@
 'use strict';
-/* jshint maxcomplexity: false */
+
 define([
     'core/utils',
     'views/baseView',
     'views/post-templates'
 ], function(Utils, BaseView) {
-    
+
     return BaseView.extend({
         // Set el the to top level element from the template
         // instead of default behaviour of inserting a div element.

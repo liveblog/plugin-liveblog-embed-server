@@ -1,7 +1,6 @@
 'use strict';
 
 define(['dust/core', 'core/gettext', 'lodash'], function(dust, gt, _){
-    /*jshint maxcomplexity:false */
     var parseAttributeParams = function(chunk, context, bodies, params) {
         var val = '';
         if(_.has(params, 'param1') ) {

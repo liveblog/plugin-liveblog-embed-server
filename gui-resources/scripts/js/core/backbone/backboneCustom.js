@@ -1,9 +1,10 @@
 // Liveblog custom additions to Backbone.js
+'use strict';
+
 define([
     'backbone',
     'underscore'
 ], function(Backbone, _){
-    'use strict';
 
     Backbone.defaultSync = Backbone.sync;
 
