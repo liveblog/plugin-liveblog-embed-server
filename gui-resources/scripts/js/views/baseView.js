@@ -30,13 +30,12 @@ define([
                 this.delegateEvents(this.clientEvents);
             }
         },
-
         // For a given template file name return the template name registered by dust.
         // Return the current theme template if registered, otherwise return the default
         // base theme template.
         // (ex: for 'container' return 'theme/container' or 'themeBase/container')
         themedTemplate: function(name) {
-            return dust.cache['theme/' + name] ? ('theme/' + name) : ('themeBase/' + name);
+            return dust.themed(name);
         },
 
         // Set template view attribute to the current theme template if registered,

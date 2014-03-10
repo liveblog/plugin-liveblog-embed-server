@@ -3,8 +3,9 @@
 define([
     'core/utils',
     'views/baseView',
+    'dust',
     'views/post-templates'
-], function(Utils, BaseView) {
+], function(Utils, BaseView, dust) {
 
     return BaseView.extend({
         // Set el the to top level element from the template
@@ -18,7 +19,7 @@ define([
 
         serialize: function() {
             var data = this.model.toJSON();
-            data.baseItem = this.themedTemplate('item/base') ;
+            data.baseItem = this.themedTemplate('item/base');
             return data;
         },
 
@@ -36,7 +37,7 @@ define([
                 }
             }
             else if (post.get('Author').Source.Name === 'google') {
-                item = 'item/source/google/' + post.Meta.type;
+                item = 'item/source/google/' + post.get('Meta').type;
             }
             else {
                 if (post.get('Author').Source.Name === 'advertisement') {
