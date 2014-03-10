@@ -19,7 +19,7 @@ define([
 
         serialize: function() {
             var data = this.model.toJSON();
-            data.baseItem = dust.themed('item/base');
+            data.baseItem = this.themedTemplate('item/base');
             return data;
         },
 
