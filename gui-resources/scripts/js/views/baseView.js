@@ -5,31 +5,14 @@ define([
     'dust',
     'core/utils',
     'backbone.layoutmanager'
-], function(Backbone, dust, Utils){
+], function(Backbone, dust, utils){
     return Backbone.View.extend({
         // Treat all Backbone.View's automatically as
-        // Layouts.
+        // (backbone.layoutManager) Layouts.
         manage: true,
 
         flags: {},
 
-        // Since templates are loaded by Require.js
-        // there is no need to 'fetch' them.
-        // fetchTemplate just need to return the registered template name.
-        fetchTemplate: function(name) {
-            return name;
-        },
-
-        // Backbone events are triggered on the node and causing error.
-        // we use this clientEvents to put events that are only triggered for client.
-        clientEvents: {},
-
-        // Apply the clientEvents as the events for client.
-        initClientEvents: function() {
-            if(Utils.isClient) {
-                this.delegateEvents(this.clientEvents);
-            }
-        },
         // For a given template file name return the template name registered by dust.
         // Return the current theme template if registered, otherwise return the default
         // base theme template.
@@ -42,6 +25,13 @@ define([
         // to base theme template otherwise.
         setTemplate: function(name) {
             this.template = this.themedTemplate(name);
+        },
+
+        // Since templates are loaded by Require.js
+        // there is no need to 'fetch' them.
+        // fetchTemplate just need to return the registered template name.
+        fetchTemplate: function(name) {
+            return name;
         },
 
         renderTemplate: function(template, context) {
@@ -57,6 +47,17 @@ define([
                     done(out);
                 }
             });
+        },
+
+        // Backbone events don't work in the server (node.js)
+        // We use this object to store events that should be triggered only client side.
+        clientEvents: {},
+
+        // Register clientEvents if in client.
+        initClientEvents: function() {
+            if(utils.isClient) {
+                this.delegateEvents(this.clientEvents);
+            }
         }
     });
 });
