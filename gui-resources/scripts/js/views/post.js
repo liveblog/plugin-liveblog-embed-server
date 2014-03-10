@@ -37,7 +37,7 @@ define([
                 }
             }
             else if (post.get('Author').Source.Name === 'google') {
-                item = 'item/source/google/' + post.Meta.type;
+                item = 'item/source/google/' + post.get('Meta').type;
             }
             else {
                 if (post.get('Author').Source.Name === 'advertisement') {

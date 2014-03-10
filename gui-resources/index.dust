@@ -13,7 +13,8 @@
                 id: {liveblog.id},
                 language: '{liveblog.language}',
                 theme: '{liveblog.theme}',
-                host: '{liveblog.host}'
+                host: '{liveblog.host}',
+                limit: {liveblog.limit}
             }
         };
     </script>

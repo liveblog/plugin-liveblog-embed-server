@@ -14,7 +14,7 @@ define([
     return function(blog, callback, viewOptions) {
 
         var core = function(){
-            _.each(plugins, function(fn){
+            _.each(plugins, function(fn, key){
                 fn(blog.get('EmbedConfig'));
             });
             var blogView = new BlogView(viewOptions);

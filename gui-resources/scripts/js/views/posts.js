@@ -22,6 +22,9 @@ define([
             this.collection.forEach(this.renderPost, this);
         },
 
+        afterRender: function(){
+            utils.dispatcher.trigger('after-render.posts-view',this);
+        },
         renderPost: function(post){
             var postView = new PostView({ model: post });
             this.insertView(postView);

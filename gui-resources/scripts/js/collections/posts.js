@@ -27,7 +27,11 @@ define([
         pollInterval: 10000,
 
         url: function(){
-            return liveblog.host + '/resources/LiveDesk/Blog/' + this.blogId + '/Post/Published/';
+            var url = liveblog.host + '/resources/LiveDesk/Blog/' + this.blogId + '/Post/Published/?';
+            if(this.syncParams.data.limit) {
+                url += 'limit='+this.syncParams.data.limit;
+            }
+            return url;
         },
 
         initialize: function(models, options) {

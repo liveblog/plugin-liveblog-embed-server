@@ -4,15 +4,13 @@ define([
     'plugins',
     'core/utils'
 ], function(plugins, utils){
-
     plugins.pagination = function(config) {
-        utils.dispatcher.on('initialize.posts-view', function(view){
+        utils.dispatcher.once('initialize.posts-view', function(view){
             if (liveblog.limit) {
                 view.collection.syncParams.data.limit = parseInt(liveblog.limit, 10);
             } else {
                 view.collection.syncParams.data.limit = view.collection.defaultFilterParams.limit;
             }
-
             view.flags.loadingNextPage = false;
 
             view.topPage = function() {
@@ -43,6 +41,5 @@ define([
             };
         });
     };
-
     return plugins.pagination;
 });
