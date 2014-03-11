@@ -3,9 +3,8 @@
 define([
     'core/utils',
     'views/baseView',
-    'dust',
     'views/post-templates'
-], function(Utils, BaseView, dust) {
+], function(utils, BaseView) {
 
     return BaseView.extend({
         // Set el the to top level element from the template
@@ -13,17 +12,18 @@ define([
         el: false,
 
         initialize: function() {
-            Utils.dispatcher.trigger('initialize.post-view',this);
-            this.setTemplate(this.postType());
+            utils.dispatcher.trigger('initialize.post-view',this);
+            this.setTemplate(this._postType());
         },
 
         serialize: function() {
             var data = this.model.toJSON();
             data.baseItem = this.themedTemplate('item/base');
+            data.permalink = this.permalink();
             return data;
         },
 
-        postType: function() {
+        _postType: function() {
             var item,
                 post = this.model;
 

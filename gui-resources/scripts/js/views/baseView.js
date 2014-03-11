@@ -11,8 +11,6 @@ define([
         // (backbone.layoutManager) Layouts.
         manage: true,
 
-        flags: {},
-
         // For a given template file name return the template name registered by dust.
         // Return the current theme template if registered, otherwise return the default
         // base theme template.
