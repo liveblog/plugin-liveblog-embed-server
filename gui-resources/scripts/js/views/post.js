@@ -11,6 +11,8 @@ define([
         // instead of default behaviour of inserting a div element.
         el: false,
 
+        socialShareBoxAdded: false,
+
         initialize: function() {
             utils.dispatcher.trigger('initialize.post-view',this);
             this.setTemplate(this._postType());
@@ -21,6 +23,14 @@ define([
             data.baseItem = this.themedTemplate('item/base');
             data.permalink = this.permalink();
             return data;
+        },
+
+        beforeRender: function(){
+            utils.dispatcher.trigger('before-render.post-view', this);
+        },
+
+        afterRender: function(){
+            utils.dispatcher.trigger('after-render.post-view', this);
         },
 
         _postType: function() {
@@ -49,5 +59,4 @@ define([
             return item;
         }
     });
-
 });

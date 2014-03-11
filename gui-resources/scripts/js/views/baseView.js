@@ -47,6 +47,13 @@ define([
             });
         },
 
+        // Get the parent view using backbone.layoutManager __manager__
+        parent: function() {
+            return this.__manager__.parent;
+        },
+
+        events: {},
+
         // Backbone events don't work in the server (node.js)
         // We use this object to store events that should be triggered only client side.
         clientEvents: {},

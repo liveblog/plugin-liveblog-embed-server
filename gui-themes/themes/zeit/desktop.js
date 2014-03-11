@@ -3,6 +3,7 @@ define([
 	'tmpl!theme/item/base',
     'plugins/pagination',
     'plugins/button-pagination',
-    'plugins/post-hash'
+    'plugins/post-hash',
+    'plugins/social-share'
 ], function(){
 });
