@@ -15,6 +15,7 @@ define([
 
             view.topPage = function() {
                 view.collection.clearFilterParams();
+                delete view.collection.syncParams.data['order.end'];
                 return view.collection.fetch();
             };
 

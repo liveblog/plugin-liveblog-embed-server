@@ -11,6 +11,10 @@ define([
             thumbSize: 'medium'
         },
 
+        flags: {
+            autoRender: true
+        },
+
         initialize: function() {
             utils.dispatcher.trigger('initialize.posts-view', this);
             this.listenTo(this.collection, 'reset', this.render);
