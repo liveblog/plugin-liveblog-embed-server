@@ -53,6 +53,9 @@ define([
                 //      Published?order.end=3&limit=2&offset=2
                 // -> gives back posts 6 7
                 view.collection.syncParams.data['order.end'] = parseFloat(href.substr(hashIndex + hash.length + 1));
+
+                view.flags.hasTopPage = true;
+
                 view.flags.autoRender = false;
             }
         });
