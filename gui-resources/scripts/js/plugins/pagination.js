@@ -40,6 +40,15 @@ define([
             view.hasNextPage = function() {
                 return view.collection.length < view.collection.filterParams.total;
             };
+
+            // True if the blog was accessed through a permanent link to a specific post
+            // (ex: http://newspaper.de/very-important-liveblog/?liveblog=78)
+            view.hasTopPage = function() {
+                if (this.flags.hasTopPage) {
+                    return true;
+                }
+                return false;
+            };
         });
     };
     return plugins.pagination;

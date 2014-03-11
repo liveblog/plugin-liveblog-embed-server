@@ -16,7 +16,7 @@ define([
 
 
         utils.dispatcher.on('initialize.blog-view', function(view){
-            
+
             view.clientEvents['click [data-gimme="posts.to-top"]'] = 'toTop';
             view.toTop = function(evt) {
                 var self = this,
@@ -27,7 +27,7 @@ define([
 
         utils.dispatcher.once('after-render.posts-view', function(view){
             var data = {};
-            
+
             data.baseItem = dust.themed('themeBase/item/base');
             dust.renderThemed('themeBase/plugins/before-button-pagination', data, function(err, out){
                 var  el = Backbone.$(out);
@@ -47,14 +47,12 @@ define([
             view.clientEvents['click [data-gimme="posts.beforePage"]'] = 'buttonTopPage';
 
             view.checkTopPage = function(evt) {
-                /*jshint unused:false */
-                // @TODO: implement a hasTopPage method into pagination plugin
                 var item = this.$('[data-gimme="posts.beforePage"]');
-                // if(!this.hasTopPage()) {
-                //     item.css(propName,propValue.hide);
-                // } else {
-                //     item.css(propName,propValue.show);
-                // }
+                if(!this.hasTopPage()) {
+                    item.css(propName,propValue.hide);
+                } else {
+                    item.css(propName,propValue.show);
+                }
             };
             view.checkNextPage = function(evt) {
                 var item = this.$('[data-gimme="posts.nextPage"]');
