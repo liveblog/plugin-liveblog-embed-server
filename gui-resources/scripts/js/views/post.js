@@ -21,7 +21,9 @@ define([
         serialize: function() {
             var data = this.model.toJSON();
             data.baseItem = this.themedTemplate('item/base');
-            data.permalink = this.permalink();
+            if (this.permalink && typeof this.permalink === 'function') {
+                data.permalink = this.permalink();
+            }
             return data;
         },
 
