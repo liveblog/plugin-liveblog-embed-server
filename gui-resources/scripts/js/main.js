@@ -18,7 +18,6 @@ require.config({
         'backbone.layoutmanager':   'node_modules/backbone.layoutmanager/backbone.layoutmanager',
         'dustjs-linkedin':          'node_modules/dustjs-linkedin/dist/dust-full.min',
         moment:                     'node_modules/moment/min/moment.min',
-        'sprintf-js':               'node_modules/sprintf-js/src/sprintf.min',
         i18n:                       'core/require/i18n',
         themeBase:                  '../../themes/base'
     },
@@ -32,9 +31,6 @@ require.config({
         },
         'dustjs-linkedin': {
             exports: 'dust'
-        },
-        'sprintf-js': {
-            exports: 'vsprintf'
         }
     },
     map: {

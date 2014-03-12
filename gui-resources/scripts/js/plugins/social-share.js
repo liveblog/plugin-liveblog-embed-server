@@ -8,10 +8,9 @@ define([
     'core/utils',
     'dust',
     'core/gettext',
-    'sprintf-js',
     'core/utils/fixedEncodeURIComponent',
     'config/social-share-plugin'
-], function(Backbone, _, plugins, utils, dust, gt, vsprintf, fixedEncodeURIComp, shareConf) {
+], function(Backbone, _, plugins, utils, dust, gt, fixedEncodeURIComp, shareConf) {
 
     if (utils.isClient){
 
@@ -45,7 +44,7 @@ define([
                         }
                         var fbURLImageComp = '';
                         view.$('.result-content img').each(function(index) {
-                            fbURLImageComp += vsprintf(shareConf.fbURLImageComp,
+                            fbURLImageComp += gt.sprintf(shareConf.fbURLImageComp,
                                                 [index, Backbone.$(this).attr('src')]);
                         });
 
@@ -59,12 +58,12 @@ define([
                         };
 
                         var socialParams = {
-                            'emailurl': vsprintf(shareConf.urls.email, urlParams.email)
+                            'emailurl': gt.sprintf(shareConf.urls.email, urlParams.email)
                         };
                         _.each(urlParams, function(value, key) {
-                            var url = vsprintf(shareConf.urls[key], urlParams[key]);
+                            var url = gt.sprintf(shareConf.urls[key], urlParams[key]);
                             socialParams[key + 'click'] =
-                                vsprintf('$.socialShareWindow("%s",%u,%u); return false;',
+                                gt.sprintf('$.socialShareWindow("%s",%u,%u); return false;',
                                     [url, shareConf.shareWindowSize[key].h,
                                           shareConf.shareWindowSize[key].w]);
                         });
