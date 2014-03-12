@@ -12,7 +12,7 @@ define([
             Utils.dispatcher.trigger('initialize.blog-view', this);
             this.setTemplate('container');
             var collection = this.model.get('publishedPosts');
-            this.setView('.liveblog-postlist', new PostsView({ collection: collection }));
+            this.insertView('.liveblog-postlist', new PostsView({ collection: collection }));
             this.initClientEvents();
         },
         afterRender: function(){

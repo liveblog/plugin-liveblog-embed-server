@@ -112,7 +112,7 @@
 {/userCommentBackdrop}
 
 {<postsList}
-<ul data-gimme="posts.list" class="liveblog-postlist">
+<div class="liveblog-postlist">
     {#Plugins.posts.list}{>"{.}"/}{/Plugins.posts.list}
-</ul>
+</div>
 {/postsList}

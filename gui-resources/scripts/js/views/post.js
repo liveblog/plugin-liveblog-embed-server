@@ -7,7 +7,7 @@ define([
 ], function(utils, BaseView) {
 
     return BaseView.extend({
-        // Set el the to top level element from the template
+        // Set el to the top level element from the template
         // instead of default behaviour of inserting a div element.
         el: false,
 
