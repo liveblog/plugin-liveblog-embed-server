@@ -17,7 +17,7 @@ define([
 
         utils.dispatcher.on('initialize.blog-view', function(view){
 
-            view.clientEvents['click [data-gimme="posts.to-top"]'] = 'toTop';
+            view.clientEvents({ 'click [data-gimme="posts.to-top"]': 'toTop' });
             view.toTop = function(evt) {
                 var self = this,
                 new_position = self.el.offset();
@@ -43,8 +43,10 @@ define([
             view.checkTopPage();
         });
         utils.dispatcher.once('initialize.posts-view', function(view){
-            view.clientEvents['click [data-gimme="posts.nextPage"]'] = 'buttonNextPage';
-            view.clientEvents['click [data-gimme="posts.beforePage"]'] = 'buttonTopPage';
+            view.clientEvents({
+                'click [data-gimme="posts.nextPage"]': 'buttonNextPage',
+                'click [data-gimme="posts.beforePage"]': 'buttonTopPage'
+            });
 
             view.checkTopPage = function(evt) {
                 var item = this.$('[data-gimme="posts.beforePage"]');
