@@ -1,9 +1,9 @@
 define([
-	'tmpl!theme/container',
-	'tmpl!theme/item/base',
+    'css!theme/liveblog',
     'plugins/pagination',
     'plugins/button-pagination',
     'plugins/post-hash',
-    'plugins/social-share'
-], function(){
-});
+    'plugins/social-share',
+    'tmpl!theme/container',
+    'tmpl!theme/item/base'
+], function(){});

@@ -7,33 +7,46 @@ var requirejs = require('requirejs'),
     fs        = require('fs'),
     lodash    = require('lodash');
 
-var app = module.exports = express();
+var app = module.exports = express(),
+    paths = {
+        app: '../../../'
+    };
+paths.guiThemes = paths.app + 'gui-themes';
+paths.guiResources = paths.app + 'gui-resources';
+paths.themes = paths.guiThemes + '/themes';
+paths.node_modules = paths.app + 'node_modules';
+
+
 
 app.configure(function() {
     app.set('port', process.env.PORT || 3000);
-    app.use(express['static'](path.join(__dirname, '..', '..', '..', 'gui-resources')));
-    app.use(express['static'](path.join(__dirname, '..', '..', '..', 'gui-themes')));
+    app.use(express['static'](path.join(__dirname, paths.guiResources)));
+    app.use(express['static'](path.join(__dirname, paths.guiThemes)));
     app.use('/scripts/js/node_modules',
-                express['static'](path.join(__dirname, '..', '..', '..', 'node_modules')));
+                express['static'](path.join(__dirname, paths.node_modules)));
 });
 
-var themesPath = path.join(__dirname, '..', '..', '..', 'gui-themes', 'themes') + '/';
+
 
 requirejs.config({
     config: {
         'createBlogView': {
-            themesPath: themesPath
+            themesPath: path.join(__dirname,paths.themes)+'/'
+        },
+        'css': {
+            siteRoot: paths.guiThemes
         }
     },
     paths: {
-        backboneCustom: 'core/backbone/backboneCustom',
-        index:          '../../index',
-        dust:           'core/dust',
-        tmpl:           'core/require/tmpl',
-        i18n:           'core/require/i18n',
-        themeBase:      themesPath + '/base',
-        underscore:     '../../../node_modules/lodash/dist/lodash.underscore',
-        'lodash.underscore': '../../../node_modules/lodash/dist/lodash.underscore'
+        backboneCustom:         'core/backbone/backboneCustom',
+        index:                  '../../index',
+        dust:                   'core/dust',
+        tmpl:                   'core/require/tmpl',
+        i18n:                   'core/require/i18n',
+        themeBase:              paths.themes + '/base',
+        underscore:             paths.node_modules + '/lodash/dist/lodash.underscore',
+        'lodash.underscore':    paths.node_modules + '/lodash/dist/lodash.underscore',
+        'css':                  'core/require/css'
     },
     map: {
         '*': {
@@ -44,7 +57,7 @@ requirejs.config({
     nodeRequire: require
 });
 
-var config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', '..', 'config.json')));
+var config = JSON.parse(fs.readFileSync(path.join(__dirname, paths.app, 'config.json')));
 
 requirejs([
     'models/blog',
@@ -53,29 +66,36 @@ requirejs([
 ], function(Blog, createBlogView) {
 
     var configLiveblog = function(config){
-
-        var host = config.host || config.hostname;
-        host = host.toLowerCase();
-
-        // If the host was given without protocol ex: http:// or //
-        //      then add the default protocol and port given in the config.
-        // If the host was given with a protocol assume that is the good
-        //      one (with port as well).
-        if( ( host.substring(0,4) !== 'http' ) || (host.substring(0,2) === '//') ){
-
-            // Request node pakage needs a http or https protocol default or won't work
-            //  so remove the automated protocol at this step.
-            if( host.substring(0,2) === '//' ) {
-                host = host.substring(2);
+        if(config.host) {
+            var authority,
+                host = config.host,
+                hostParts = host.toLowerCase().match(/((http:|https:)?\/\/)([^/?#]*)/);
+            if(hostParts) {
+                if(hostParts[1] !== '//') {
+                    config.protocol = hostParts[1];
+                }
+                authority = hostParts[3];
+            } else {
+                authority = host;
             }
-            // and the default port if there isn't any.
-            if( host.indexOf(':') === -1 ) {
-                host = host + ':' + config.port;
+            if( authority.indexOf(':') !== -1 ) {
+                var authorityParts = authority.split(':');
+                config.hostname = authorityParts[0];
+                config.port = authorityParts[1];
+            } else {
+                config.hostname = authority;
             }
-            // and add the default protocol.
-            host = config.protocol + host;
+
         }
-        config.host = host;
+
+        config.host = config.protocol + config.hostname + (config.port? (':' + config.port) : '');
+        requirejs.config({
+            config: {
+                    css: {
+                        host: '//' + config.hostname + (config.port? (':' + config.port) : '')+'/content/lib/livedesk-embed'
+                    }
+                }
+            });
         return config;
     };
 
