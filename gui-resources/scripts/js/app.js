@@ -23,6 +23,10 @@ requirejs.config({
     config: {
         'createBlogView': {
             themesPath: themesPath
+        },
+        'css': {
+            id: 'liveblog-css',
+            siteRoot: '../../../gui-themes'
         }
     },
     paths: {
@@ -33,7 +37,9 @@ requirejs.config({
         i18n:           'core/require/i18n',
         themeBase:      themesPath + '/base',
         underscore:     '../../../node_modules/lodash/dist/lodash.underscore',
-        'lodash.underscore': '../../../node_modules/lodash/dist/lodash.underscore'
+        'lodash.underscore': '../../../node_modules/lodash/dist/lodash.underscore',
+        'css':          'core/require/css-loader',
+        'css-browser':  'core/require/css'
     },
     map: {
         '*': {
@@ -53,29 +59,38 @@ requirejs([
 ], function(Blog, createBlogView) {
 
     var configLiveblog = function(config){
-
-        var host = config.host || config.hostname;
-        host = host.toLowerCase();
-
-        // If the host was given without protocol ex: http:// or //
-        //      then add the default protocol and port given in the config.
-        // If the host was given with a protocol assume that is the good
-        //      one (with port as well).
-        if( ( host.substring(0,4) !== 'http' ) || (host.substring(0,2) === '//') ){
-
-            // Request node pakage needs a http or https protocol default or won't work
-            //  so remove the automated protocol at this step.
-            if( host.substring(0,2) === '//' ) {
-                host = host.substring(2);
+        if(config.host) {
+            console.log('there is host');
+            var authority,
+                host = config.host,
+                hostParts = host.toLowerCase().match(/((http:|https:)?\/\/)([^/?#]*)/);
+            console.log(hostParts);
+            if(hostParts) {
+                if(hostParts[1] !== '//') {
+                    config.protocol = hostParts[1];
+                }
+                authority = hostParts[3];
+            } else {
+                authority = host;
             }
-            // and the default port if there isn't any.
-            if( host.indexOf(':') === -1 ) {
-                host = host + ':' + config.port;
+            if( authority.indexOf(':') !== -1 ) {
+                var authorityParts = authority.split(':');
+                config.hostname = authorityParts[0];
+                config.port = authorityParts[1];
+            } else {
+                config.hostname = authority;
             }
-            // and add the default protocol.
-            host = config.protocol + host;
+
         }
-        config.host = host;
+
+        config.host = config.protocol + config.hostname + (config.port? (':' + config.port) : '');
+        requirejs.config({
+            config: {
+                    css: {
+                        host: '//' + config.hostname + (config.port? (':' + config.port) : '')+'/content/lib/livedesk-embed'
+                    }
+                }
+            });
         return config;
     };
 

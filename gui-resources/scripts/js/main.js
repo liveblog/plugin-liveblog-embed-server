@@ -4,6 +4,10 @@ require.config({
     config: {
         'createBlogView': {
             themesPath:             '../../themes/'
+        },
+        css: {
+            id: 'liveblog-css',
+            host: '//' + liveblog.hostname + (liveblog.port? (':' + liveblog.port) : '')+'/content/lib/livedesk-embed'
         }
     },
     paths: {
@@ -19,7 +23,9 @@ require.config({
         'dustjs-linkedin':          'node_modules/dustjs-linkedin/dist/dust-full.min',
         moment:                     'node_modules/moment/min/moment.min',
         i18n:                       'core/require/i18n',
-        themeBase:                  '../../themes/base'
+        themeBase:                  '../../themes/base',
+        'css':                      'core/require/css-loader',
+        'css-browser':              'core/require/css'
     },
     shim: {
         json2: {
