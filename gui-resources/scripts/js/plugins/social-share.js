@@ -24,7 +24,7 @@ define([
             };
 
             utils.dispatcher.on('initialize.post-view', function(view) {
-                view.events['click .sf-share'] = 'share';
+                view.clientEvents({ 'click .sf-share': 'share' });
 
                 view.share = function(e) {
                     e.preventDefault();

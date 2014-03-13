@@ -54,14 +54,11 @@ define([
 
         events: {},
 
-        // Backbone events don't work in the server (node.js)
-        // We use this object to store events that should be triggered only client side.
-        clientEvents: {},
-
-        // Register clientEvents if in client.
-        initClientEvents: function() {
-            if(utils.isClient) {
-                this.delegateEvents(this.clientEvents);
+        // Add events to the view only if we are in the client.
+        // Accepts an events object that would extend the existent object.
+        clientEvents: function(events) {
+            if (utils.isClient) {
+                _.extend(this.events, events);
             }
         }
     });

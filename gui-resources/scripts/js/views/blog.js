@@ -13,7 +13,6 @@ define([
             this.setTemplate('container');
             var collection = this.model.get('publishedPosts');
             this.insertView('.liveblog-postlist', new PostsView({ collection: collection }));
-            this.initClientEvents();
         },
         afterRender: function(){
 
