@@ -38,8 +38,7 @@ requirejs.config({
         themeBase:      themesPath + '/base',
         underscore:     '../../../node_modules/lodash/dist/lodash.underscore',
         'lodash.underscore': '../../../node_modules/lodash/dist/lodash.underscore',
-        'css':          'core/require/css-loader',
-        'css-browser':  'core/require/css'
+        'css':          'core/require/css'
     },
     map: {
         '*': {
@@ -60,11 +59,9 @@ requirejs([
 
     var configLiveblog = function(config){
         if(config.host) {
-            console.log('there is host');
             var authority,
                 host = config.host,
                 hostParts = host.toLowerCase().match(/((http:|https:)?\/\/)([^/?#]*)/);
-            console.log(hostParts);
             if(hostParts) {
                 if(hostParts[1] !== '//') {
                     config.protocol = hostParts[1];

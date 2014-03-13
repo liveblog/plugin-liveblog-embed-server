@@ -24,8 +24,7 @@ require.config({
         moment:                     'node_modules/moment/min/moment.min',
         i18n:                       'core/require/i18n',
         themeBase:                  '../../themes/base',
-        'css':                      'core/require/css-loader',
-        'css-browser':              'core/require/css'
+        'css':                      'core/require/css'
     },
     shim: {
         json2: {
