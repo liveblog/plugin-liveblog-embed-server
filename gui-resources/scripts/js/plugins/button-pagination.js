@@ -25,7 +25,7 @@ define([
             };
         });
 
-        utils.dispatcher.once('after-render.posts-view', function(view){
+        utils.dispatcher.on('after-render.posts-view', function(view){
             var data = {};
 
             data.baseItem = dust.themed('themeBase/item/base');
