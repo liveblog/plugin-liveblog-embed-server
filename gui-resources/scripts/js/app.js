@@ -7,38 +7,46 @@ var requirejs = require('requirejs'),
     fs        = require('fs'),
     lodash    = require('lodash');
 
-var app = module.exports = express();
+var app = module.exports = express(),
+    paths = {
+        app: '../../../'
+    };
+paths.guiThemes = paths.app + 'gui-themes';
+paths.guiResources = paths.app + 'gui-resources';
+paths.themes = paths.guiThemes + '/themes';
+paths.node_modules = paths.app + 'node_modules';
+
+
 
 app.configure(function() {
     app.set('port', process.env.PORT || 3000);
-    app.use(express['static'](path.join(__dirname, '..', '..', '..', 'gui-resources')));
-    app.use(express['static'](path.join(__dirname, '..', '..', '..', 'gui-themes')));
+    app.use(express['static'](path.join(__dirname, paths.guiResources)));
+    app.use(express['static'](path.join(__dirname, paths.guiThemes)));
     app.use('/scripts/js/node_modules',
-                express['static'](path.join(__dirname, '..', '..', '..', 'node_modules')));
+                express['static'](path.join(__dirname, paths.node_modules)));
 });
 
-var themesPath = path.join(__dirname, '..', '..', '..', 'gui-themes', 'themes') + '/';
+
 
 requirejs.config({
     config: {
         'createBlogView': {
-            themesPath: themesPath
+            themesPath: path.join(__dirname,paths.themes)+'/'
         },
         'css': {
-            id: 'liveblog-css',
-            siteRoot: '../../../gui-themes'
+            siteRoot: paths.guiThemes
         }
     },
     paths: {
-        backboneCustom: 'core/backbone/backboneCustom',
-        index:          '../../index',
-        dust:           'core/dust',
-        tmpl:           'core/require/tmpl',
-        i18n:           'core/require/i18n',
-        themeBase:      themesPath + '/base',
-        underscore:     '../../../node_modules/lodash/dist/lodash.underscore',
-        'lodash.underscore': '../../../node_modules/lodash/dist/lodash.underscore',
-        'css':          'core/require/css'
+        backboneCustom:         'core/backbone/backboneCustom',
+        index:                  '../../index',
+        dust:                   'core/dust',
+        tmpl:                   'core/require/tmpl',
+        i18n:                   'core/require/i18n',
+        themeBase:              paths.themes + '/base',
+        underscore:             paths.node_modules + '/lodash/dist/lodash.underscore',
+        'lodash.underscore':    paths.node_modules + '/lodash/dist/lodash.underscore',
+        'css':                  'core/require/css'
     },
     map: {
         '*': {
@@ -49,7 +57,7 @@ requirejs.config({
     nodeRequire: require
 });
 
-var config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', '..', 'config.json')));
+var config = JSON.parse(fs.readFileSync(path.join(__dirname, paths.app, 'config.json')));
 
 requirejs([
     'models/blog',
