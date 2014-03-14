@@ -52,10 +52,17 @@ define([
 
     Backbone.nodeSync = function(options) {
 
-        var request = require('request');
+        var request = require('request'),
+            qs      = require('qs');
 
         // Parse response to json
         options.json = true;
+
+        // Set the query string with the options.data params
+        if (options.data) {
+            options.url = options.url + '?' + qs.stringify(options.data);
+            delete options.data;
+        }
 
         // Use options.success and options.errors callbacks
         request.get(options, function(error, response, data) {
