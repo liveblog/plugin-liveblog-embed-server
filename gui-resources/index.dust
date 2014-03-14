@@ -15,7 +15,9 @@
                 theme: '{liveblog.theme}',
                 hostname: '{liveblog.hostname}',
                 port: {liveblog.port},
-                protocol: '{liveblog.protocol}',
+                {?liveblog.protocol}
+                    protocol: '{liveblog.protocol}',
+                {/liveblog.protocol}
                 host: '{liveblog.host}',
                 limit: {liveblog.limit}
             }

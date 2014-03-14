@@ -25,7 +25,7 @@ define([
             };
         });
 
-        utils.dispatcher.on('after-render.posts-view', function(view){
+        utils.dispatcher.once('after-render.posts-view', function(view){
             var data = {};
 
             data.baseItem = dust.themed('themeBase/item/base');
@@ -39,9 +39,13 @@ define([
                 el.css(propName,propValue.hide);
                 view.$el.append(el);
             });
+        });
+
+        utils.dispatcher.once('after-render.posts-view', function(view){
             view.checkNextPage();
             view.checkTopPage();
         });
+
         utils.dispatcher.once('initialize.posts-view', function(view){
             view.clientEvents({
                 'click [data-gimme="posts.nextPage"]': 'buttonNextPage',

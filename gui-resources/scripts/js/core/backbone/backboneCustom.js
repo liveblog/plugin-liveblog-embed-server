@@ -52,15 +52,15 @@ define([
 
     Backbone.nodeSync = function(options) {
 
-        var request = require('request'),
-            qs      = require('qs');
+        var request = require.nodeRequire('request'),
+           qs = require.nodeRequire('qs');
 
         // Parse response to json
         options.json = true;
 
         // Set the query string with the options.data params
         if (options.data) {
-            options.url = options.url + '?' + qs.stringify(options.data);
+            options.url += ((options.url.indexOf('?') === -1)? '?': '') + qs.stringify(options.data);
             delete options.data;
         }
 

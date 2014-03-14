@@ -84,10 +84,10 @@ requirejs([
                 config.port = authorityParts[1];
             } else {
                 config.hostname = authority;
+                delete config.port;
             }
 
         }
-
         config.host = config.protocol + config.hostname + (config.port? (':' + config.port) : '');
         requirejs.config({
             config: {
