@@ -2,7 +2,6 @@
 
 var requirejs = require('requirejs'),
     express   = require('express'),
-    dust      = require('dustjs-linkedin'),
     path      = require('path'),
     fs        = require('fs'),
     lodash    = require('lodash');
@@ -114,18 +113,7 @@ requirejs([
 
             var renderBlog = function() {
                 var html = blogView.render().$el.html();
-                var ctx = {
-                    'liveblog': liveblog,
-                    'content': function(chunk) {
-                        return chunk.map(function(chunk){
-                            chunk.end(html);
-                        });
-                    }
-                };
-
-                dust.render('index', ctx, function(err,out){
-                    res.send(out);
-                });
+                res.send(html);
             };
 
             var fetchPosts = function(view) {
