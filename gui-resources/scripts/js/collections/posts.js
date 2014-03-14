@@ -40,18 +40,17 @@ define([
         },
 
         parse: function(data) {
-            this.filterParams.lastCId    = data.lastCId;
-            this.filterParams.offset     = data.offset;
-            this.filterParams.offsetMore = data.offsetMore;
-            this.filterParams.total      = data.total;
-            this.filterParams.limit      = data.limit;
+            this.filterParams.lastCId = parseInt(data.lastCId, 10);
+            this.filterParams.offset  = parseInt(data.offset, 10);
+            this.filterParams.total   = parseInt(data.total, 10);
+            this.filterParams.limit   = parseInt(data.limit, 10);
+            delete data.offsetMore;
 
             if (data.PostList) {
                 return data.PostList;
             } else {
                 delete data.lastCId;
                 delete data.offset;
-                delete data.offsetMore;
                 delete data.total;
                 delete data.limit;
                 return data;
