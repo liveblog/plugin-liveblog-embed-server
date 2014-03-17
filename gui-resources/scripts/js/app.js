@@ -5,6 +5,7 @@ var requirejs = require('requirejs'),
     dust      = require('dustjs-linkedin'),
     path      = require('path'),
     fs        = require('fs'),
+    qs        = require('qs'),
     Log       = require('log'),
     lodash    = require('lodash');
 
@@ -109,6 +110,10 @@ requirejs([
     };
 
     app.get('/', function(req, res) {
+
+        var queryString = qs.stringify(req.query);
+        liveblogLogger.info('App request query string' +
+            (queryString ? ': "' + queryString + '"' : ' is empty'));
 
         // override the default configuration parameters with
         // the GET query given ones if there are any.
