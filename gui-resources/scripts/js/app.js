@@ -16,10 +16,10 @@ paths.guiResources = paths.app + 'gui-resources';
 paths.themes = paths.guiThemes + '/themes';
 paths.node_modules = paths.app + 'node_modules';
 
-
+var config = JSON.parse(fs.readFileSync(path.join(__dirname, paths.app, 'config.json')));
 
 app.configure(function() {
-    app.set('port', process.env.PORT || 3000);
+    app.set('port', process.env.PORT || config.server.port);
     app.use(express['static'](path.join(__dirname, paths.guiResources)));
     app.use(express['static'](path.join(__dirname, paths.guiThemes)));
     app.use('/scripts/js/node_modules',
@@ -57,8 +57,6 @@ requirejs.config({
     },
     nodeRequire: require
 });
-
-var config = JSON.parse(fs.readFileSync(path.join(__dirname, paths.app, 'config.json')));
 
 requirejs([
     'models/blog',
