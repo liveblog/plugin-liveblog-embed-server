@@ -1,15 +1,15 @@
 module.exports = {
+    options: {
+        script: '<%= dir.script  %>/server.js',
+        port: '<%= server.port %>'
+    },
     dev: {
         options: {
-            script: '<%= dir.script  %>/server.js',
-            port: '<%= server.port %>'
+            livereload: true
         }
     },
-
     prod: {
         options: {
-            script: '<%= dir.script  %>/server.js',
-            port: '<%= server.port %>',
             background: false
         }
     }

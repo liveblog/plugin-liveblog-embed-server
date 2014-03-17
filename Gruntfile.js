@@ -3,7 +3,7 @@
 module.exports = function(grunt) {
 
     // Load all grunt task declared in package.json
-    require('load-grunt-tasks')(grunt);
+    require('load-grunt-tasks')(grunt, {scope: ['devDependencies', 'dependencies', 'optionalDependencies']});
 
     // var server =  grunt.option('server') || 'http://localhost:9000',
     //     port = server.
@@ -55,9 +55,38 @@ module.exports = function(grunt) {
         grunt.file.write('./config.json', JSON.stringify(configuration, null, 4));
     });
 
-    grunt.registerTask('dev', ['express:dev', 'open:dev', 'watch:express']);
+
+    grunt.registerTask('server', 'Start the liveblog embed server', function(target, action, server){
+        
+        // default option configuration.
+        grunt.option.init({
+            target: 'dev',
+            action: 'start',
+            server: 'liveblog'
+        });
+        // get the config always before starting the server
+        grunt.task.run('update-config');
+
+        // if parametes wherent specified take the ones form options.
+        target = target || grunt.option('target');
+        action = action || grunt.option('action');
+        server = server || grunt.option('server');
+
+        switch(target) {
+            case 'dev':
+                grunt.task.run(['express:dev', 'open:dev', 'watch:express']);
+                break;
+            case 'prod':
+                grunt.task.run(['express:prod']);
+                break;
+            case 'forever':
+                grunt.task.run(['forever:'+server+':'+action]);
+                break;
+        }
+    });
+
     grunt.registerTask('hint', ['jshint:all']);
     grunt.registerTask('build', ['jshint:all','requirejs']);
 
-    grunt.registerTask('default', ['install-hook','update-config', 'dev']);
+    grunt.registerTask('default', ['install-hook', 'server']);
 };
