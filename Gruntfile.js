@@ -55,9 +55,11 @@ module.exports = function(grunt) {
         grunt.file.write('./config.json', JSON.stringify(configuration, null, 4));
     });
 
+    grunt.registerTask('create-folders', 'Create needed folders', function() {
+        grunt.file.mkdir('logs');
+    });
 
     grunt.registerTask('server', 'Start the liveblog embed server', function(target, action, server){
-        
         // default option configuration.
         grunt.option.init({
             target: 'dev',
@@ -66,6 +68,9 @@ module.exports = function(grunt) {
         });
         // get the config always before starting the server
         grunt.task.run('update-config');
+
+        // create needed folders if they don't exist
+        grunt.task.run('create-folders');
 
         // if parametes wherent specified take the ones form options.
         target = target || grunt.option('target');

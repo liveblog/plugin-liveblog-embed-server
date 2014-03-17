@@ -64,6 +64,10 @@ define([
             delete options.data;
         }
 
+        if (GLOBAL && GLOBAL.liveblogLogger) {
+            liveblogLogger.info('Request to url: %s', options.url);
+        }
+
         // Use options.success and options.errors callbacks
         request.get(options, function(error, response, data) {
             if (!error && response.statusCode === 200) {

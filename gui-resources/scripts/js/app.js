@@ -5,6 +5,7 @@ var requirejs = require('requirejs'),
     dust      = require('dustjs-linkedin'),
     path      = require('path'),
     fs        = require('fs'),
+    Log       = require('log'),
     lodash    = require('lodash');
 
 var app = module.exports = express(),
@@ -15,6 +16,7 @@ paths.guiThemes = paths.app + 'gui-themes';
 paths.guiResources = paths.app + 'gui-resources';
 paths.themes = paths.guiThemes + '/themes';
 paths.node_modules = paths.app + 'node_modules';
+paths.logs = path.join(__dirname, paths.app, 'logs');
 
 var config = JSON.parse(fs.readFileSync(path.join(__dirname, paths.app, 'config.json')));
 
@@ -26,7 +28,15 @@ app.configure(function() {
                 express['static'](path.join(__dirname, paths.node_modules)));
 });
 
-
+// Create logger for the app
+fs.exists(paths.logs, function(exists) {
+    if (exists) {
+        GLOBAL.liveblogLogger = new Log('info', fs.createWriteStream('logs/appjs.log'));
+    } else {
+        console.log('logs/ folder missing, to create it run ' +
+                        '"grunt create-logs-folder" or "grunt server"');
+    }
+});
 
 requirejs.config({
     baseUrl: __dirname,
