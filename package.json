@@ -36,7 +36,7 @@
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-docco": "~0.3.2",
-    "grunt-express-server": "https://github.com/nistormihai/grunt-express-server/archive/v0.4.14.tar.gz",
+    "grunt-express-server": "~0.4.13",
     "grunt-open": "~0.2.3",
     "load-grunt-tasks": "~0.3.0",
     "load-grunt-config": "~0.7.1"

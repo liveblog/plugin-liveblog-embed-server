@@ -5,10 +5,9 @@ module.exports = {
         tasks: ['express:dev'],
         options: {
             // According to express docu, 'spawn: false' is needed for the
-            // server to reload, but if we use it the browser is reloaded
-            // before the server is ready
+            // server to reload
             livereload: true,
-            nospawn: true
+            spawn: false
         }
     },
     'hint-own': {
