@@ -55,9 +55,9 @@ module.exports = function(grunt) {
         grunt.file.write('./config.json', JSON.stringify(configuration, null, 4));
     });
 
-    grunt.registerTask('server', ['express:dev', 'open:dev', 'watch:express']);
+    grunt.registerTask('dev', ['express:dev', 'open:dev', 'watch:express']);
     grunt.registerTask('hint', ['jshint:all']);
     grunt.registerTask('build', ['jshint:all','requirejs']);
 
-    grunt.registerTask('default', ['install-hook','update-config', 'server']);
+    grunt.registerTask('default', ['install-hook','update-config', 'dev']);
 };

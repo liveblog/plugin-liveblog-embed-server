@@ -29,6 +29,7 @@ app.configure(function() {
 
 
 requirejs.config({
+    baseUrl: __dirname,
     config: {
         'createBlogView': {
             themesPath: path.join(__dirname,paths.themes)+'/'
