@@ -79,13 +79,13 @@ module.exports = function(grunt) {
 
         switch(target) {
             case 'dev':
-                grunt.task.run(['express:dev', 'open:dev', 'watch:express']);
+                grunt.task.run(['env:dev', 'express:dev', 'open:dev', 'watch:express']);
                 break;
             case 'prod':
-                grunt.task.run(['express:prod']);
+                grunt.task.run(['env:prod', 'express:prod']);
                 break;
             case 'forever':
-                grunt.task.run(['forever:'+server+':'+action]);
+                grunt.task.run(['env:forever', 'forever:'+server+':'+action]);
                 break;
         }
     });
