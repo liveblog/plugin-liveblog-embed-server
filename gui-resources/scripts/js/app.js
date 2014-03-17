@@ -5,6 +5,8 @@ var requirejs = require('requirejs'),
     dust      = require('dustjs-linkedin'),
     path      = require('path'),
     fs        = require('fs'),
+    qs        = require('qs'),
+    Logger    = require('./core/logger'),
     lodash    = require('lodash');
 
 var app = module.exports = express(),
@@ -26,7 +28,19 @@ app.configure(function() {
                 express['static'](path.join(__dirname, paths.node_modules)));
 });
 
+paths.logs = path.join(__dirname, paths.app, config.dir.log);
 
+// Create logger for the app
+fs.exists(paths.logs, function(exists) {
+    if (exists) {
+        var logFile = fs.createWriteStream(path.join(paths.logs, config.logging.app),
+                                            { 'flags': 'a' });
+        GLOBAL.liveblogLogger = new Logger('info', logFile);
+    } else {
+        console.log(paths.log + ' folder missing, to create it run ' +
+                        '"grunt create-logs-folder" or "grunt server"');
+    }
+});
 
 requirejs.config({
     baseUrl: __dirname,
@@ -99,6 +113,10 @@ requirejs([
     };
 
     app.get('/', function(req, res) {
+
+        var queryString = qs.stringify(req.query);
+        liveblogLogger.info('App request query string' +
+            (queryString ? ': "' + queryString + '"' : ' is empty'));
 
         // override the default configuration parameters with
         // the GET query given ones if there are any.
