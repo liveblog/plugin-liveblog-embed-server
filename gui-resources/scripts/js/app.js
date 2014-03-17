@@ -32,7 +32,8 @@ app.configure(function() {
 // Create logger for the app
 fs.exists(paths.logs, function(exists) {
     if (exists) {
-        GLOBAL.liveblogLogger = new Log('info', fs.createWriteStream('logs/appjs.log'));
+        GLOBAL.liveblogLogger = new Log('info', fs.createWriteStream('logs/appjs.log',
+                                                                    { 'flags': 'a' }));
     } else {
         console.log('logs/ folder missing, to create it run ' +
                         '"grunt create-logs-folder" or "grunt server"');
