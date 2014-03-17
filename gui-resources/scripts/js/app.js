@@ -4,6 +4,8 @@ var requirejs = require('requirejs'),
     express   = require('express'),
     path      = require('path'),
     fs        = require('fs'),
+    qs        = require('qs'),
+    Logger    = require('./core/logger'),
     lodash    = require('lodash');
 
 var app = module.exports = express(),
@@ -15,19 +17,32 @@ paths.guiResources = paths.app + 'gui-resources';
 paths.themes = paths.guiThemes + '/themes';
 paths.node_modules = paths.app + 'node_modules';
 
-
+var config = JSON.parse(fs.readFileSync(path.join(__dirname, paths.app, 'config.json')));
 
 app.configure(function() {
-    app.set('port', process.env.PORT || 3000);
+    app.set('port', process.env.PORT || config.server.port);
     app.use(express['static'](path.join(__dirname, paths.guiResources)));
     app.use(express['static'](path.join(__dirname, paths.guiThemes)));
     app.use('/scripts/js/node_modules',
                 express['static'](path.join(__dirname, paths.node_modules)));
 });
 
+paths.logs = path.join(__dirname, paths.app, config.dir.log);
 
+// Create logger for the app
+fs.exists(paths.logs, function(exists) {
+    if (exists) {
+        var logFile = fs.createWriteStream(path.join(paths.logs, config.logging.app),
+                                            { 'flags': 'a' });
+        GLOBAL.liveblogLogger = new Logger('info', logFile);
+    } else {
+        console.log(paths.log + ' folder missing, to create it run ' +
+                        '"grunt create-logs-folder" or "grunt server"');
+    }
+});
 
 requirejs.config({
+    baseUrl: __dirname,
     config: {
         'createBlogView': {
             themesPath: path.join(__dirname,paths.themes)+'/'
@@ -55,8 +70,6 @@ requirejs.config({
     },
     nodeRequire: require
 });
-
-var config = JSON.parse(fs.readFileSync(path.join(__dirname, paths.app, 'config.json')));
 
 requirejs([
     'models/blog',
@@ -99,6 +112,10 @@ requirejs([
     };
 
     app.get('/', function(req, res) {
+
+        var queryString = qs.stringify(req.query);
+        liveblogLogger.info('App request query string' +
+            (queryString ? ': "' + queryString + '"' : ' is empty'));
 
         // override the default configuration parameters with
         // the GET query given ones if there are any.

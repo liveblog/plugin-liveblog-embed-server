@@ -7,10 +7,14 @@
         "port": 9000,
         "protocol": "http://"
     },
+    "logging": {
+        "app": "appjs.log"
+    },
     "dir": {
         "script": "gui-resources/scripts/js",
         "theme": "gui-themes",
-        "build": "build"
+        "build": "build",
+        "log": "logs"
     },
     "app": {
         "hostname": "localhost",
