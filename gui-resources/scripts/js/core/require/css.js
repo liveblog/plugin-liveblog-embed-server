@@ -1,4 +1,5 @@
 /*jshint -W030 */
+/*jshint unused: false*/
 'use strict';
 
 define(['core/utils', 'plugins/css', 'backbone'], function(utils, pluginCss, Backbone) {
@@ -144,11 +145,13 @@ define(['core/utils', 'plugins/css', 'backbone'], function(utils, pluginCss, Bac
         }
         if(utils.isClient) {
             var loaded = Backbone.$('link[href="'+req.toUrl(configCss.host + '/' + name+'.css')+'"]');
-            if(!loaded) {
-                (useImportLoad ? importLoad : linkLoad)(req.toUrl(name + '.css'), onload);
-            } else {
-                onload();
-            }
+            (useImportLoad ? importLoad : linkLoad)(req.toUrl(name + '.css'), onload);
+            // @TODO uncomment the lines below when main view is defined
+            //if(!loaded) {
+            //    (useImportLoad ? importLoad : linkLoad)(req.toUrl(name + '.css'), onload);
+            //} else {
+            //    onload();
+            //}
         }
     };
 
