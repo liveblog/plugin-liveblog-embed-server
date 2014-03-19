@@ -6,4 +6,4 @@ define([
     'plugins/social-share',
     'tmpl!theme/container',
     'tmpl!theme/item/base'
-], function(){});
+], function() {});

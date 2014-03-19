@@ -19,7 +19,7 @@ define([
         plugins['social-share'] = function(config) {
 
             utils.dispatcher.on('initialize.post-view', function(view) {
-                view.clientEvents({ 'click .sf-share': 'share' });
+                view.clientEvents({'click .sf-share': 'share'});
 
                 view.share = function(e) {
                     e.preventDefault();
@@ -34,7 +34,7 @@ define([
 
                     var socialShareBox = view.$('[data-gimme="post.share-social"]');
                     var postShare = view.$('[data-gimme^="post.share"]');
-                    if(socialShareBox.css('visibility') === 'hidden') {
+                    if (socialShareBox.css('visibility') === 'hidden') {
                         visibilityToggle(postShare, false);
                     }
                     visibilityToggle(socialShareBox);
@@ -44,7 +44,7 @@ define([
             // Construct the window containing the social sharing links
             Backbone.$.socialShareWindow = function(url, height, width) {
                 var options = 'resizable, height=' + height + ', width=' + width;
-                var socialShareWindow = window.open( url, '', options);
+                var socialShareWindow = window.open(url, '', options);
                 socialShareWindow.focus();
                 return false;
             };
@@ -85,7 +85,7 @@ define([
             };
 
             // Return the parameters for the social sharing template
-            var socialParams = function(view){
+            var socialParams = function(view) {
 
                 var params = {},
                     urlParams = socialUrlParams(view);

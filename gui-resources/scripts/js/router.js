@@ -12,7 +12,7 @@ define([
             // TODO: Throw error if blog id missing
             if (liveblog.id) {
                 var blogView,
-                    blog = new Blog({ id: liveblog.id });
+                    blog = new Blog({id: liveblog.id});
 
                 var renderBlog = function(view) {
                     blogView = view;
@@ -20,8 +20,8 @@ define([
                     blog.get('publishedPosts').fetch();
                 };
 
-                blog.fetch({ success: function(){
-                    createBlogView(blog, renderBlog, { el: '#here' });
+                blog.fetch({success: function() {
+                    createBlogView(blog, renderBlog, {el: '#here'});
                 }});
             }
         }

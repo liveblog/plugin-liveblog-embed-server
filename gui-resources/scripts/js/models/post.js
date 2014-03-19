@@ -14,7 +14,7 @@ define([
                 data.Meta = JSON.parse(data.Meta);
 
                 if (data.AuthorName) {
-                    data.Meta.Creator = { 'Name': data.AuthorName };
+                    data.Meta.Creator = {'Name': data.AuthorName};
                 }
 
                 if (data.Meta.annotation) {
@@ -22,15 +22,13 @@ define([
                 }
             }
 
-
             if (data.Author.Source.Type.Key === 'smsblog') {
                 data.item = 'source/sms';
             } else {
                 if (data.Author.Source.IsModifiable ===  'True' ||
                         data.Author.Source.Name === 'internal') {
                     data.item = 'posttype/' + data.Type.Key;
-                }
-                else if (data.Type) {
+                } else if (data.Type) {
                     data.item = 'source/' + data.Author.Source.Name;
                 }
             }

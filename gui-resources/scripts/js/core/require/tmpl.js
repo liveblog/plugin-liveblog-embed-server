@@ -29,11 +29,11 @@ define(['dust', 'core/require/i18n-parse'], function(dust, i18nParse) {
              * If dataType is requested as text then it fails due to some cdm issues with ie
              * so request it as json and in error method if is a json parsing issue we are good to go.
              */
-            require(['jquery', 'core/jquery/xdomainrequest'], function($){
+            require(['jquery', 'core/jquery/xdomainrequest'], function($) {
                 $.ajax({
                     //dataType: 'json',
                     url: url,
-                    error: function(xhr, textStatus, errorThrown){
+                    error: function(xhr, textStatus, errorThrown) {
                         if(textStatus === 'parsererror'){
                             callback(xhr.responseText);
                         }
@@ -63,7 +63,7 @@ define(['dust', 'core/require/i18n-parse'], function(dust, i18nParse) {
                 text = i18nParse(text);
 				//Do dust transform.
                 try {
-                    text = 'define(["dust"],function(dust){'+dust.compile(text, name)+' return {render: function(context, callback) {return dust.render("'+name+'", context, callback)}}})';
+                    text = 'define(["dust"],function(dust){' + dust.compile(text, name) + ' return {render: function(context, callback) {return dust.render("' + name + '", context, callback)}}})';
                 }
                 catch (err) {
                     err.message = 'In ' + path + ', ' + err.message;

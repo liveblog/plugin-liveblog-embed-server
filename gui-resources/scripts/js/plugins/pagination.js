@@ -3,9 +3,9 @@
 define([
     'plugins',
     'core/utils'
-], function(plugins, utils){
+], function(plugins, utils) {
     plugins.pagination = function(config) {
-        utils.dispatcher.once('initialize.posts-view', function(view){
+        utils.dispatcher.once('initialize.posts-view', function(view) {
             if (liveblog.limit) {
                 view.collection.syncParams.data.limit = parseInt(liveblog.limit, 10);
             } else {

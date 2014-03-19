@@ -1,3 +1,5 @@
+'use strict';
+
 define([
 	'tmpl!theme/container',
 	'tmpl!theme/item/base',
@@ -6,8 +8,8 @@ define([
 	'plugins/permanent-link',
 	'plugins/user-comments',
 	'css!theme/liveblog'
-], function(){
+], function() {
 	return {
 		plugins: [ 'scroll', 'pagination' ]
-	}
+	};
 });

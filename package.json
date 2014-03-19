@@ -42,7 +42,8 @@
     "grunt-docco": "~0.3.2",
     "grunt-express-server": "~0.4.13",
     "grunt-open": "~0.2.3",
-    "grunt-contrib-less": "~0.10.0"
+    "grunt-contrib-less": "~0.10.0",
+    "grunt-jscs-checker": "~0.4.0"
   },
   "optionalDependencies": {
     "grunt-forever": "^0.4.4",
@@ -50,6 +51,6 @@
   },
   "main": "Gruntfile.js",
   "scripts": {
-    "test": "./travis_build.sh"
+    "test": "grunt ci:travis"
   }
 }

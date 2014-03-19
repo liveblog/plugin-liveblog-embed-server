@@ -1,6 +1,6 @@
 'use strict';
 
-define([], function(){
+define([], function() {
     var helpers = {};
 
     helpers.trimTag = function(tag, myString) {
@@ -15,8 +15,8 @@ define([], function(){
                 if (myString.indexOf(tag) === 0) {
                     myString = myString.substr(tlen, slen);
                 }
-                if (myString.substr(slen-tlen, slen) === tag) {
-                    myString = myString.substr(0, slen-tlen);
+                if (myString.substr(slen - tlen, slen) === tag) {
+                    myString = myString.substr(0, slen - tlen);
                 }
                 return myString;
             };

@@ -11,9 +11,8 @@ var Logger = module.exports = function Logger(level, stream) {
     // For development stream to provided file
     if (stream && process.env.NODE_ENV === 'development') {
         return new Log(level, stream);
-    }
     // For 'production' & 'forever' stream to stdout
-    else if (process.env.NODE_ENV === 'production' ||
+    } else if (process.env.NODE_ENV === 'production' ||
         process.env.NODE_ENV === 'forever') {
         return new Log(level);
     }

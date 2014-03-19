@@ -27,16 +27,16 @@ define([
             this.listenTo(this.collection, 'change', this.render);
         },
 
-        beforeRender: function(manage){
+        beforeRender: function(manage) {
             this.collection.forEach(this.renderPost, this);
         },
 
-        afterRender: function(){
-            utils.dispatcher.trigger('after-render.posts-view',this);
+        afterRender: function() {
+            utils.dispatcher.trigger('after-render.posts-view', this);
         },
 
-        renderPost: function(post){
-            var postView = new PostView({ model: post });
+        renderPost: function(post) {
+            var postView = new PostView({model: post});
             this.insertView('ul', postView);
         }
     });

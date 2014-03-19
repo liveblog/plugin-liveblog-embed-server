@@ -4,7 +4,7 @@
 // If no showOrHide param is provided, just toggle the current state.
 'use strict';
 
-define(function(){
+define(function() {
 
     var visibilityToggle = function(el, showOrHide) {
         var vsblty = '';

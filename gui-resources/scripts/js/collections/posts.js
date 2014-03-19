@@ -26,7 +26,7 @@ define([
 
         pollInterval: 10000,
 
-        url: function(){
+        url: function() {
             return liveblog.host + '/resources/LiveDesk/Blog/' + this.blogId + '/Post/Published/';
         },
 

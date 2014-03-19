@@ -1,6 +1,6 @@
 'use strict';
 
-define(['backboneCustom', 'core/gettext'], function(Backbone, gt){
+define(['backboneCustom', 'core/gettext'], function(Backbone, gt) {
 
     var buildMap = {};
         // apiUrl = liveblog.frontendServer,
@@ -23,14 +23,14 @@ define(['backboneCustom', 'core/gettext'], function(Backbone, gt){
                     dataType: 'json',
                     //timeout : 2500,
                     processTime: 400,
-                    tryCount : 0,
-                    retryLimit : 2,
-                    success: function(data){
+                    tryCount: 0,
+                    retryLimit: 2,
+                    success: function(data) {
                         if (config.isBuild) {
                             buildMap[name] = data;
                             onLoad(data);
                         } else {
-                            gt.loadMessages(data.livedesk_embed );
+                            gt.loadMessages(data.livedesk_embed);
                             onLoad(data);
                         }
                         onLoad(data);
@@ -39,7 +39,7 @@ define(['backboneCustom', 'core/gettext'], function(Backbone, gt){
                     // call errorTimout from the error handler to request again ajax if timeout
                     // if is not a timeout status then maybe a redirect issue is in ie or other browser
                     // so in this case call the urlCached of the internationalization
-                    error: function(xhr, textStatus, errorThrown){
+                    error: function(xhr, textStatus, errorThrown) {
                         if(!this.errorTimeout(xhr, textStatus, errorThrown)) {
 
                             // provide url option in the form of the urlCached
@@ -49,7 +49,7 @@ define(['backboneCustom', 'core/gettext'], function(Backbone, gt){
                             Backbone.ajax(options);
                         }
                     },
-                    errorTimeout : function(xhr, textStatus, errorThrown ) {
+                    errorTimeout: function(xhr, textStatus, errorThrown) {
                         if (textStatus === 'timeout') {
                             this.tryCount++;
                             if (this.tryCount <= this.retryLimit) {
@@ -57,7 +57,7 @@ define(['backboneCustom', 'core/gettext'], function(Backbone, gt){
                                 Backbone.ajax(this);
                                 return true;
                             }
-                            if( console ) {
+                            if (console) {
                                 console.log('We have tried ' + this.retryLimit + ' times and it is still not working. We give in. Sorry.');
                             }
                             return false;
@@ -66,10 +66,10 @@ define(['backboneCustom', 'core/gettext'], function(Backbone, gt){
                 };
             Backbone.ajax(options);
         },
-        write: function(pluginName, moduleName, write){
+        write: function(pluginName, moduleName, write) {
             if(moduleName in buildMap){
                 var content = buildMap[moduleName];
-                write('define("'+ pluginName +'!'+ moduleName +'", function(){ return '+ content +';});\n');
+                write('define("' + pluginName + '!' + moduleName + '", function(){ return ' + content + ';});\n');
             }
         }
 

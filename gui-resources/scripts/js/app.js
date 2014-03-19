@@ -34,7 +34,7 @@ paths.logs = path.join(__dirname, paths.app, config.dir.log);
 fs.exists(paths.logs, function(exists) {
     if (exists) {
         var logFile = fs.createWriteStream(path.join(paths.logs, config.logging.app),
-                                            { 'flags': 'a' });
+                                            {'flags': 'a'});
         GLOBAL.liveblogLogger = new Logger('info', logFile);
     } else {
         console.log(paths.log + ' folder missing, to create it run ' +
@@ -46,7 +46,7 @@ requirejs.config({
     baseUrl: __dirname,
     config: {
         'createBlogView': {
-            themesPath: path.join(__dirname,paths.themes)+'/'
+            themesPath: path.join(__dirname, paths.themes) + '/'
         },
         'css': {
             siteRoot: paths.guiThemes
@@ -78,12 +78,12 @@ requirejs([
     'tmpl!index'
 ], function(Blog, createBlogView) {
 
-    var configLiveblog = function(config){
-        if(config.host) {
+    var configLiveblog = function(config) {
+        if (config.host) {
             var authority,
                 host = config.host,
                 hostParts = host.toLowerCase().match(/((http:|https:)?\/\/)([^/?#]*)/);
-            if(hostParts) {
+            if (hostParts) {
                 if(hostParts[1] !== '//') {
                     config.protocol = hostParts[1];
                 }
@@ -91,7 +91,7 @@ requirejs([
             } else {
                 authority = host;
             }
-            if( authority.indexOf(':') !== -1 ) {
+            if (authority.indexOf(':') !== -1) {
                 var authorityParts = authority.split(':');
                 config.hostname = authorityParts[0];
                 config.port = authorityParts[1];
@@ -101,11 +101,11 @@ requirejs([
             }
 
         }
-        config.host = config.protocol + config.hostname + (config.port? (':' + config.port) : '');
+        config.host = config.protocol + config.hostname + (config.port ? (':' + config.port) : '');
         requirejs.config({
             config: {
                     css: {
-                        host: '//' + config.hostname + (config.port? (':' + config.port) : '')+'/content/lib/livedesk-embed'
+                        host: '//' + config.hostname + (config.port ? (':' + config.port) : '') + '/content/lib/livedesk-embed'
                     }
                 }
             });
@@ -127,30 +127,30 @@ requirejs([
         requirejs(['i18n!livedesk_embed'], function() {
 
             var blogView,
-                blog = new Blog({ id: liveblog.id });
+                blog = new Blog({id: liveblog.id});
 
             var renderBlog = function() {
                 var html = blogView.render().$el.html();
                 var ctx = {
                     'liveblog': liveblog,
                     'content': function(chunk) {
-                        return chunk.map(function(chunk){
+                        return chunk.map(function(chunk) {
                             chunk.end(html);
                         });
                     }
                 };
 
-                dust.render('index', ctx, function(err,out){
+                dust.render('index', ctx, function(err, out) {
                     res.send(out);
                 });
             };
 
             var fetchPosts = function(view) {
                 blogView = view;
-                blogView.model.get('publishedPosts').fetch({ success: renderBlog });
+                blogView.model.get('publishedPosts').fetch({success: renderBlog});
             };
 
-            blog.fetch({ success: function() {
+            blog.fetch({success: function() {
                 createBlogView(blog, fetchPosts);
             }});
         });

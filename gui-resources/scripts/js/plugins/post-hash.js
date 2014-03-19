@@ -38,7 +38,7 @@ define([
             };
         });
 
-        utils.dispatcher.on('initialize.posts-view', function(view){
+        utils.dispatcher.on('initialize.posts-view', function(view) {
             // Find if the liveblog was accessed with a hash identifier
             //   then use it as a parameter on the collection for the first request.
             var hashIndex = href.indexOf(hash + '=');

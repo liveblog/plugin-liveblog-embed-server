@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     var config;
     try {
         config = grunt.file.readJSON('./config.json');
-    } catch(e){
+    } catch (e){
         config = grunt.file.readJSON('./config.sample.json');
     }
     config.pkg = grunt.file.readJSON('./package.json');
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
     // Install the jshint pre-commit hook
     grunt.registerTask('install-hook', function () {
         var fs = require('fs');
-        if(!fs.existsSync('.git/hooks/pre-commit')) {
+        if (!fs.existsSync('.git/hooks/pre-commit')) {
             try {
                 // my precommit hook is inside the repo as /hooks/pre-commit
                 // copy the hook file to the correct place in the .git directory
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
 
                 // chmod the file to readable and executable by all
                 fs.chmodSync('.git/hooks/pre-commit', '755');
-            } catch(e) {
+            } catch (e) {
                 console.log(e.message);
             }
         }
@@ -59,7 +59,7 @@ module.exports = function(grunt) {
         grunt.file.mkdir('logs');
     });
 
-    grunt.registerTask('server', 'Start the liveblog embed server', function(target, action, server){
+    grunt.registerTask('server', 'Start the liveblog embed server', function(target, action, server) {
         // default option configuration.
         grunt.option.init({
             target: 'dev',
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
         action = action || grunt.option('action');
         server = server || grunt.option('server');
 
-        switch(target) {
+        switch (target) {
             case 'dev':
                 grunt.task.run(['env:dev', 'express:dev', 'open:dev', 'watch:express']);
                 break;
@@ -85,13 +85,13 @@ module.exports = function(grunt) {
                 grunt.task.run(['env:prod', 'express:prod']);
                 break;
             case 'forever':
-                grunt.task.run(['env:forever', 'forever:'+server+':'+action]);
+                grunt.task.run(['env:forever', 'forever:' + server + ':' + action]);
                 break;
         }
     });
 
-    grunt.registerTask('hint', ['jshint:all']);
     grunt.registerTask('build', ['jshint:all', 'less:all', 'requirejs']);
-
+    grunt.registerTask('hint', ['jshint:all', 'jscs:all']);
+    grunt.registerTask('ci:travis', ['hint']);
     grunt.registerTask('default', ['install-hook', 'server']);
 };

@@ -1,5 +1,5 @@
 'use strict';
-define(['dust/core', 'core/utils/twitter'], function(dust, twitter){
+define(['dust/core', 'core/utils/twitter'], function(dust, twitter) {
 
     var getAnnotation = function(idx) {
         return function(content) {
@@ -7,7 +7,7 @@ define(['dust/core', 'core/utils/twitter'], function(dust, twitter){
                 content = JSON.parse(content);
                 return content.annotation[idx];
             }
-            catch(e){}
+            catch (e){}
             return '';
         };
     };
