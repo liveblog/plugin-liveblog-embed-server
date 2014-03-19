@@ -24,23 +24,6 @@ module.exports = function(grunt) {
         init: true
     });
 
-    // Install the jshint pre-commit hook
-    grunt.registerTask('install-hook', function () {
-        var fs = require('fs');
-        if (!fs.existsSync('.git/hooks/pre-commit')) {
-            try {
-                // my precommit hook is inside the repo as /hooks/pre-commit
-                // copy the hook file to the correct place in the .git directory
-                grunt.file.copy('hooks/pre-commit', '.git/hooks/pre-commit');
-
-                // chmod the file to readable and executable by all
-                fs.chmodSync('.git/hooks/pre-commit', '755');
-            } catch (e) {
-                console.log(e.message);
-            }
-        }
-    });
-
     // Update the configuration
     grunt.registerTask('update-config', function () {
         // read the sample config
@@ -93,5 +76,5 @@ module.exports = function(grunt) {
     grunt.registerTask('build', ['jshint:all', 'less:all', 'requirejs']);
     grunt.registerTask('hint', ['jshint:all', 'jscs:all']);
     grunt.registerTask('ci:travis', ['hint']);
-    grunt.registerTask('default', ['install-hook', 'server']);
+    grunt.registerTask('default', ['githooks', 'server']);
 };
