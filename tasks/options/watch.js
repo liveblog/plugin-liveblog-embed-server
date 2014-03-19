@@ -10,17 +10,17 @@ module.exports = {
             spawn: false
         }
     },
-    'hint-own': {
+    'check-own': {
         files: ['<%= jshint.own.src %>'],
-        tasks: ['jshint:own']
+        tasks: ['jshint:own', 'jscs:own']
     },
-    'hint-libs': {
+    'check-libs': {
         files: ['<%= jshint.libs.src %>'],
-        tasks: ['jshint:libs']
+        tasks: ['jshint:libs', 'jscs:libs']
     },
-    'hint-all': {
+    'check-all': {
         files: ['<%= jshint.all.src %>'],
-        tasks: ['jshint:all']
+        tasks: ['jshint:all', 'jscs:all']
     },
     less: {
         files: ['<%= dir.theme %>/themes/**/*.less'],

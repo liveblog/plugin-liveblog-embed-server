@@ -73,8 +73,8 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('build', ['jshint:all', 'less:all', 'requirejs']);
     grunt.registerTask('hint', ['jshint:all', 'jscs:all']);
+    grunt.registerTask('build', ['hint', 'less:all', 'requirejs']);
     grunt.registerTask('ci:travis', ['hint']);
     grunt.registerTask('default', ['githooks', 'server']);
 };
