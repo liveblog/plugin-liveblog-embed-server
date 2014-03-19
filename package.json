@@ -43,7 +43,8 @@
         "grunt-express-server": "^0.4.13",
         "grunt-open": "^0.2.3",
         "grunt-contrib-less": "^0.10.0",
-        "grunt-jscs-checker": "^0.4.0"
+        "grunt-jscs-checker": "^0.4.0",
+        "grunt-githooks": "^0.3.1"
     },
     "optionalDependencies": {
         "grunt-forever": "^0.4.4",
