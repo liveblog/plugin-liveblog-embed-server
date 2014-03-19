@@ -21,5 +21,9 @@ module.exports = {
     'hint-all': {
         files: ['<%= jshint.all.src %>'],
         tasks: ['jshint:all']
+    },
+    less: {
+        files: ['<%= dir.theme %>/themes/**/*.less'],
+        tasks: ['less:all']
     }
 };

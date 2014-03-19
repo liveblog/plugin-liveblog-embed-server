@@ -91,7 +91,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('hint', ['jshint:all']);
-    grunt.registerTask('build', ['jshint:all','requirejs']);
+    grunt.registerTask('build', ['jshint:all', 'less:all', 'requirejs']);
 
     grunt.registerTask('default', ['install-hook', 'server']);
 };
