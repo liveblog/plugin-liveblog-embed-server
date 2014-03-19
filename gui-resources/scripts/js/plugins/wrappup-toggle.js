@@ -18,7 +18,7 @@ define([
         //once posts-view is rendered
         utils.dispatcher.once('initialize.posts-view', function(view) {
             //add the on click handler for post.wrapup
-            view.clientEvents({ 'click [data-gimme="post.wrapup"]': 'wrapupToggle' });
+            view.clientEvents({'click [data-gimme="post.wrapup"]': 'wrapupToggle'});
             view.wrapupToggle = function(evt) {
                 //make sure we get the closest post-wrapup to the actual click location
                 var item = view.$(evt.target).closest('[data-gimme="post.wrapup"]');

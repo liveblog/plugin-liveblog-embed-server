@@ -14,7 +14,7 @@ define([
         socialShareBoxAdded: false,
 
         initialize: function() {
-            utils.dispatcher.trigger('initialize.post-view',this);
+            utils.dispatcher.trigger('initialize.post-view', this);
             this.setTemplate(this._postType());
         },
 
@@ -27,11 +27,11 @@ define([
             return data;
         },
 
-        beforeRender: function(){
+        beforeRender: function() {
             utils.dispatcher.trigger('before-render.post-view', this);
         },
 
-        afterRender: function(){
+        afterRender: function() {
             utils.dispatcher.trigger('after-render.post-view', this);
         },
 
@@ -43,15 +43,12 @@ define([
                 post.get('Author').Source.Name === 'internal') {
                 if (post.get('Type').Key === 'advertisement') {
                     item = 'item/posttype/infomercial';
-                }
-                else {
+                } else {
                     item = 'item/posttype/' + post.get('Type').Key;
                 }
-            }
-            else if (post.get('Author').Source.Name === 'google') {
+            } else if (post.get('Author').Source.Name === 'google') {
                 item = 'item/source/google/' + post.get('Meta').type;
-            }
-            else {
+            } else {
                 if (post.get('Author').Source.Name === 'advertisement') {
                     item = 'item/source/infomercial';
                 } else {

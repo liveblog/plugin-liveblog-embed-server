@@ -4,7 +4,7 @@
 define([
     'backbone',
     'underscore'
-], function(Backbone, _){
+], function(Backbone, _) {
 
     Backbone.defaultSync = Backbone.sync;
 
@@ -41,7 +41,7 @@ define([
 
     Backbone.defaultAjax = Backbone.ajax;
 
-    Backbone.ajax = function(options){
+    Backbone.ajax = function(options) {
         if (typeof process !== 'undefined' &&
                 process.versions &&
                 !!process.versions.node) {
@@ -60,7 +60,7 @@ define([
 
         // Set the query string with the options.data params
         if (options.data) {
-            options.url += ((options.url.indexOf('?') === -1)? '?': '') + qs.stringify(options.data);
+            options.url += ((options.url.indexOf('?') === -1) ? '?': '') + qs.stringify(options.data);
             delete options.data;
         }
 
@@ -74,7 +74,7 @@ define([
                 if (options.success) {
                     return options.success(data);
                 }
-            } else if(options.error) {
+            } else if (options.error) {
                 return options.error(response);
             }
         });

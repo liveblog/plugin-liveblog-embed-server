@@ -12,13 +12,13 @@ define([
             utils.dispatcher.trigger('initialize.blog-view', this);
             this.setTemplate('container');
             var collection = this.model.get('publishedPosts');
-            this.insertView('.liveblog-postlist', new PostsView({ collection: collection }));
+            this.insertView('.liveblog-postlist', new PostsView({collection: collection}));
         },
-        afterRender: function(){
+        afterRender: function() {
 
             utils.dispatcher.trigger('after-render.blog-view', this);
         },
-        beforeRender: function(){
+        beforeRender: function() {
 
             utils.dispatcher.trigger('before-render.blog-view', this);
         },

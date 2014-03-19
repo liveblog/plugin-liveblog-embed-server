@@ -2,7 +2,7 @@
 // due to unexpected member on line 73,75 wich are ok
 'use strict';
 
-define(function(){
+define(function() {
     /*
         json_parse.js
         2011-03-06
@@ -143,7 +143,7 @@ define(function(){
                         next();
                     }
                 }
-                number = +string;
+                number = + string;
                 if (!isFinite(number)) {
                     error('Bad number');
                 } else {
@@ -189,7 +189,7 @@ define(function(){
                         }
                     }
                 /*jshint quotmark:false */
-                } else if(ch === "'") {
+                } else if (ch === "'") {
                     while (next()) {
                         if (ch === "'") {
                             next();
@@ -290,8 +290,7 @@ define(function(){
                             return string;
                         } else if (ch === '}') {
                             return string;
-                        }
-                        else if (ch === '\\') {
+                        } else if (ch === '\\') {
                             next();
                             if (ch === 'u') {
                                 uffff = 0;
@@ -397,7 +396,7 @@ define(function(){
                     while (ch) {
                         key = keys();
                         white();
-                        if(ch === ':') {
+                        if (ch === ':') {
                             next(':');
                             if (injection.hasOwnProperty.call(injection, key)) {
                                 error('Duplicate key "' + key + '"');
@@ -413,9 +412,8 @@ define(function(){
                         } else {
                             if(ch === '}') {
                                 next('}');
-                                return '{'+key+'}';
-                            }
-                            else {
+                                return '{' + key + '}';
+                            } else {
                                 error("Bad object");
                             }
                         }

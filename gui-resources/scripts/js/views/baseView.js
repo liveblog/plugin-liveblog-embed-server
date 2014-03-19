@@ -5,7 +5,7 @@ define([
     'dust',
     'core/utils',
     'backbone.layoutmanager'
-], function(Backbone, dust, utils){
+], function(Backbone, dust, utils) {
     return Backbone.View.extend({
         // Treat all Backbone.View's automatically as
         // (backbone.layoutManager) Layouts.
@@ -37,7 +37,7 @@ define([
             // (callback function)
             var done = this.async();
 
-            dust.render(template, context, function(err, out){
+            dust.render(template, context, function(err, out) {
                 if (err) {
                     // TODO: What do we want to do with the error?
                     throw err;

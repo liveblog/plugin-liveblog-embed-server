@@ -78,7 +78,7 @@ define(['dust'], function(dust) {
                 //text = i18n_parse(text);
                 //Do dust transform.
                 try {
-                    text = 'define(["dust"],function(dust){'+dust.compile(text, name)+' return {render: function(context, callback) {return dust.render("'+name+'", context, callback)}}})';
+                    text = 'define(["dust"],function(dust){' + dust.compile(text, name) + ' return {render: function(context, callback) {return dust.render("' + name + '", context, callback)}}})';
                 }
                 catch (err) {
                     err.message = 'In ' + path + ', ' + err.message;

@@ -16,12 +16,12 @@ define([
 
         pollInterval: 10000,
 
-        urlRoot: function(){
+        urlRoot: function() {
             return liveblog.host + '/resources/LiveDesk/Blog/';
         },
 
         initialize: function() {
-            this.set('publishedPosts', new Posts([], { blogId: this.id }));
+            this.set('publishedPosts', new Posts([], {blogId: this.id}));
             if (utils.isClient) {
                 this.startPolling();
             }

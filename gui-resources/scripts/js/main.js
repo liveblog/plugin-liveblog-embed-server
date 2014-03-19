@@ -6,7 +6,7 @@ require.config({
             themesPath:             '../../themes/'
         },
         css: {
-            host: '//' + liveblog.hostname + (liveblog.port? (':' + liveblog.port) : '')+'/content/lib/livedesk-embed'
+            host: '//' + liveblog.hostname + (liveblog.port ? (':' + liveblog.port) : '') + '/content/lib/livedesk-embed'
         }
     },
     paths: {
@@ -51,10 +51,10 @@ require([
 ], function($, Backbone) {
     $(function() {
         // Router can't be required before liveblog global variable is defined
-        require(['router', 'i18n!livedesk_embed'], function(Router){
+        require(['router', 'i18n!livedesk_embed'], function(Router) {
             /*jshint unused: false */
             var router = new Router();
-            Backbone.history.start({ pushState: true });
+            Backbone.history.start({pushState: true});
         });
     });
 });

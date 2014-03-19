@@ -2,7 +2,7 @@
 define(['dust/core'], function(dust) {
     dust.themed = function(name) {
         // Check fist if name contains a theme base reference.
-        if(name.substr(0,10) === 'themeBase/') {
+        if(name.substr(0, 10) === 'themeBase/') {
             // if so remove it.
             name = name.substr(10);
         }
