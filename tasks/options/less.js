@@ -10,7 +10,9 @@ module.exports = {
         expand: true,
         cwd: '<%= dir.theme %>/themes/',
         src: [
-            '**/*.less'
+            '**/*.less',
+            '!zeit/**/*.less',
+            '!zeit_solo/**/*.less'
         ],
         dest: '<%= dir.theme %>/themes/',
         ext: '.css',
