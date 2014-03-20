@@ -53,7 +53,7 @@ requirejs.config({
         }
     },
     paths: {
-        backboneCustom:         'core/backbone/backboneCustom',
+        'backbone-custom':         'core/backbone/backbone-custom',
         index:                  '../../index',
         dust:                   'core/dust',
         tmpl:                   'core/require/tmpl',

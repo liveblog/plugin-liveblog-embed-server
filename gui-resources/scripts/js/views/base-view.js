@@ -2,7 +2,7 @@
 
 define([
     'underscore',
-    'backboneCustom',
+    'backbone-custom',
     'dust',
     'core/utils',
     'backbone.layoutmanager'

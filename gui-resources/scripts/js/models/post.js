@@ -2,7 +2,7 @@
 'use strict';
 
 define([
-    'models/baseModel',
+    'models/base-model',
     'core/utils/helpers',
     'moment'
 ], function(BaseModel, helpers, moment) {

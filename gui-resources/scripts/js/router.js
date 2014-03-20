@@ -1,6 +1,6 @@
 'use strict';
 define([
-    'backboneCustom',
+    'backbone-custom',
     'models/blog',
     'createBlogView'
 ], function(Backbone, Blog, createBlogView) {

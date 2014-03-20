@@ -2,8 +2,8 @@
 
 define([
     'underscore',
-    'backboneCustom',
-    'core/backbone/modelCollectionCommon',
+    'backbone-custom',
+    'core/backbone/model-collection-common',
     'core/poller'
 ], function(_, Backbone, modelCollectionCommon, poller) {
 

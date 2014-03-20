@@ -1,7 +1,7 @@
 'use strict';
 
 define([
-    'collections/baseCollection',
+    'collections/base-collection',
     'models/post',
     'core/utils'
 ], function(BaseCollection, Post, utils) {
