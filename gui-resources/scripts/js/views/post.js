@@ -2,7 +2,7 @@
 
 define([
     'core/utils',
-    'views/baseView',
+    'views/base-view',
     'views/post-templates'
 ], function(utils, BaseView) {
 
@@ -15,12 +15,12 @@ define([
 
         initialize: function() {
             utils.dispatcher.trigger('initialize.post-view', this);
-            this.setTemplate(this._postType());
+            this.setTemplate(this.itemName());
         },
 
         serialize: function() {
             var data = this.model.toJSON();
-            data.baseItem = this.themedTemplate('item/base');
+            data.baseItem = this.themedTemplate('themeBase/item/base');
             if (this.permalink && typeof this.permalink === 'function') {
                 data.permalink = this.permalink();
             }
@@ -35,7 +35,7 @@ define([
             utils.dispatcher.trigger('after-render.post-view', this);
         },
 
-        _postType: function() {
+        itemName: function() {
             var item,
                 post = this.model;
 
@@ -55,7 +55,8 @@ define([
                     item = 'item/source/' + post.get('Author').Source.Name;
                 }
             }
-            return item;
+            this.shortItemName = item;
+            return 'themeBase/' + item;
         }
     });
 });

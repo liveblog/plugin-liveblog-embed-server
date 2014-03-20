@@ -1,6 +1,6 @@
 'use strict';
 define([
-    'views/baseView',
+    'views/base-view',
     'views/posts',
     'core/utils',
     'core/utils/displayToggle',
@@ -12,7 +12,7 @@ define([
 
         initialize: function() {
             utils.dispatcher.trigger('initialize.blog-view', this);
-            this.setTemplate('container');
+            this.setTemplate('themeBase/container');
             var collection = this.model.get('publishedPosts');
             //When the model changes, update the view
             this.listenTo(this.model, 'change', this.update);

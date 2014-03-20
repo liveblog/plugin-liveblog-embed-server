@@ -1,7 +1,7 @@
 'use strict';
 define([
     'core/utils',
-    'views/baseView',
+    'views/base-view',
     'views/post',
     'tmpl!themeBase/posts-list'
 ], function(utils, BaseView, PostView) {
@@ -20,7 +20,7 @@ define([
         },
 
         initialize: function() {
-            this.setTemplate('posts-list');
+            this.setTemplate('themeBase/posts-list');
             utils.dispatcher.trigger('initialize.posts-view', this);
             this.listenTo(this.collection, 'reset', this.render);
             this.listenTo(this.collection, 'sync', this.render);
