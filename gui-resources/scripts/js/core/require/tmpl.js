@@ -29,7 +29,7 @@ define(['dust', 'core/require/i18n-parse'], function(dust, i18nParse) {
              * If dataType is requested as text then it fails due to some cdm issues with ie
              * so request it as json and in error method if is a json parsing issue we are good to go.
              */
-            require(['jquery', 'core/jquery/xdomainrequest'], function($) {
+            require(['core/jquery/xdomainrequest'], function($) {
                 $.ajax({
                     //dataType: 'json',
                     url: url,
