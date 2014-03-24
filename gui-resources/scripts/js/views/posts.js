@@ -20,8 +20,9 @@ define([
         },
 
         initialize: function() {
-            this.setTemplate('themeBase/posts-list');
             utils.dispatcher.trigger('initialize.posts-view', this);
+            this.collection.fetch();
+            this.setTemplate('themeBase/posts-list');
             this.listenTo(this.collection, 'reset', this.render);
             this.listenTo(this.collection, 'sync', this.render);
             this.listenTo(this.collection, 'change', this.render);

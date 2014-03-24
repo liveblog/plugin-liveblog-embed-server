@@ -22,9 +22,9 @@ define([
 
         initialize: function() {
             this.set('publishedPosts', new Posts([], {blogId: this.id}));
-            if (utils.isClient) {
-                this.startPolling();
-            }
+            // if (utils.isClient) {
+            //     this.startPolling();
+            // }
         },
 
         parse: function(data) {

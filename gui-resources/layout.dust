@@ -5,7 +5,8 @@
     <title>Liveblog</title>
   </head>
   <body>
-    <div id="here">{content}</div>
+    <div id="liveblog-embed-code"></div>
+    <div id="liveblog-layout"></div>
     <script src="//localhost:35729/livereload.js"></script>
   </body>
 </html>

@@ -2,7 +2,7 @@
 require.config({
     baseUrl: '/scripts/js/',
     config: {
-        'createBlogView': {
+        'load-theme': {
             themesPath:             '../../themes/'
         },
         css: {

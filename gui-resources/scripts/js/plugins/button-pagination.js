@@ -9,8 +9,9 @@ define([
     'tmpl!themeBase/plugins/after-button-pagination',
     'tmpl!themeBase/plugins/before-button-pagination'
 ], function(Backbone, plugins, paginationPlugin, dust, utils) {
-
+    delete plugins.pagination;
     plugins['button-pagination'] = function(config) {
+        paginationPlugin(config);
         var propName = 'display',
             propValue = {'show': 'block', 'hide': 'none'};
 

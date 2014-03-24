@@ -1,9 +1,10 @@
 'use strict';
 define([
     'backbone-custom',
+    'views/blog',
     'models/blog',
-    'createBlogView'
-], function(Backbone, Blog, createBlogView) {
+    'load-theme'
+], function(Backbone, BlogView, Blog, loadTheme) {
     return Backbone.Router.extend({
         'routes': {
             '*path': 'default'
@@ -11,17 +12,12 @@ define([
         'default': function(path) {
             // TODO: Throw error if blog id missing
             if (liveblog.id) {
-                var blogView,
-                    blog = new Blog({id: liveblog.id});
-
-                var renderBlog = function(view) {
-                    blogView = view;
-                    blogView.render();
-                    blog.get('publishedPosts').fetch();
-                };
-
+                var blog = new Blog({id: liveblog.id});
                 blog.fetch({success: function() {
-                    createBlogView(blog, renderBlog, {el: '#here'});
+                    loadTheme(blog.get('EmbedConfig'), function() {
+                        var blogView = new BlogView({el: '#here', model: blog});
+                        blogView.render();
+                    });
                 }});
             }
         }

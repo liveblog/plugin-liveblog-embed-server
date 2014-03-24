@@ -64,7 +64,6 @@
         {/main}
     </div>
 {/mainContainer}
-<script data-main="scripts/js/main" src="scripts/js/node_modules/requirejs/require.js"></script>
 
 {! -- predefined blocks for block header !}
 

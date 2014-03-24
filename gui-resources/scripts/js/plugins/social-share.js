@@ -8,7 +8,7 @@ define([
     'core/utils',
     'dust',
     'core/gettext',
-    'core/utils/fixed-encode-uri-component',
+    'core/utils/fixed-encodeURIComponent',
     'core/utils/visibility-toggle',
     'config/social-share-plugin'
 ], function(Backbone, _, plugins, utils, dust, gt,

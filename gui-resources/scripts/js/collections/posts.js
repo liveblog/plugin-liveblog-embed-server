@@ -34,9 +34,9 @@ define([
             if (options.blogId) {
                 this.blogId = options.blogId;
             }
-            if (utils.isClient) {
-                this.startPolling();
-            }
+            // if (utils.isClient) {
+            //     this.startPolling();
+            // }
         },
 
         parse: function(data) {
