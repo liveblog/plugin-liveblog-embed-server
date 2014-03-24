@@ -3,8 +3,9 @@ define([
     'views/baseView',
     'views/posts',
     'core/utils',
+    'core/utils/displayToggle',
     'tmpl!themeBase/container'
-], function(BaseView, PostsView, utils) {
+], function(BaseView, PostsView, utils, displayToggle) {
 
     return BaseView.extend({
 
@@ -27,20 +28,10 @@ define([
         },
         update: function() {
             var embedConfig = {};
-            //EmbedConfig may be a string instead of JSON
             embedConfig = this.model.get('EmbedConfig');
-            try {
-                embedConfig = JSON.parse(embedConfig);
-            } catch (e){
-                //handle it
-            }
             //Show or hide the entire advertisment
-            if (typeof(embedConfig.MediaToggle) !== 'undefined') {
-                if (embedConfig.MediaToggle) {
-                    this.$('[data-gimme="blog.media-toggle"]').css('display', 'block');
-                } else {
-                    this.$('[data-gimme="blog.media-toggle"]').css('display', 'none');
-                }
+            if (!_.isUndefined(embedConfig.MediaToggle)) {
+                displayToggle(this.$('[data-gimme="blog.media-toggle"]'), embedConfig.MediaToggle);
             }
             //Set the target and the image for the advertisment
             if (embedConfig.MediaUrl) {
