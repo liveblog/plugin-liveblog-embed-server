@@ -206,8 +206,6 @@
         "gettext": false,
         // our global object
         "liveblog": false,
-        // definitions for underscore or lodash
-        "_": false,
         // app logger
         "liveblogLogger": false
     }

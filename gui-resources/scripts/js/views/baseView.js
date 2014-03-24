@@ -1,11 +1,12 @@
 'use strict';
 
 define([
+    'underscore',
     'backboneCustom',
     'dust',
     'core/utils',
     'backbone.layoutmanager'
-], function(Backbone, dust, utils) {
+], function(_, Backbone, dust, utils) {
     return Backbone.View.extend({
         // Treat all Backbone.View's automatically as
         // (backbone.layoutManager) Layouts.

@@ -1,10 +1,11 @@
 'use strict';
 
 define([
+    'underscore',
     'backboneCustom',
     'core/backbone/modelCollectionCommon',
     'core/poller'
-], function(Backbone, modelCollectionCommon, poller) {
+], function(_, Backbone, modelCollectionCommon, poller) {
 
     return Backbone.Collection.extend(_.extend({
 
