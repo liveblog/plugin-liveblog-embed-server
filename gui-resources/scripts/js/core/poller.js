@@ -22,7 +22,7 @@ define(['underscore'], function(_) {
                     this[setting] = this.defaultPollSettings[setting];
                 }
             }
-            this._poll();
+            this._delayedPoll();
         },
 
         stopPolling: function() {
@@ -54,6 +54,7 @@ define(['underscore'], function(_) {
         },
 
         _delayedPoll: function() {
+            if (!this.pollInterval) { return; }
             var run = _.bind(this._poll, this);
             this.timeoutId = _.delay(run, this.pollInterval);
         }
