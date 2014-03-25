@@ -59,7 +59,6 @@ requirejs.config({
         tmpl:                   'core/require/tmpl',
         i18n:                   'core/require/i18n',
         themeBase:              paths.themes + '/base',
-        underscore:             paths.node_modules + '/lodash/dist/lodash.underscore',
         'lodash.underscore':    paths.node_modules + '/lodash/dist/lodash.underscore',
         'css':                  'core/require/css'
     },
