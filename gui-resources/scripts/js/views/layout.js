@@ -15,7 +15,7 @@ define([
         initialize: function() {
             var self = this;
             utils.dispatcher.trigger('initialize.layout-view', this);
-            this.model = new Blog({id: liveblog.id});
+            this.model = new Blog({Id: liveblog.id});
             this.model.fetch({success: function() {
                 loadTheme(self.model.get('EmbedConfig'), function() {
                     self.insertView('#liveblog-layout', new BlogView({model: self.model}));

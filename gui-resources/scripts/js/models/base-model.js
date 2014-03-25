@@ -8,6 +8,6 @@ define([
 ], function(_, Backbone, modelCollectionCommon, poller) {
 
     return Backbone.Model.extend(_.extend({
-        // Backbone.Model customizations go here
+        idAttribute: 'Id'
     }, modelCollectionCommon, poller));
 });
