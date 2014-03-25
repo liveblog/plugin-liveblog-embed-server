@@ -69,7 +69,7 @@
 {! -- predefined blocks for block header !}
 
 {<blogTitle}
-<h3 data-gimme="blog.title"></h3>
+<h3 data-gimme="blog.title">{Title}</h3>
 {/blogTitle}
 
 {<blogMedia}
@@ -79,7 +79,7 @@
 {/blogMedia}
 
 {<blogDescription}
-<p data-gimme="blog.description"></p>
+<p data-gimme="blog.description">{Description}</p>
 {/blogDescription}
 
 {! -- predefined blocks for content top block !}
