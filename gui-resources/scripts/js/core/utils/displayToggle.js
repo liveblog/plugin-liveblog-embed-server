@@ -1,4 +1,4 @@
-// Toggle display attribute.
+// Toggle display attribute. (we can't use jQuery toggle because it is not supported by Cheerio)
 // Specify with showOrHide if the display attribute should be set to
 // 'block' or 'none' by providing a true or falsy value respectively
 // If no showOrHide param is provided, just toggle the current state.

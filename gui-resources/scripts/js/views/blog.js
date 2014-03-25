@@ -19,8 +19,6 @@ define([
             this.insertView('.liveblog-postlist', new PostsView({collection: collection}));
         },
         afterRender: function() {
-            //We need to update the view after first render
-            this.update();
             utils.dispatcher.trigger('after-render.blog-view', this);
         },
         beforeRender: function() {
