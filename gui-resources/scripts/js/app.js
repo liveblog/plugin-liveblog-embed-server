@@ -64,7 +64,6 @@ requirejs.config({
     },
     map: {
         '*': {
-            'lodash': 'lodash.underscore',
             'underscore': 'lodash.underscore'
         }
     },

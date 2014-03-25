@@ -35,7 +35,6 @@ require.config({
     },
     map: {
         '*': {
-            'lodash':       'core/lodash-private',
             'underscore':   'core/lodash-private',
             'jquery':       'core/jquery-private',
             'backbone':     'core/backbone-private'
