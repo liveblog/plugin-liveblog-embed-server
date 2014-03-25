@@ -14,9 +14,8 @@ define([
             utils.dispatcher.trigger('initialize.blog-view', this);
             this.setTemplate('themeBase/container');
             var collection = this.model.get('publishedPosts');
-            //When the model changes, update the view
             this.listenTo(this.model, 'change', this.update);
-            this.insertView('.liveblog-postlist', new PostsView({collection: collection}));
+            this.insertView('[data-gimme="posts.view"]', new PostsView({collection: collection}));
         },
         afterRender: function() {
             utils.dispatcher.trigger('after-render.blog-view', this);

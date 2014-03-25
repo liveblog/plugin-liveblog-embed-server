@@ -111,7 +111,7 @@
 {/userCommentBackdrop}
 
 {<postsList}
-<div class="liveblog-postlist">
+<div data-gimme="posts.view">
     {#Plugins.posts.list}{>"{.}"/}{/Plugins.posts.list}
 </div>
 {/postsList}
