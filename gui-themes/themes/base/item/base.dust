@@ -1,5 +1,7 @@
 {+mainContainer}
-    <li class="{+itemClass}{/itemClass}" {+additionalAttributes}{/additionalAttributes}>
+    <li class="{+itemClass}{/itemClass}"
+        {#Id}data-gimme-postid="{Id}"{/Id}
+        {+additionalAttributes}{/additionalAttributes}>
         {+main}
             <a name="{Order}"></a>
             {+headerContainer}

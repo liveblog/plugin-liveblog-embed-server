@@ -17,13 +17,12 @@ define([
             this.setTemplate('themeBase/container');
             var collection = this.model.get('publishedPosts');
             this.listenTo(this.model, 'change', this.update);
-            this.insertView('[data-gimme="posts.view"]', new PostsView({collection: collection}));
+            this.setView('[data-gimme="posts.view"]', new PostsView({collection: collection}));
         },
         afterRender: function() {
             utils.dispatcher.trigger('after-render.blog-view', this);
         },
         beforeRender: function() {
-
             utils.dispatcher.trigger('before-render.blog-view', this);
         },
         update: function() {
