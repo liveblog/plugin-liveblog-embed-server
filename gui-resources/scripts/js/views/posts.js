@@ -41,6 +41,7 @@ define([
             if (utils.isClient) {
                 this.listenTo(this.collection, 'reset', this.render);
                 this.listenTo(this.collection, 'add', this.addPost);
+                this.listenTo(this.collection, 'remove', this.removePost);
             }
             this.collection.fetch({reset: true});
         },
@@ -66,6 +67,15 @@ define([
             this.views[this.rootSel] = _.sortBy(this.views[this.rootSel],
                                                 'order').reverse();
             postView.render();
+        },
+
+        removePost: function(post) {
+            var self = this;
+            this.removeView(function(nestedView) {
+                if (nestedView.$el.is(self.postRootSel(post.id))) {
+                    return nestedView;
+                }
+            });
         },
 
         // Override Backbone.LayoutManager to insert new posts in the right position
