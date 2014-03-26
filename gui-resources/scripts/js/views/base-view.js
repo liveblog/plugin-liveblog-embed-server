@@ -49,7 +49,7 @@ define([
         },
 
         // Get the parent view using backbone.layoutManager __manager__
-        parent: function() {
+        parentView: function() {
             return this.__manager__.parent;
         },
 

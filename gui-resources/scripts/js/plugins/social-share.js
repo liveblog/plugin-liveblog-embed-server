@@ -51,7 +51,7 @@ define([
 
             // Return the parameters to construct the social sharing urls
             var socialUrlParams = function(view) {
-                var blog      = view.parent().parent().model,
+                var blog      = view.parentView().parentView().model,
                     blogTitle = fixedEncodeURIComp(blog.get('Title')),
                     summary   = fixedEncodeURIComp(
                                 view.$('.result-content .result-text:last').text());
