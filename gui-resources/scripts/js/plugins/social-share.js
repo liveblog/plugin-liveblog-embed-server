@@ -25,7 +25,7 @@ define([
                     e.preventDefault();
 
                     if (!view.socialShareBoxAdded) {
-                        dust.renderThemed('item/social-share', socialParams(view),
+                        dust.renderThemed('themeBase/item/social-share', socialParams(view),
                           function(err, out) {
                             view.$('.sf-share').after(out);
                             view.socialShareBoxAdded = true;

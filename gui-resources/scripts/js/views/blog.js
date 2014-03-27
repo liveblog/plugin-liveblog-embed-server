@@ -10,6 +10,8 @@ define([
 
     return BaseView.extend({
 
+        el: false,
+
         initialize: function() {
             utils.dispatcher.trigger('initialize.blog-view', this);
             this.setTemplate('themeBase/container');
