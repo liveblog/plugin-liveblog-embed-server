@@ -10,7 +10,11 @@ define([
         // Set el to the top level element from the template
         // instead of default behaviour of inserting a div element.
         el: false,
-
+        // Where we cache some data.
+        //   for now is used for cacheing the itemName after the compilation of it.
+        _cacheData: {
+            itemName: false
+        },
         socialShareBoxAdded: false,
 
         initialize: function() {
@@ -36,6 +40,9 @@ define([
         },
 
         itemName: function() {
+            if(this._cacheData.itemName) {
+                return this._cacheData.itemName;
+            }
             var item,
                 post = this.model;
 
@@ -55,8 +62,8 @@ define([
                     item = 'item/source/' + post.get('Author').Source.Name;
                 }
             }
-            this.shortItemName = item;
-            return 'themeBase/' + item;
+            this._cacheData.itemName = 'themeBase/' + item;
+            return this._cacheData.itemName;
         }
     });
 });

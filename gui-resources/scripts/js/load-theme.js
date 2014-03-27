@@ -28,8 +28,6 @@ define([
                 themeFile: module.config().themesPath + liveblog.theme
             }
         });
-        console.log(module.config().themesPath + liveblog.theme);
-        console.log(module.config().themesPath + liveblog.theme);
         // Load (apply) theme config
         require([
             'themeFile',

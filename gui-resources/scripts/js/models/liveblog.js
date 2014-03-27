@@ -1,4 +1,3 @@
-/* jshint maxcomplexity: false */
 'use strict';
 
 define([
