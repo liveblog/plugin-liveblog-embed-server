@@ -1,7 +1,7 @@
 'use strict';
 
 define([
-    'models/baseModel',
+    'models/base-model',
     'collections/posts',
     'core/utils'
 ], function(BaseModel, Posts, utils) {
@@ -22,9 +22,9 @@ define([
 
         initialize: function() {
             this.set('publishedPosts', new Posts([], {blogId: this.id}));
-            if (utils.isClient) {
-                this.startPolling();
-            }
+            // if (utils.isClient) {
+            //     this.startPolling();
+            // }
         },
 
         parse: function(data) {

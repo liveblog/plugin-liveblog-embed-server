@@ -1,7 +1,7 @@
 'use strict';
 
 define([
-    'collections/baseCollection',
+    'collections/base-collection',
     'models/post',
     'core/utils'
 ], function(BaseCollection, Post, utils) {
@@ -34,9 +34,9 @@ define([
             if (options.blogId) {
                 this.blogId = options.blogId;
             }
-            if (utils.isClient) {
-                this.startPolling();
-            }
+            // if (utils.isClient) {
+            //     this.startPolling();
+            // }
         },
 
         parse: function(data) {

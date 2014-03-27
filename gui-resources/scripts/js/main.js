@@ -2,7 +2,7 @@
 require.config({
     baseUrl: '/scripts/js/',
     config: {
-        'createBlogView': {
+        'load-theme': {
             themesPath:             '../../themes/'
         },
         css: {
@@ -17,7 +17,7 @@ require.config({
         'jed':                      'node_modules/jed/jed',
         'lodash.underscore':        'node_modules/lodash/dist/lodash.underscore.min',
         'backbone':                 'node_modules/backbone/backbone-min',
-        'backboneCustom':           'core/backbone/backboneCustom',
+        'backbone-custom':             'core/backbone/backbone-custom',
         'backbone.layoutmanager':   'node_modules/backbone.layoutmanager/backbone.layoutmanager',
         'moment':                   'node_modules/moment/min/moment.min',
         'themeBase':                '../../themes/base',
