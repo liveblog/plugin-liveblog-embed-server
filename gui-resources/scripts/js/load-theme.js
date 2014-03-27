@@ -31,7 +31,7 @@ define([
         // Load (apply) theme config
         require([
             'themeFile',
-            'core/utils/find-environment'
+            'lib/helpers/find-environment'
         ], function(theme, findEnvironment) {
             // If the theme has different environments reset the
             //  path to theme template files and theme config file to use

@@ -1,7 +1,7 @@
 'use strict';
 define([
     'underscore',
-    'core/utils',
+    'lib/utils',
     'views/base-view',
     'views/post',
     'tmpl!themeBase/posts-list'

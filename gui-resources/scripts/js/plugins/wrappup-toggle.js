@@ -5,7 +5,7 @@ define([
     'backbone',
     'underscore',
     'plugins',
-    'core/utils',
+    'lib/utils',
     'dust'
 ], function(Backbone, _, plugins, utils, dust) {
     //animation effects for the wrapup

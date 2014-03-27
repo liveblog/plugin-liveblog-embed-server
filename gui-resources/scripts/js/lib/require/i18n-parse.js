@@ -1,6 +1,6 @@
 'use strict';
 
-define(['core/utils/object-parse'], function(objectParse) {
+define(['lib/helpers/object-parse'], function(objectParse) {
 
     function escapeDust(str) {
         return str

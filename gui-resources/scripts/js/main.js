@@ -13,17 +13,17 @@ require.config({
         'jquery':                   'bower_components/jquery/dist/jquery.min',
         'json2':                    'bower_components/json2/json2',
         'dustjs-linkedin':          'node_modules/dustjs-linkedin/dist/dust-full.min',
-        'dust':                     'core/dust',
+        'dust':                     'lib/dust',
         'jed':                      'node_modules/jed/jed',
         'lodash.underscore':        'node_modules/lodash/dist/lodash.underscore.min',
         'backbone':                 'node_modules/backbone/backbone-min',
-        'backbone-custom':             'core/backbone/backbone-custom',
+        'backbone-custom':             'lib/backbone/backbone-custom',
         'backbone.layoutmanager':   'node_modules/backbone.layoutmanager/backbone.layoutmanager',
         'moment':                   'node_modules/moment/min/moment.min',
         'themeBase':                '../../themes/base',
-        'tmpl':                     'core/require/tmpl',
-        'i18n':                     'core/require/i18n',
-        'css':                      'core/require/css'
+        'tmpl':                     'lib/require/tmpl',
+        'i18n':                     'lib/require/i18n',
+        'css':                      'lib/require/css'
     },
     shim: {
         json2: {
@@ -35,13 +35,13 @@ require.config({
     },
     map: {
         '*': {
-            'underscore':   'core/lodash-private',
-            'jquery':       'core/jquery-private',
-            'backbone':     'core/backbone-private'
+            'underscore':   'lib/lodash-private',
+            'jquery':       'lib/jquery-private',
+            'backbone':     'lib/backbone-private'
         },
-        'core/jquery-private':   {'jquery': 'jquery'},
-        'core/backbone-private': {'backbone': 'backbone'},
-        'core/lodash-private':   {'lodash': 'lodash.underscore'}
+        'lib/jquery-private':   {'jquery': 'jquery'},
+        'lib/backbone-private': {'backbone': 'backbone'},
+        'lib/lodash-private':   {'lodash': 'lodash.underscore'}
     }
 });
 

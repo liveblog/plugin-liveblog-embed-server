@@ -5,7 +5,7 @@ var requirejs = require('requirejs'),
     path      = require('path'),
     fs        = require('fs'),
     qs        = require('qs'),
-    Logger    = require('./core/logger'),
+    Logger    = require('./lib/logger'),
     lodash    = require('lodash');
 
 var app = module.exports = express(),
@@ -52,15 +52,15 @@ requirejs.config({
         }
     },
     paths: {
-        'backbone-custom':         'core/backbone/backbone-custom',
+        'backbone-custom':         'lib/backbone/backbone-custom',
         layout:                  '../../layout',
         'embed-code':           '../../embed-code',
-        dust:                   'core/dust',
-        tmpl:                   'core/require/tmpl',
-        i18n:                   'core/require/i18n',
+        dust:                   'lib/dust',
+        tmpl:                   'lib/require/tmpl',
+        i18n:                   'lib/require/i18n',
         themeBase:              paths.themes + '/base',
         'lodash.underscore':    paths.node_modules + '/lodash/dist/lodash.underscore',
-        'css':                  'core/require/css'
+        'css':                  'lib/require/css'
     },
     map: {
         '*': {

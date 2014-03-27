@@ -6,7 +6,7 @@ define([
     'views/embed-code',
     'models/blog',
     'load-theme',
-    'core/utils',
+    'lib/utils',
     'tmpl!layout'
 ], function(BaseView, BlogView, EmbedCode, Blog, loadTheme, utils) {
 

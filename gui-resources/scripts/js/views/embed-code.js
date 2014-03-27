@@ -2,7 +2,7 @@
 define([
     'views/base-view',
     'models/liveblog',
-    'core/utils',
+    'lib/utils',
     'tmpl!embed-code'
 ], function(BaseView, Liveblog, utils) {
 

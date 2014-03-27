@@ -8,7 +8,7 @@
 /* global define, window, process, require */
 'use strict';
 
-define(['dust', 'core/require/i18n-parse'], function(dust, i18nParse) {
+define(['dust', 'lib/require/i18n-parse'], function(dust, i18nParse) {
     var fetchText = function () {
             throw new Error('Environment unsupported.');
         },
@@ -29,7 +29,7 @@ define(['dust', 'core/require/i18n-parse'], function(dust, i18nParse) {
              * If dataType is requested as text then it fails due to some cdm issues with ie
              * so request it as json and in error method if is a json parsing issue we are good to go.
              */
-            require(['core/jquery/xdomainrequest'], function($) {
+            require(['lib/jquery/xdomainrequest'], function($) {
                 $.ajax({
                     //dataType: 'json',
                     url: url,
@@ -49,7 +49,7 @@ define(['dust', 'core/require/i18n-parse'], function(dust, i18nParse) {
     }
 
     return {
-        pluginBuilder: 'core/require/tmpl-builder',
+        pluginBuilder: 'lib/require/tmpl-builder',
         write: function (pluginName, name, write) {
             if (buildMap.hasOwnProperty(name)) {
                 var text = buildMap[name];

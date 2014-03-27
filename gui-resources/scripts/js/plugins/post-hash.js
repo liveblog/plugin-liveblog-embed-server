@@ -2,7 +2,7 @@
 
 define([
     'plugins',
-    'core/utils'
+    'lib/utils'
 ], function(plugins, utils) {
 
     plugins['post-hash'] = function(config) {

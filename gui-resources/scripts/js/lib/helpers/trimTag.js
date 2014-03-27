@@ -1,9 +1,8 @@
 'use strict';
 
 define([], function() {
-    var helpers = {};
 
-    helpers.trimTag = function(tag, myString) {
+    var trimTag = function(tag, myString) {
 
         var recursiveTrim = function(tag, myString) {
             var simpleTrim = function(tag, myString) {
@@ -49,5 +48,5 @@ define([], function() {
         return myString;
     };
 
-    return helpers;
+    return trimTag;
 });

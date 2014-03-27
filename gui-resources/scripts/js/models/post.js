@@ -3,9 +3,9 @@
 
 define([
     'models/base-model',
-    'core/utils/helpers',
+    'lib/helpers/trimTag',
     'moment'
-], function(BaseModel, helpers, moment) {
+], function(BaseModel, trimTag, moment) {
 
     return BaseModel.extend({
 
@@ -71,23 +71,23 @@ define([
             if (annotation) {
                 if (annotation[1] === null) {
                     annotation = annotation[0];
-                    annotation = helpers.trimTag(['<br>', '<br />'], annotation);
+                    annotation = trimTag(['<br>', '<br />'], annotation);
                 }
                 if (typeof annotation !== 'string') {
                     if (annotation[0]) {
                         var aux = annotation;
                         annotation = {
-                            'before': helpers.trimTag(['<br>', '<br />'], aux[0]),
-                            'after': helpers.trimTag(['<br>', '<br />'], aux[1])
+                            'before': trimTag(['<br>', '<br />'], aux[0]),
+                            'after': trimTag(['<br>', '<br />'], aux[1])
                         };
                     } else {
                         annotation = {
-                            'before': helpers.trimTag(['<br>', '<br />'], annotation.before),
-                            'after': helpers.trimTag(['<br>', '<br />'], annotation.after)
+                            'before': trimTag(['<br>', '<br />'], annotation.before),
+                            'after': trimTag(['<br>', '<br />'], annotation.after)
                         };
                     }
                 } else {
-                    annotation = helpers.trimTag(['<br>', '<br />'], annotation);
+                    annotation = trimTag(['<br>', '<br />'], annotation);
                 }
             }
 

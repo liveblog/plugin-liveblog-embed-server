@@ -3,7 +3,7 @@
 define([
     'collections/base-collection',
     'models/post',
-    'core/utils'
+    'lib/utils'
 ], function(BaseCollection, Post, utils) {
 
     return BaseCollection.extend({

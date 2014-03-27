@@ -1,6 +1,6 @@
 'use strict';
 
-define(['dust/core', 'core/gettext', 'underscore'], function(dust, gt, _) {
+define(['dust/core', 'lib/gettext', 'underscore'], function(dust, gt, _) {
     var parseAttributeParams = function(chunk, context, bodies, params) {
         var val = '';
         if (_.has(params, 'param1')) {
