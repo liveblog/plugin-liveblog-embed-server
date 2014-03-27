@@ -21,6 +21,7 @@ define([
             utils.dispatcher.trigger('initialize.post-view', this);
             this.setTemplate(this.itemName());
             this.order = parseFloat(this.model.get('Order'));
+            this.listenTo(this.model, 'change', this.render);
         },
 
         serialize: function() {
