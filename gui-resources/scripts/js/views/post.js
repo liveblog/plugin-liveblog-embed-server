@@ -20,6 +20,7 @@ define([
         initialize: function() {
             utils.dispatcher.trigger('initialize.post-view', this);
             this.setTemplate(this.itemName());
+            this.order = parseFloat(this.model.get('Order'));
         },
 
         serialize: function() {

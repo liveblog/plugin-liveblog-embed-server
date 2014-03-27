@@ -12,11 +12,12 @@ define([
         'default': function(path) {
             // TODO: Throw error if blog id missing
             if (liveblog.id) {
-                var blog = new Blog({id: liveblog.id});
+                var blog = new Blog({Id: liveblog.id});
                 blog.fetch({success: function() {
                     loadTheme(blog.get('EmbedConfig'), function() {
+                        /* jshint unused: false */
                         var blogView = new BlogView({el: '#liveblog-layout', model: blog});
-                        blogView.render();
+                        //blogView.render();
                     });
                 }});
             }
