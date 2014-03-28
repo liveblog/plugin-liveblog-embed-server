@@ -30,6 +30,8 @@ define([
         parse: function(data) {
             if (data.EmbedConfig) {
                 data.EmbedConfig = JSON.parse(data.EmbedConfig);
+            } else {
+                data.EmbedConfig = {};
             }
             return data;
         }

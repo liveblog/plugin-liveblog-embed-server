@@ -19,6 +19,16 @@ define([
             this.listenTo(this.model, 'change', this.update);
             this.setView('[data-gimme="posts.view"]', new PostsView({collection: collection}));
         },
+        conditionalRender: function() {
+            //if the markup for the blog view is already generated, use it
+            if (this.$('[data-gimme="blog.view"]').length) {
+                this.el = this.$('[data-gimme="blog.view"]');
+                //make sure that we updated the seo generated markup with the latest changes
+                this.update();
+            } else {
+                this.render();
+            }
+        },
         afterRender: function() {
             utils.dispatcher.trigger('after-render.blog-view', this);
         },
