@@ -16,7 +16,7 @@ define([
                 blog.fetch({success: function() {
                     loadTheme(blog.get('EmbedConfig'), function() {
                         /* jshint unused: false */
-                        var blogView = new BlogView({el: '#liveblog-layout', model: blog});
+                        var blogView = new BlogView({el: '[data-gimme="liveblog-layout"]', model: blog});
                         blogView.conditionalRender();
                     });
                 }});

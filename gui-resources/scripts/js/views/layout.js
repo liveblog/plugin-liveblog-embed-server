@@ -1,27 +1,37 @@
 /* jshint maxparams: 9 */
 'use strict';
 define([
+    'underscore',
     'views/base-view',
     'views/blog',
     'views/embed-code',
     'models/blog',
+    'models/liveblog',
     'load-theme',
     'lib/utils',
     'tmpl!layout'
-], function(BaseView, BlogView, EmbedCode, Blog, loadTheme, utils) {
+], function(_, BaseView, BlogView, EmbedCode, Blog, Liveblog, loadTheme, utils) {
 
     return BaseView.extend({
 
         initialize: function() {
             var self = this;
             utils.dispatcher.trigger('initialize.layout-view', this);
-            this.model = new Blog({Id: liveblog.id});
-            this.model.fetch({success: function() {
-                loadTheme(self.model.get('EmbedConfig'), function() {
-                    self.insertView('#liveblog-layout', new BlogView({model: self.model}));
+            if (_.isString(liveblog.render)) {
+                var render = liveblog.render.split(',');
+                liveblog.render = {};
+                _.each(render, function(value) {
+                    liveblog.render[value] = true;
+                });
+            }
+            this.model = new Liveblog(liveblog);
+            this.blogModel = new Blog({Id: liveblog.id});
+            this.blogModel.fetch({success: function() {
+                loadTheme(self.blogModel.get('EmbedConfig'), function() {
+                    self.insertView('[data-gimme="liveblog-layout"]', new BlogView({model: self.blogModel}));
                 });
             }});
-            self.insertView('#liveblog-embed-code', new EmbedCode());
+            self.insertView('[data-gimme="liveblog-embed-code"]', new EmbedCode({model: this.model}));
             this.setTemplate('layout');
         },
         afterRender: function() {

@@ -10,7 +10,6 @@ define([
         el: false,
         initialize: function() {
             utils.dispatcher.trigger('initialize.embed-code-view', this);
-            this.model = new Liveblog(liveblog);
             this.setTemplate('embed-code');
         },
         serialize: function() {
