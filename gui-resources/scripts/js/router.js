@@ -17,7 +17,7 @@ define([
                     loadTheme(blog.get('EmbedConfig'), function() {
                         /* jshint unused: false */
                         var blogView = new BlogView({el: '#liveblog-layout', model: blog});
-                        //blogView.render();
+                        blogView.conditionalRender();
                     });
                 }});
             }
