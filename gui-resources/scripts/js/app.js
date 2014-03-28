@@ -40,6 +40,26 @@ fs.exists(paths.logs, function(exists) {
                         '"grunt create-logs-folder" or "grunt server"');
     }
 });
+// Set a vector for caching on requirejs object.
+requirejs.cache = [];
+
+// This method is triggered by requirejs when a module is added,
+//   so we keep all of the module id into the requirejs cache object.
+requirejs.onResourceLoad = function (context, map, depArray) {
+    requirejs.cache.push(map.id);
+};
+
+// Check the require cache object for the matching pattern,
+//    and if modules with the pattern are found undefine them form requirejs.
+requirejs.clearCache = function(pattern) {
+    var srex = new RegExp(pattern);
+    lodash.each(requirejs.cache, function(name, idx) {
+        if (srex.test(name)) {
+            requirejs.cache.splice(idx, 1);
+            requirejs.undef(name);
+        }
+    });
+};
 
 requirejs.config({
     baseUrl: __dirname,
@@ -70,56 +90,59 @@ requirejs.config({
     nodeRequire: require
 });
 
-requirejs([
-    'views/layout'
-], function(Layout) {
-
-    var configLiveblog = function(config, server) {
-        if (config.host) {
-            var authority,
-                host = config.host,
-                hostParts = host.toLowerCase().match(/((http:|https:)?\/\/)([^/?#]*)/);
-            if (hostParts) {
-                if(hostParts[1] !== '//') {
-                    config.protocol = hostParts[1];
-                }
-                authority = hostParts[3];
-            } else {
-                authority = host;
+var configLiveblog = function(config, server) {
+    if (config.host) {
+        var authority,
+            host = config.host,
+            hostParts = host.toLowerCase().match(/((http:|https:)?\/\/)([^/?#]*)/);
+        if (hostParts) {
+            if(hostParts[1] !== '//') {
+                config.protocol = hostParts[1];
             }
-            if (authority.indexOf(':') !== -1) {
-                var authorityParts = authority.split(':');
-                config.hostname = authorityParts[0];
-                config.port = authorityParts[1];
-            } else {
-                config.hostname = authority;
-                delete config.port;
-            }
-
+            authority = hostParts[3];
+        } else {
+            authority = host;
         }
-        config.host = config.protocol + config.hostname + (config.port ? (':' + config.port) : '');
-        config.frontendServer = server.protocol + server.hostname + (server.port ? (':' + server.port) : '');
-        requirejs.config({
-            config: {
-                    css: {
-                        host: '//' + config.hostname + (config.port ? (':' + config.port) : '') + '/content/lib/livedesk-embed'
-                    }
+        if (authority.indexOf(':') !== -1) {
+            var authorityParts = authority.split(':');
+            config.hostname = authorityParts[0];
+            config.port = authorityParts[1];
+        } else {
+            config.hostname = authority;
+            delete config.port;
+        }
+
+    }
+    config.host = config.protocol + config.hostname + (config.port ? (':' + config.port) : '');
+    config.frontendServer = server.protocol + server.hostname + (server.port ? (':' + server.port) : '');
+    requirejs.config({
+        config: {
+                css: {
+                    host: '//' + config.hostname + (config.port ? (':' + config.port) : '') + '/content/lib/livedesk-embed'
                 }
-            });
-        return config;
-    };
+            }
+        });
+    return config;
+};
 
-    app.get('/', function(req, res) {
+app.get('/', function(req, res) {
 
-        var queryString = qs.stringify(req.query);
-        liveblogLogger.info('App request query string' +
-            (queryString ? ': "' + queryString + '"' : ' is empty'));
+    var queryString = qs.stringify(req.query);
+    liveblogLogger.info('App request query string' +
+        (queryString ? ': "' + queryString + '"' : ' is empty'));
 
-        // override the default configuration parameters with
-        // the GET query given ones if there are any.
-        GLOBAL.liveblog = configLiveblog(lodash.extend(
-                            lodash.clone(config.app),
-                            req.query), config.server);
+    // override the default configuration parameters with
+    // the GET query given ones if there are any.
+    GLOBAL.liveblog = configLiveblog(lodash.extend(
+                        lodash.clone(config.app),
+                        req.query), config.server);
+    // for requirejs to reload internationalization and css,
+    //   we need to clear the theme and themeFile aswell beside i18n and css modules.
+    requirejs.clearCache('^(i18n!|css!|theme|themeFile)');
+    requirejs([
+        'views/layout',
+        'i18n!livedesk_embed'
+    ], function(Layout) {
         var layout = new Layout();
         layout.model.get('publishedPosts').on('sync', function() {
             res.send(layout.render().$el.html());
