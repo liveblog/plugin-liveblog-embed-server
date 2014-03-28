@@ -2,7 +2,7 @@
 
 define([
     'plugins',
-    'core/utils'
+    'lib/utils'
 ], function(plugins, utils) {
     plugins.pagination = function(config) {
         utils.dispatcher.once('initialize.posts-view', function(view) {

@@ -2,7 +2,7 @@
 /*jshint unused: false*/
 'use strict';
 
-define(['core/utils', 'plugins/css', 'backbone'], function(utils, pluginCss, Backbone) {
+define(['lib/utils', 'plugins/css', 'backbone'], function(utils, pluginCss, Backbone) {
     var cssAPI = {};
 
     cssAPI.normalize = function(name, normalize) {

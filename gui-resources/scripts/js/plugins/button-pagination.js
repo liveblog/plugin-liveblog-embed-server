@@ -4,7 +4,7 @@ define([
     'plugins',
     'plugins/pagination',
     'dust',
-    'core/utils',
+    'lib/utils',
     'tmpl!themeBase/item/base',
     'tmpl!themeBase/plugins/after-button-pagination',
     'tmpl!themeBase/plugins/before-button-pagination'

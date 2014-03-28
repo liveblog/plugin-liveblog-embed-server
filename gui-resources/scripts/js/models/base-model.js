@@ -3,8 +3,8 @@
 define([
     'underscore',
     'backbone-custom',
-    'core/backbone/model-collection-common',
-    'core/poller'
+    'lib/backbone/model-collection-common',
+    'lib/poller'
 ], function(_, Backbone, modelCollectionCommon, poller) {
 
     return Backbone.Model.extend(_.extend({

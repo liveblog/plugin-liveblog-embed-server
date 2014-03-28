@@ -1,5 +1,5 @@
 'use strict';
-define(['dust/core', 'core/utils/twitter'], function(dust, twitter) {
+define(['dust/core', 'lib/helpers/twitter'], function(dust, twitter) {
 
     var getAnnotation = function(idx) {
         return function(content) {

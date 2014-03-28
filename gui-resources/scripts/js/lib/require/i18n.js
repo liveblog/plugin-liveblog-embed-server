@@ -1,6 +1,6 @@
 'use strict';
 
-define(['backbone-custom', 'core/gettext'], function(Backbone, gt) {
+define(['backbone-custom', 'lib/gettext'], function(Backbone, gt) {
 
     var buildMap = {};
         // apiUrl = liveblog.frontendServer,

@@ -5,11 +5,11 @@ define([
     'backbone',
     'underscore',
     'plugins',
-    'core/utils',
+    'lib/utils',
     'dust',
-    'core/gettext',
-    'core/utils/fixed-encodeURIComponent',
-    'core/utils/visibility-toggle',
+    'lib/gettext',
+    'lib/helpers/fixed-encodeURIComponent',
+    'lib/helpers/visibility-toggle',
     'config/social-share-plugin'
 ], function(Backbone, _, plugins, utils, dust, gt,
     fixedEncodeURIComp, visibilityToggle, shareConf) {

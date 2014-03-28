@@ -1,7 +1,7 @@
 'use strict';
 
 define([
-    'core/utils',
+    'lib/utils',
     'views/base-view',
     'views/post-templates'
 ], function(utils, BaseView) {

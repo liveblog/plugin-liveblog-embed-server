@@ -4,7 +4,7 @@ define([
     'underscore',
     'backbone-custom',
     'dust',
-    'core/utils',
+    'lib/utils',
     'backbone.layoutmanager'
 ], function(_, Backbone, dust, utils) {
     return Backbone.View.extend({
