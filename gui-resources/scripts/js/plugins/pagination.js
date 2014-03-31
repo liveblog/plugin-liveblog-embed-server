@@ -28,7 +28,7 @@ define([
 
                 var options = {
                     data: {
-                        offset: view.collection.filterParams.offset
+                        offset: view.collection.filterParams.offset + view.collection.filterParams.limit
                     }
                 };
                 return view.collection.fetch(options).done(function(data) {

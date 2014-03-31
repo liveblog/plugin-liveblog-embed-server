@@ -72,7 +72,7 @@ define([
             view.buttonNextPage = function(evt) {
                 view.flags.buttonNextPage = true;
                 var item = view.$('[data-gimme="posts.nextPage"]');
-                view.addClass('loading');
+                item.addClass('loading');
                 view.nextPage().done(function() {
                     view.flags.buttonNextPage = false;
                     item.removeClass('loading');
