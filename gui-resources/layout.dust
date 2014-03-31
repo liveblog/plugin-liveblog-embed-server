@@ -1,3 +1,9 @@
+{+index}    
+{/index}
+
+
+{<index}
+{?render.index}
 <!DOCTYPE html>
 <html>
   <head>
@@ -5,8 +11,24 @@
     <title>Liveblog</title>
   </head>
   <body>
-    <div id="liveblog-embed-code"></div>
-    <div id="liveblog-layout"></div>
+    {+embedCode}{/embedCode}  
+    {+layout}{/layout}  
     <script src="//localhost:35729/livereload.js"></script>
   </body>
 </html>
+{:else}
+    {+embedCode}{/embedCode}
+    {+layout}{/layout}
+{/render.index}
+{/index}
+
+{<embedCode}
+    {?render.embed}
+    <div data-gimme="liveblog-embed-code"></div>
+    {/render.embed}
+{/embedCode}
+{<layout}
+    {?render.seo}
+    <div data-gimme="liveblog-layout"></div>
+    {/render.seo}
+{/layout}

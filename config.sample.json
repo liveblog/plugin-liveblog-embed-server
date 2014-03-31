@@ -24,6 +24,11 @@
         "environment": "desktop",
         "id": 1,
         "limit": 20,
-        "language": "en"
+        "language": "en",
+        "render": {
+            "index": true,
+            "embed": true,
+            "seo": true
+        }
     }
 }

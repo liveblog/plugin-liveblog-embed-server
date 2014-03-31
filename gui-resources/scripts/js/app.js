@@ -144,7 +144,7 @@ app.get('/', function(req, res) {
         'i18n!livedesk_embed'
     ], function(Layout) {
         var layout = new Layout();
-        layout.model.get('publishedPosts').on('sync', function() {
+        layout.blogModel.get('publishedPosts').on('sync', function() {
             res.send(layout.render().$el.html());
         });
     });
