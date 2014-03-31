@@ -1,6 +1,6 @@
 {>"themeBase/container"/}
 {<mainContainer}
-<div id="livedesk-root">
+<div id="livedesk-root" data-gimme="blog.view">
 	{+main}
 	<div class="liveblog-container">
 
@@ -17,7 +17,7 @@
 				{/contentTopContainer}
 
 				{+contentMiddleContainer}
-				<div class="liveblog-content-middle"> 
+				<div class="liveblog-content-middle">
 					{+contentMiddle}
 						{+postsList}{/postsList}
 					{/contentMiddle}
