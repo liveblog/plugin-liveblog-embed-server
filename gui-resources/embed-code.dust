@@ -16,6 +16,7 @@
             host: '{host}',
             scriptsPath: '/scripts/js/',
             script: d.scripts[d.scripts.length - 1],
+            limit: {limit},
             dev: true
         };
 
