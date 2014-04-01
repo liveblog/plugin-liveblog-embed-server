@@ -13,6 +13,7 @@ require.config({
         'jquery':                   'bower_components/jquery/dist/jquery.min',
         'json2':                    'bower_components/json2/json2',
         'dustjs-linkedin':          'node_modules/dustjs-linkedin/dist/dust-full.min',
+        'dustjs-helpers':           'node_modules/dustjs-helpers/dist/dust-helpers.min',
         'dust':                     'lib/dust',
         'jed':                      'node_modules/jed/jed',
         'lodash.underscore':        'node_modules/lodash/dist/lodash.underscore.min',
@@ -31,6 +32,9 @@ require.config({
         },
         'dustjs-linkedin': {
             exports: 'dust'
+        },
+        'dustjs-helpers': {
+            deps: ['dustjs-linkedin']
         }
     },
     map: {
