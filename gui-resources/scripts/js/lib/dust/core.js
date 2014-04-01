@@ -1,5 +1,5 @@
 'use strict';
 
-define(['dustjs-linkedin'], function(dust) {
+define(['dustjs-linkedin', 'dustjs-helpers'], function(dust) {
     return dust;
 });
