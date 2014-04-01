@@ -21,7 +21,15 @@ define([
             utils.dispatcher.trigger('initialize.post-view', this);
             this.setTemplate(this.itemName());
             this.order = parseFloat(this.model.get('Order'));
-            this.listenTo(this.model, 'change', this.render);
+            this.listenTo(this.model, 'change:CId', this.update);
+        },
+
+        // If the model changed re-render the view, except if one of the changed
+        // attributes was 'Order', in which case the event will be handle by posts view
+        update: function() {
+            if (!this.model.hasChanged('Order')) {
+                this.render();
+            }
         },
 
         serialize: function() {
