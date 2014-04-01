@@ -37,7 +37,8 @@ define([
 
         initialize: function() {
             utils.dispatcher.trigger('initialize.posts-view', this);
-            _.bindAll(this, 'insertPostView', 'orderViews', '_postViewIndex', '_insertPostViewAt');
+            _.bindAll(this, 'insertPostView', 'orderViews', '_postViewIndex',
+                            '_insertPostViewAt', '_insertPostViewAtFirstPos');
             this.setTemplate('themeBase/posts-list');
             if (utils.isClient) {
                 this.listenTo(this.collection, 'reset', this.setViewOnReset);
@@ -184,13 +185,32 @@ define([
 
         // Insert post element in the parent list element at a given index
         _insertPostViewAt: function($parent, $el, i) {
-            // If i it's not 0, find the previous post el by postId and add
-            // it after it
-            if (i > 0) {
+            if (i === 0) {
+                this._insertPostViewAtFirstPos($parent, $el);
+            } else if (i > 0) {
+                // For adding it to a position different that the first, find
+                // prev post and add it after it
                 var prevId = this.views[this.rootSel][i - 1].model.id;
                 $parent.children(this.postRootSel(prevId)).after($el);
+            }
+        },
+
+        // Insert post element in the parent list element at first position
+        _insertPostViewAtFirstPos: function($parent, $el) {
+            // find the first post element and add it before it.
+            var nextEl = $parent.children(this.postRootSel()).first();
+            if (nextEl.length !== 0) {
+                nextEl.before($el);
             } else {
-                $parent.children(this.postRootSel()).first().before($el);
+                // If there is no first post search for pagination elements
+                // and add it between them
+                var pagEl = $parent.children('[data-gimme="posts.beforePage"]');
+                if (pagEl.length !== 0) {
+                    pagEl.after($el);
+                } else {
+                    // If there is no pagination element either, append to $parent
+                    $parent.append($el);
+                }
             }
         }
     });
