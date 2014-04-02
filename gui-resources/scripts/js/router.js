@@ -15,7 +15,14 @@ define([
                 var blog = new Blog({Id: liveblog.id});
                 blog.fetch({success: function() {
                     loadTheme(blog.get('EmbedConfig'), function() {
-                        var blogView = new BlogView({el: '[data-gimme="liveblog-layout"]', model: blog});
+                        var blogView,
+                            blogViewSel = '[data-gimme="blog.view"]',
+                            blogViewRootEl = Backbone.$(blogViewSel);
+                        if (blogViewRootEl.length !== 0) {
+                            blogView = new BlogView({el: blogViewSel, model: blog});
+                        } else {
+                            blogView = new BlogView({el: liveblog.el, model: blog});
+                        }
                         blogView.conditionalRender();
                     });
                 }});

@@ -11,8 +11,8 @@
     <title>Liveblog</title>
   </head>
   <body>
-    {+embedCode}{/embedCode}  
-    {+layout}{/layout}  
+    {+embedCode}{/embedCode}
+    {+layout}{/layout}
     <script src="//localhost:35729/livereload.js"></script>
   </body>
 </html>
@@ -30,5 +30,7 @@
 {<layout}
     {?render.seo}
     <div data-gimme="liveblog-layout"></div>
+    {:else}
+        <div data-gimme="liveblog"></div>
     {/render.seo}
 {/layout}

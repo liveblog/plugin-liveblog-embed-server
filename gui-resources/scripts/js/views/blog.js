@@ -32,13 +32,13 @@ define([
             }
         },
         conditionalRender: function() {
-            //if the markup for the blog view is already generated, use it
-            if (this.$('[data-gimme="blog.view"]').length) {
-                this.el = this.$('[data-gimme="blog.view"]');
-                //make sure that we updated the seo generated markup with the latest changes
-                this.update();
-            } else {
+            // if there is no previous generated HTML markup, render the view
+            if (this.$el.is(':empty')) {
                 this.render();
+            // if the markup is already there, use it
+            } else {
+                //make sure that we update the seo generated markup with the latest changes
+                this.update();
             }
         },
         afterRender: function() {
