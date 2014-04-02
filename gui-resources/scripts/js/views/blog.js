@@ -14,10 +14,22 @@ define([
 
         initialize: function() {
             utils.dispatcher.trigger('initialize.blog-view', this);
+
             this.setTemplate('themeBase/container');
-            var collection = this.model.get('publishedPosts');
+
             this.listenTo(this.model, 'change', this.update);
-            this.setView('[data-gimme="posts.view"]', new PostsView({collection: collection}));
+
+            // When creating the PostsView, if there is server side generated HTML
+            // attach the view to it
+            var collection      = this.model.get('publishedPosts'),
+                postsViewSel    = PostsView.prototype.rootSel,
+                postsViewRootEl = this.$(postsViewSel);
+            if (utils.isClient && postsViewRootEl.length !== 0) {
+                var postsView = new PostsView({collection: collection, el: postsViewSel});
+                this.setView('[data-gimme="posts.view"]', postsView);
+            } else {
+                this.setView('[data-gimme="posts.view"]', new PostsView({collection: collection}));
+            }
         },
         conditionalRender: function() {
             //if the markup for the blog view is already generated, use it
