@@ -58,9 +58,6 @@ define([
         },
 
         setViewOnReset: function() {
-            // Set view $el element
-            this.$el = this.parentView().$(this.rootSel);
-
             var postEls = this.$el.children(this.postRootSel());
 
             // If there are no server side rendered posts, render whole view
@@ -82,10 +79,9 @@ define([
                 if (post && postCId === post.get('CId')) {
                     // TODO: We may need to set here postView.hasRendered = true or
                     // fire an event here for the plugins
-                    var postView = self.insertPostView(post);
-                    postView.$el = postEl;
-
-                } else { // Else remove markup
+                    self.insertPostView(post, {el: self.postRootSel(postId)});
+                } else {
+                    // Else remove markup
                     postEl.remove();
                 }
             });
@@ -152,8 +148,9 @@ define([
         },
 
         // Create a new post view and insert it at the end of the views array
-        insertPostView: function(post) {
-            var postView = new PostView({model: post});
+        insertPostView: function(post, options) {
+            var opts = _.extend({model: post}, options);
+            var postView = new PostView(opts);
             this.insertView(this.rootSel, postView);
             return postView;
         },

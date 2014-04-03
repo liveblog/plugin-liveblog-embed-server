@@ -2,10 +2,10 @@
 /* <![CDATA[ */{~n}
     var liveblog = (function(d){
         var self = this;
-        
+
         self.data = {
             id: {id},
-            el: '#livedesk-root-container',
+            el: '[data-gimme="liveblog"]',
             {?language}
             'language': '{language}',
             {/language}
@@ -24,7 +24,7 @@
         self.data.loadJs = function(path) {
                     var ls = d.createElement('script'), s = d.getElementsByTagName('script')[0];
                     ls.type = "text/javascript"; s.async = true;
-                    ls.src = path.indexOf('//') === -1 ? 
+                    ls.src = path.indexOf('//') === -1 ?
                         self.data.baseUrl + path + '.js?version=' + (self.data.version || parseInt((new Date()).getTime()/600000)):
                         path;
                     s.parentNode.insertBefore( ls, s ); return ls;
