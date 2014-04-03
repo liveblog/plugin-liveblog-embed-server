@@ -122,7 +122,7 @@ define([
                 this.addPost(post);
             } else {
                 // Update order attribute in view
-                this.views[this.rootSel][this._postViewIndex(post.id)].order =
+                this.views[''][this._postViewIndex(post.id)].order =
                                                             parseFloat(newOrder);
 
                 // Reorder views array
@@ -151,14 +151,13 @@ define([
         insertPostView: function(post, options) {
             var opts = _.extend({model: post}, options);
             var postView = new PostView(opts);
-            this.insertView(this.rootSel, postView);
+            this.insertView('', postView);
             return postView;
         },
 
         // Order the views array according to order param in views
         orderViews: function() {
-            this.views[this.rootSel] = _.sortBy(this.views[this.rootSel],
-                                                'order').reverse();
+            this.views[''] = _.sortBy(this.views[''], 'order').reverse();
         },
 
         onlyOrderHasChanged: function(post) {
@@ -169,14 +168,12 @@ define([
         // Returns the index of the post view on the views array or -1
         // if the view is not in it
         _postViewIndex: function(postId) {
-            // If there are no views yet on this.views[this.rootSel]
-            if (!this.views[this.rootSel]) {
+            // If there are no views yet on this.views['']
+            if (!this.views['']) {
                 return -1;
             }
 
-            var orderedIds = this.views[this.rootSel].map(function(v) {
-                                    return v.model.id;
-                                });
+            var orderedIds = this.views[''].map(function(v) { return v.model.id; });
             return _.indexOf(orderedIds, postId);
         },
 
@@ -187,7 +184,7 @@ define([
             } else if (i > 0) {
                 // For adding it to a position different that the first, find
                 // prev post and add it after it
-                var prevId = this.views[this.rootSel][i - 1].model.id;
+                var prevId = this.views[''][i - 1].model.id;
                 $parent.children(this.postRootSel(prevId)).after($el);
             }
         },
