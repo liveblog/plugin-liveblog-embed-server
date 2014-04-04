@@ -9,10 +9,5 @@ define({
     syncParams: {
         headers: {},
         data: {}
-    },
-
-    // The function to be called for polling
-    poller: function(options) {
-        this.fetch(options);
     }
 });

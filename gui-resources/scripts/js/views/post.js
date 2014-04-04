@@ -24,10 +24,12 @@ define([
             this.listenTo(this.model, 'change:CId', this.update);
         },
 
-        // If the model changed re-render the view, except if one of the changed
-        // attributes was 'Order', in which case the event will be handle by posts view
+        // If the model has changed re-render the view, except if the post was reordered,
+        // unpublished or deleted, in which case the event will be handle by posts view
         update: function() {
-            if (!this.model.hasChanged('Order')) {
+            if (!this.model.hasChanged('Order') &&
+                !this.model.hasChanged('DeletedOn') &&
+                !this.model.hasChanged('isPublished')) {
                 this.render();
             }
         },
@@ -56,7 +58,8 @@ define([
             var item,
                 post = this.model;
 
-            if (post.get('Author').Source.IsModifiable ===  'True' ||
+            if (post.get('Author') &&
+                post.get('Author').Source.IsModifiable ===  'True' ||
                 post.get('Author').Source.Name === 'internal') {
                 if (post.get('Type').Key === 'advertisement') {
                     item = 'item/posttype/infomercial';
