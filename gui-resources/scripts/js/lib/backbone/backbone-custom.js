@@ -12,6 +12,9 @@ define([
 
         if (!options) { options = {}; }
 
+        // Never delete models from the collection on merge
+        options.remove = false;
+
         if (method === 'read') {
             // Request a date format that all browsers can parse
             options.headers = {
