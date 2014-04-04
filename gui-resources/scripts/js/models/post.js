@@ -22,14 +22,16 @@ define([
                 }
             }
 
-            if (data.Author.Source.Type.Key === 'smsblog') {
-                data.item = 'source/sms';
-            } else {
-                if (data.Author.Source.IsModifiable ===  'True' ||
-                        data.Author.Source.Name === 'internal') {
-                    data.item = 'posttype/' + data.Type.Key;
-                } else if (data.Type) {
-                    data.item = 'source/' + data.Author.Source.Name;
+            if (data.Author) {
+                if (data.Author.Source.Type.Key === 'smsblog') {
+                    data.item = 'source/sms';
+                } else {
+                    if (data.Author.Source.IsModifiable ===  'True' ||
+                            data.Author.Source.Name === 'internal') {
+                        data.item = 'posttype/' + data.Type.Key;
+                    } else if (data.Type) {
+                        data.item = 'source/' + data.Author.Source.Name;
+                    }
                 }
             }
 

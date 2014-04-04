@@ -21,6 +21,23 @@ define([
 
         clearFilterParams: function() {
             this.filterParams = this.defaultFilterParams;
+        },
+
+        fetchPage: function(options) {
+            options = options || {};
+            options.data = _.extend(this.syncParams.pagination, options.data);
+            return this.fetch(options);
+        },
+
+        fetchUpdates: function(options) {
+            options = options || {};
+            options.data = _.extend(this.syncParams.updates, options.data);
+            return this.fetch(options);
+        },
+
+        // The function to be called for polling
+        poller: function(options) {
+            this.fetchUpdates(options);
         }
 
     }, modelCollectionCommon, poller));

@@ -7,16 +7,16 @@ define([
     plugins.pagination = function(config) {
         utils.dispatcher.once('initialize.posts-view', function(view) {
             if (liveblog.limit) {
-                view.collection.syncParams.data.limit = parseInt(liveblog.limit, 10);
+                view.collection.syncParams.pagination.limit = parseInt(liveblog.limit, 10);
             } else {
-                view.collection.syncParams.data.limit = view.collection.defaultFilterParams.limit;
+                view.collection.syncParams.pagination.limit = view.collection.defaultFilterParams.limit;
             }
             view.flags.loadingNextPage = false;
 
             view.topPage = function() {
                 view.collection.clearFilterParams();
-                delete view.collection.syncParams.data['order.end'];
-                return view.collection.fetch();
+                delete view.collection.syncParams.pagination['order.end'];
+                return view.collection.fetchPage();
             };
 
             view.nextPage = function() {
@@ -31,7 +31,7 @@ define([
                         offset: view.collection.filterParams.offset + view.collection.filterParams.limit
                     }
                 };
-                return view.collection.fetch(options).done(function(data) {
+                return view.collection.fetchPage(options).done(function(data) {
                     view.flags.loadingNextPage = false;
                     utils.dispatcher.trigger('loaded.posts-view', view);
                 });

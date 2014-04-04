@@ -45,8 +45,10 @@ define([
                 this.listenTo(this.collection, 'add', this.addPost);
                 this.listenTo(this.collection, 'remove', this.removePost);
                 this.listenTo(this.collection, 'change:Order', this.reorderPost);
+                this.listenTo(this.collection, 'change:DeletedOn', this.removePostFromCollection);
+                this.listenTo(this.collection, 'change:IsPublished', this.removePostFromCollection);
             }
-            this.collection.fetch({reset: true});
+            this.collection.fetchPage({reset: true});
         },
 
         beforeRender: function(manage) {
@@ -96,6 +98,13 @@ define([
             var i = this._postViewIndex(post.id);
             if (i === -1) {
                 this.addPost(post);
+            }
+        },
+
+        removePostFromCollection: function(post) {
+            if (!_.isUndefined(post.get('DeletedOn') ||
+                post.get('isPublished') === 'false')) {
+                this.collection.remove(post);
             }
         },
 
