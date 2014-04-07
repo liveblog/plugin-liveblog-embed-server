@@ -15,6 +15,10 @@ define([
 
             view.flags.loadingNextPage = false;
 
+            view.updateNextPageOffset = function() {
+                this.collection.syncParams.pagination.offset = this.collection.length;
+            };
+
             view.topPage = function() {
                 this.collection.clearPaginationParams();
                 delete this.collection.syncParams.pagination['order.end'];
@@ -28,14 +32,9 @@ define([
                 utils.dispatcher.trigger('loading.posts-view', this);
                 this.flags.loadingNextPage = true;
 
-                var options = {
-                    data: {
-                        offset: this.collection.syncParams.pagination.offset + this.collection.syncParams.pagination.limit
-                    }
-                };
-
+                this.updateNextPageOffset();
                 var self = this;
-                return this.collection.fetchPage(options).done(function(data) {
+                return this.collection.fetchPage().done(function(data) {
                     self.flags.loadingNextPage = false;
                     utils.dispatcher.trigger('loaded.posts-view', self);
                 });
