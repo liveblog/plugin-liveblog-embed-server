@@ -16,32 +16,33 @@ define([
             view.flags.loadingNextPage = false;
 
             view.topPage = function() {
-                view.collection.clearPaginationParams();
-                delete view.collection.syncParams.pagination['order.end'];
-                return view.collection.fetchPage();
+                this.collection.clearPaginationParams();
+                delete this.collection.syncParams.pagination['order.end'];
+                return this.collection.fetchPage();
             };
 
             view.nextPage = function() {
-                if (view.flags.loadingNextPage || !view.hasNextPage()) {
+                if (this.flags.loadingNextPage || !this.hasNextPage()) {
                     return;
                 }
-                utils.dispatcher.trigger('loading.posts-view', view);
-                view.flags.loadingNextPage = true;
+                utils.dispatcher.trigger('loading.posts-view', this);
+                this.flags.loadingNextPage = true;
 
                 var options = {
                     data: {
-                        offset: view.collection.syncParams.pagination.offset + view.collection.syncParams.pagination.limit
+                        offset: this.collection.syncParams.pagination.offset + this.collection.syncParams.pagination.limit
                     }
                 };
 
-                return view.collection.fetchPage(options).done(function(data) {
-                    view.flags.loadingNextPage = false;
-                    utils.dispatcher.trigger('loaded.posts-view', view);
+                var self = this;
+                return this.collection.fetchPage(options).done(function(data) {
+                    self.flags.loadingNextPage = false;
+                    utils.dispatcher.trigger('loaded.posts-view', self);
                 });
             };
 
             view.hasNextPage = function() {
-                return view.collection.length < view.collection.filterProps.total;
+                return this.collection.length < this.collection.filterProps.total;
             };
 
             // True if the blog was accessed through a permanent link to a specific post
