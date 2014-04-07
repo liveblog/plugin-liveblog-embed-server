@@ -1,10 +1,12 @@
 'use strict';
 
 define([
+    'lodash',
     'lib/utils',
     'views/base-view',
+    'lib/lodash/defaults-deep',
     'views/post-templates'
-], function(utils, BaseView) {
+], function(_, utils, BaseView) {
 
     return BaseView.extend({
         // Set el to the top level element from the template
@@ -12,12 +14,16 @@ define([
         el: false,
         // Where we cache some data.
         //   for now is used for cacheing the itemName after the compilation of it.
-        _cacheData: {
-            itemName: false
+        propertyObj: {
+            _cacheData: {
+                itemName: false
+            }
         },
+
         socialShareBoxAdded: false,
 
         initialize: function() {
+            _.defaultsDeep(this, this.propertyObj);
             utils.dispatcher.trigger('initialize.post-view', this);
             this.setTemplate(this.itemName());
             this.order = parseFloat(this.model.get('Order'));
@@ -42,7 +48,10 @@ define([
             }
             return data;
         },
-
+        alreadyRender: function() {
+            utils.dispatcher.trigger('before-render.post-view', this);
+            utils.dispatcher.trigger('after-render.post-view', this);
+        },
         beforeRender: function() {
             utils.dispatcher.trigger('before-render.post-view', this);
         },
@@ -52,11 +61,13 @@ define([
         },
 
         itemName: function() {
+            if (this._cacheData.itemName) {
+                return this._cacheData.itemName;
+            }
             var item,
                 post = this.model;
 
-            if (post.get('Author') &&
-                post.get('Author').Source.IsModifiable ===  'True' ||
+            if (post.get('Author').Source.IsModifiable ===  'True' ||
                 post.get('Author').Source.Name === 'internal') {
                 if (post.get('Type').Key === 'advertisement') {
                     item = 'item/posttype/infomercial';
@@ -72,7 +83,8 @@ define([
                     item = 'item/source/' + post.get('Author').Source.Name;
                 }
             }
-            return 'themeBase/' + item;
+            this._cacheData.itemName = 'themeBase/' + item;
+            return this._cacheData.itemName;
         }
     });
 });

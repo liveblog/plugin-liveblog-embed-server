@@ -74,14 +74,16 @@ define([
                 var postEl  = self.$(pEl),
                     postId  = postEl.attr(self.postRootDataAttr),
                     postCId = postEl.data('gimme-cid').toString(),
-                    post    = self.collection.get(postId);
+                    post    = self.collection.get(postId),
+                    postView;
 
                 // If the post is still in the collection and hasn't changed
                 // construct the postView and add it to nested views
                 if (post && postCId === post.get('CId')) {
                     // TODO: We may need to set here postView.hasRendered = true or
                     // fire an event here for the plugins
-                    self.insertPostView(post, {el: self.postRootSel(postId)});
+                    postView = self.insertPostView(post, {el: self.postRootSel(postId)});
+                    postView.alreadyRender();
                 } else {
                     // Else remove markup
                     postEl.remove();
