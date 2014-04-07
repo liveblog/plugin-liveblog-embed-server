@@ -14,7 +14,7 @@ define([
         el: false,
         // Where we cache some data.
         //   for now is used for cacheing the itemName after the compilation of it.
-        propertyObj: {
+        propertiesObj: {
             _cacheData: {
                 itemName: false
             }
@@ -23,7 +23,7 @@ define([
         socialShareBoxAdded: false,
 
         initialize: function() {
-            _.defaultsDeep(this, this.propertyObj);
+            _.defaultsDeep(this, this.propertiesObj);
             utils.dispatcher.trigger('initialize.post-view', this);
             this.setTemplate(this.itemName());
             this.order = parseFloat(this.model.get('Order'));
@@ -48,7 +48,7 @@ define([
             }
             return data;
         },
-        alreadyRender: function() {
+        alreadyRendered: function() {
             utils.dispatcher.trigger('before-render.post-view', this);
             utils.dispatcher.trigger('after-render.post-view', this);
         },
@@ -66,8 +66,8 @@ define([
             }
             var item,
                 post = this.model;
-
-            if (post.get('Author').Source.IsModifiable ===  'True' ||
+            if (post.get('Author') &&
+                post.get('Author').Source.IsModifiable ===  'True' ||
                 post.get('Author').Source.Name === 'internal') {
                 if (post.get('Type').Key === 'advertisement') {
                     item = 'item/posttype/infomercial';

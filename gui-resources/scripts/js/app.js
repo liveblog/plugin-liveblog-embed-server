@@ -80,7 +80,6 @@ requirejs.config({
         i18n:                   'lib/require/i18n',
         themeBase:              paths.themes + '/base',
         'lodash.compat':    paths.node_modules + '/lodash/dist/lodash.compat',
-        'lodash':    paths.node_modules + '/lodash/dist/lodash.compat',
         'css':                  'lib/require/css'
     },
     map: {
