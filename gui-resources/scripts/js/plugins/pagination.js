@@ -6,15 +6,17 @@ define([
 ], function(plugins, utils) {
     plugins.pagination = function(config) {
         utils.dispatcher.once('initialize.posts-view', function(view) {
+
+            // Set pagination params
+            view.collection.clearPaginationParams();
             if (liveblog.limit) {
                 view.collection.syncParams.pagination.limit = parseInt(liveblog.limit, 10);
-            } else {
-                view.collection.syncParams.pagination.limit = view.collection.defaultFilterParams.limit;
             }
+
             view.flags.loadingNextPage = false;
 
             view.topPage = function() {
-                view.collection.clearFilterParams();
+                view.collection.clearPaginationParams();
                 delete view.collection.syncParams.pagination['order.end'];
                 return view.collection.fetchPage();
             };
@@ -28,9 +30,10 @@ define([
 
                 var options = {
                     data: {
-                        offset: view.collection.filterParams.offset + view.collection.syncParams.pagination.limit
+                        offset: view.collection.syncParams.pagination.offset + view.collection.syncParams.pagination.limit
                     }
                 };
+
                 return view.collection.fetchPage(options).done(function(data) {
                     view.flags.loadingNextPage = false;
                     utils.dispatcher.trigger('loaded.posts-view', view);
@@ -38,7 +41,7 @@ define([
             };
 
             view.hasNextPage = function() {
-                return view.collection.length < view.collection.filterParams.total;
+                return view.collection.length < view.collection.filterProps.total;
             };
 
             // True if the blog was accessed through a permanent link to a specific post

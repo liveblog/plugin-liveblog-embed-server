@@ -27,10 +27,6 @@ define([
             }
         },
 
-        syncParams: {
-            thumbSize: 'medium'
-        },
-
         flags: {
             autoRender: true
         },
