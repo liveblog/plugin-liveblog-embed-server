@@ -28,7 +28,7 @@ define([
 
                 var options = {
                     data: {
-                        offset: view.collection.filterParams.offset + view.collection.filterParams.limit
+                        offset: view.collection.filterParams.offset + view.collection.syncParams.pagination.limit
                     }
                 };
                 return view.collection.fetchPage(options).done(function(data) {
