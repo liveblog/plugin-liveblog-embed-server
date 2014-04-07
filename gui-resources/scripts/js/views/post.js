@@ -52,9 +52,6 @@ define([
         },
 
         itemName: function() {
-            if(this._cacheData.itemName) {
-                return this._cacheData.itemName;
-            }
             var item,
                 post = this.model;
 
@@ -75,8 +72,7 @@ define([
                     item = 'item/source/' + post.get('Author').Source.Name;
                 }
             }
-            this._cacheData.itemName = 'themeBase/' + item;
-            return this._cacheData.itemName;
+            return 'themeBase/' + item;
         }
     });
 });

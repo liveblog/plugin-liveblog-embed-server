@@ -90,8 +90,8 @@ define([
 
             // Add new posts or posts that were removed because they had changed
             this.collection.forEach(this.addPostIfMissing, this);
-
             // TODO: We may need to fire an event here for the plugins
+            utils.dispatcher.trigger('add-all.posts-view', this);
         },
 
         addPostIfMissing: function(post) {
@@ -154,6 +154,7 @@ define([
                 var i = this._postViewIndex($el.attr(this.postRootDataAttr));
                 this._insertPostViewAt($root, $el, i);
             }
+            utils.dispatcher.trigger('add-all.posts-view', this);
         },
 
         // Create a new post view and insert it at the end of the views array
