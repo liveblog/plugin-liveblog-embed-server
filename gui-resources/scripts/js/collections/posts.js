@@ -55,7 +55,7 @@ define([
         },
 
         updateDataParse: function(data, options) {
-            this.updateLastCId(data.lastCId);
+            this.updateLastCId(parseInt(data.lastCId, 10));
 
             // Filter updates of posts: remove post updates from following pages
             if (data.PostList.length) {
@@ -77,12 +77,11 @@ define([
             // new cId are outside this range the API won't include them here.
             // To get the changes we need to request the updates from the old lastCId.
             // Therefore set lastCId only if it's yet undefined.
-            if (_.isUndefined(this.filterParams.lastCId)) {
-                this.updateLastCId(data.lastCId);
+            if (_.isUndefined(this.lastCId())) {
+                this.updateLastCId(parseInt(data.lastCId, 10));
             }
 
-            this.filterParams.offset  = parseInt(data.offset, 10);
-            this.filterParams.total   = parseInt(data.total, 10);
+            this.filterProps.total = parseInt(data.total, 10);
 
             if (data.PostList.length) {
                 var minOrderPost = _.min(data.PostList, function(p) {
@@ -94,11 +93,11 @@ define([
             return data.PostList;
         },
 
+        lastCId: function() {
+            return this.syncParams.updates['cId.since'];
+        },
+
         updateLastCId: function(lastCId) {
-            if (!_.isNumber(lastCId)) {
-                lastCId = parseInt(lastCId, 10);
-            }
-            this.filterParams.lastCId = lastCId;
             this.syncParams.updates['cId.since'] = lastCId;
         }
     });

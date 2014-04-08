@@ -6,39 +6,42 @@ define([
 ], function(plugins, utils) {
     plugins.pagination = function(config) {
         utils.dispatcher.once('initialize.posts-view', function(view) {
+
+            // Set pagination params
+            view.collection.clearPaginationParams();
             if (liveblog.limit) {
                 view.collection.syncParams.pagination.limit = parseInt(liveblog.limit, 10);
-            } else {
-                view.collection.syncParams.pagination.limit = view.collection.defaultFilterParams.limit;
             }
+
             view.flags.loadingNextPage = false;
 
+            view.updateNextPageOffset = function() {
+                this.collection.syncParams.pagination.offset = this.collection.length;
+            };
+
             view.topPage = function() {
-                view.collection.clearFilterParams();
-                delete view.collection.syncParams.pagination['order.end'];
-                return view.collection.fetchPage();
+                this.collection.clearPaginationParams();
+                delete this.collection.syncParams.pagination['order.end'];
+                return this.collection.fetchPage();
             };
 
             view.nextPage = function() {
-                if (view.flags.loadingNextPage || !view.hasNextPage()) {
+                if (this.flags.loadingNextPage || !this.hasNextPage()) {
                     return;
                 }
-                utils.dispatcher.trigger('loading.posts-view', view);
-                view.flags.loadingNextPage = true;
+                utils.dispatcher.trigger('loading.posts-view', this);
+                this.flags.loadingNextPage = true;
 
-                var options = {
-                    data: {
-                        offset: view.collection.filterParams.offset + view.collection.syncParams.pagination.limit
-                    }
-                };
-                return view.collection.fetchPage(options).done(function(data) {
-                    view.flags.loadingNextPage = false;
-                    utils.dispatcher.trigger('loaded.posts-view', view);
+                this.updateNextPageOffset();
+                var self = this;
+                return this.collection.fetchPage().done(function(data) {
+                    self.flags.loadingNextPage = false;
+                    utils.dispatcher.trigger('loaded.posts-view', self);
                 });
             };
 
             view.hasNextPage = function() {
-                return view.collection.length < view.collection.filterParams.total;
+                return this.collection.length < this.collection.filterProps.total;
             };
 
             // True if the blog was accessed through a permanent link to a specific post
