@@ -15,6 +15,7 @@ define(function() {
                             'hidden' : 'visible';
         }
         el.css('visibility', vsblty);
+        return vsblty === 'visible' ? true : false;
     };
 
     return visibilityToggle;
