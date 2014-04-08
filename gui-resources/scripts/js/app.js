@@ -27,7 +27,7 @@ app.configure(function() {
                 express['static'](path.join(__dirname, paths.node_modules)));
 });
 
-paths.logs = path.join(__dirname, paths.app, config.dir.log);
+paths.logs = path.join(__dirname, paths.app, config.paths.log);
 
 // Create logger for the app
 fs.exists(paths.logs, function(exists) {

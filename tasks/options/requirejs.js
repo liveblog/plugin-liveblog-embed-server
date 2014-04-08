@@ -1,10 +1,10 @@
 module.exports = {
     compile: {
         options: {
-            mainConfigFile: '<%= dir.script  %>/main.js',
-            baseUrl: '<%= dir.script  %>/',
+            mainConfigFile: '<%= paths.script  %>/main.js',
+            baseUrl: '<%= paths.script  %>/',
             name: 'main',
-            out: '<%= dir.build  %>/app.min.js',
+            out: '<%= paths.build  %>/app.min.js',
             findNestedDependencies: true
         }
     }

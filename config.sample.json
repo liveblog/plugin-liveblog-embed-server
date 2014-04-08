@@ -10,7 +10,7 @@
     "logging": {
         "app": "appjs.log"
     },
-    "dir": {
+    "paths": {
         "script": "gui-resources/scripts/js",
         "theme": "gui-themes",
         "build": "build",

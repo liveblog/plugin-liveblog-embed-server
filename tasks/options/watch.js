@@ -1,6 +1,6 @@
 module.exports = {
     express: {
-        files: ['<%= dir.script  %>/**/*.js', '<%= dir.theme %>/**/*.js', '<%= dir.theme %>/**/*.dust'],
+        files: ['<%= paths.script  %>/**/*.js', '<%= paths.theme %>/**/*.js', '<%= paths.theme %>/**/*.dust'],
 
         tasks: ['express:dev'],
         options: {
@@ -15,7 +15,7 @@ module.exports = {
         tasks: ['jshint:all', 'jscs:all']
     },
     less: {
-        files: ['<%= dir.theme %>/themes/**/*.less'],
+        files: ['<%= paths.theme %>/themes/**/*.less'],
         tasks: ['less:all']
     },
     mocha: {

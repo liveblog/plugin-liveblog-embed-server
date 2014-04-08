@@ -3,17 +3,17 @@ module.exports = {
         // When using a jshintrc file the
         // options can't be overwritten at task level
         jshintrc: true,
-        ignores: ['<%= dir.script  %>/bower_components/**']
+        ignores: ['<%= paths.script  %>/bower_components/**']
     },
     source: {
         src: [
-            '<%= dir.script  %>/**/*.js',
-            '<%= dir.theme  %>/**/*.js'
+            '<%= paths.script  %>/**/*.js',
+            '<%= paths.theme  %>/**/*.js'
         ]
     },
     tests: {
         src: [
-            '<%= dir.test %>/**/*.js'
+            '<%= paths.test %>/**/*.js'
         ]
     },
     grunt: {
@@ -25,9 +25,9 @@ module.exports = {
         src: [
             'Gruntfile.js',
             'tasks/**/*.js',
-            '<%= dir.script  %>/**/*.js',
-            '<%= dir.theme  %>/**/*.js',
-            '<%= dir.test %>/**/*.js'
+            '<%= paths.script  %>/**/*.js',
+            '<%= paths.theme  %>/**/*.js',
+            '<%= paths.test %>/**/*.js'
         ]
     }
 };

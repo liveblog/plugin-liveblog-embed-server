@@ -1,7 +1,7 @@
 module.exports = {
     options: {
-        script: '<%= dir.script  %>/server.js',
-        port: '<%= server.port %>'
+        script: '<%= paths.script  %>/server.js',
+        port: '<%= paths.port %>'
     },
     dev: {
         options: {
