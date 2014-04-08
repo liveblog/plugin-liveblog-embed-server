@@ -56,6 +56,7 @@ define([
         },
 
         setViewOnReset: function() {
+            this.fakeViewRendering();
             var postEls = this.$el.children(this.postRootSel());
 
             // If there are no server side rendered posts, render whole view
@@ -87,7 +88,7 @@ define([
 
             // Add new posts or posts that were removed because they had changed
             this.collection.forEach(this.addPostIfMissing, this);
-            // TODO: We may need to fire an event here for the plugins
+
             utils.dispatcher.trigger('add-all.posts-view', this);
         },
 
