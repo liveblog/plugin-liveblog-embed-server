@@ -12,6 +12,7 @@ define([
         // Set el to the top level element from the template
         // instead of default behaviour of inserting a div element.
         el: false,
+
         // Where we cache some data.
         //   for now is used for cacheing the itemName after the compilation of it.
         propertiesObj: {
@@ -48,10 +49,13 @@ define([
             }
             return data;
         },
+
         alreadyRendered: function() {
+            this.fakeViewRendering();
             utils.dispatcher.trigger('before-render.post-view', this);
             utils.dispatcher.trigger('after-render.post-view', this);
         },
+
         beforeRender: function() {
             utils.dispatcher.trigger('before-render.post-view', this);
         },

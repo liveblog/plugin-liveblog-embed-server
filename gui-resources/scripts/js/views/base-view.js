@@ -53,6 +53,14 @@ define([
             return this.__manager__.parent;
         },
 
+        // Fix LB-1564
+        // We set some view properties for Backbone.layoutManager to work as
+        // if the view had been rendered
+        fakeViewRendering: function() {
+            this.hasRendered      = true;
+            this.__manager__.noel = true;
+        },
+
         events: {},
 
         // Add events to the view only if we are in the client.
