@@ -79,12 +79,13 @@ requirejs.config({
         tmpl:                   'lib/require/tmpl',
         i18n:                   'lib/require/i18n',
         themeBase:              paths.themes + '/base',
-        'lodash.underscore':    paths.node_modules + '/lodash/dist/lodash.underscore',
+        'lodash.compat':    paths.node_modules + '/lodash/dist/lodash.compat',
         'css':                  'lib/require/css'
     },
     map: {
         '*': {
-            'underscore': 'lodash.underscore'
+            'underscore': 'lodash.compat',
+            'lodash': 'lodash.compat'
         }
     },
     nodeRequire: require

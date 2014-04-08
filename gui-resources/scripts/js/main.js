@@ -16,9 +16,9 @@ require.config({
         'dustjs-helpers':           'node_modules/dustjs-helpers/dist/dust-helpers.min',
         'dust':                     'lib/dust',
         'jed':                      'node_modules/jed/jed',
-        'lodash.underscore':        'node_modules/lodash/dist/lodash.underscore.min',
+        'lodash.compat':            'node_modules/lodash/dist/lodash.compat.min',
         'backbone':                 'node_modules/backbone/backbone-min',
-        'backbone-custom':             'lib/backbone/backbone-custom',
+        'backbone-custom':          'lib/backbone/backbone-custom',
         'backbone.layoutmanager':   'node_modules/backbone.layoutmanager/backbone.layoutmanager',
         'moment':                   'node_modules/moment/min/moment.min',
         'themeBase':                '../../themes/base',
@@ -40,12 +40,13 @@ require.config({
     map: {
         '*': {
             'underscore':   'lib/lodash-private',
+            'lodash':       'lib/lodash-private',
             'jquery':       'lib/jquery-private',
             'backbone':     'lib/backbone-private'
         },
         'lib/jquery-private':   {'jquery': 'jquery'},
         'lib/backbone-private': {'backbone': 'backbone'},
-        'lib/lodash-private':   {'lodash': 'lodash.underscore'}
+        'lib/lodash-private':   {'lodash': 'lodash.compat'}
     }
 });
 
