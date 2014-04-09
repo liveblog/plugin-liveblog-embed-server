@@ -132,9 +132,12 @@ define(['lib/utils', 'plugins/css', 'backbone'], function(utils, pluginCss, Back
             // calculate the base folder of the file
             fileBase = configCss.siteRoot ? path.join(config.baseUrl, configCss.siteRoot) : config.baseUrl,
             // get the relative path from the file base
-            relativePath = path.relative(fileBase, req.toUrl(name + '.css')),
+            relativePath = path.relative(fileBase, req.toUrl(name + '.css'));
             // url should be formated from the css configuration host and relativePath
-            url = configCss.host + '/' + relativePath;
+            if (utils.isWindows) {
+                relativePath = relativePath.replace(/\\/g, '/');
+            }
+            var url = configCss.host + '/' + relativePath;
             pluginCss.setData('<link type="text/css" rel="stylesheet" href="' + url + '">');
             onload();
         }
