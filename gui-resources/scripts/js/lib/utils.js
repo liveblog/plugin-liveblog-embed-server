@@ -13,6 +13,9 @@ define(['backbone', 'underscore'], function(Backbone, _) {
                    process.versions &&
                    !!process.versions.node);
 
+    //set to true if the server is running Windows OS
+    obj.isWindows = (typeof process !== 'undefined' && !!process.platform.match(/^win/));
+
     // set the dispatcher form Backbone events.
     obj.dispatcher = _.extend({}, Backbone.Events);
 
