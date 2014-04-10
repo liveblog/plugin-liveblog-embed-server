@@ -2,11 +2,13 @@
 
 define([
 	'css!theme/liveblog',
-	'tmpl!theme/container',
-	'tmpl!theme/item/base',
-	'plugins/wrappup-toggle'
-//	'plugins/scroll-pagination',
-//	'plugins/permanent-link'
-//	'plugins/user-comments'
+    'plugins/pagination',
+    'plugins/button-pagination',
+    'plugins/twitter-widgets',
+    'plugins/post-hash',
+    'plugins/permanent-link',
+    'plugins/social-share',
+    'tmpl!theme/container',
+    'tmpl!theme/item/base'
 ], function() {
 });
