@@ -2,7 +2,6 @@
 
 define([
 	'tmpl!themeBase/item/base',
-	'tmpl!themeBase/item/social-share',
 	'tmpl!themeBase/item/posttype/base',
 	'tmpl!themeBase/item/posttype/normal',
 	'tmpl!themeBase/item/posttype/image',

@@ -2,14 +2,22 @@
 define([
     'plugins',
     'lib/utils',
-    'lib/helpers/visibility-toggle'
-], function (plugins, utils, visibilityToggle) {
+    'dust',
+    'lib/helpers/visibility-toggle',
+    'tmpl!themeBase/item/base',
+    'tmpl!themeBase/plugins/permanent-link'
+], function (plugins, utils, dust, visibilityToggle) {
     if (utils.isClient) {
         plugins.permalink = function (config) {
             utils.dispatcher.on('initialize.post-view', function (view) {
+                //add the 'anchor' to the template
+                dust.renderThemed('themeBase/plugins/permanent-link', {}, function(err, out) {
+                    view.$('[data-gimme="post.permanent-link-placeholder"]').html(out);
+                });
                 view.clientEvents({
                     'click [data-gimme="post.permalink"]': 'permalinkAction'
                 });
+                //toggle the visibility of the permalink input box
                 view.permalinkAction = function (evt) {
                     evt.preventDefault();
                     var box = this.$(evt.target).siblings('[data-gimme="post.share-permalink"]');
@@ -24,6 +32,7 @@ define([
                     permLink = view.permalink();
                     view.$('[data-gimme="post.share-permalink"]').val(permLink);
                 }
+                //select all the content of the permalink input box for easy copying
                 view.clientEvents({
                     'click [data-gimme="post.share-permalink"]': 'permalinkInput',
                     'focus [data-gimme="post.share-permalink"]': 'permalinkInput'
@@ -31,6 +40,7 @@ define([
                 view.permalinkInput = function (evt) {
                     view.$(evt.target).select();
                 };
+                view.delegateEvents();
             });
         };
         return plugins.permalink;

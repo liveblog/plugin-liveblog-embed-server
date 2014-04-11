@@ -233,14 +233,9 @@
 {/shareContainer}
 
 {<permanentLinkShare}
-    {+permanentLink}
-        <a data-gimme="post.permalink" href="{permalink}" rel="bookmark" class="permalink">#</a>
-        <input data-gimme="post.share-permalink" type="text" style="visibility:hidden" value="{permalink}">
-    {/permanentLink}
+    <div data-gimme="post.permanent-link-placeholder"></div>
 {/permanentLinkShare}
 
 {<socialShare}
-    {+social}
-        <a data-gimme="post.social" href="#" class="sf-share">_('Share');</a>
-    {/social}
+    <div data-gimme="post.social-share-placeholder"></div>
 {/socialShare}
