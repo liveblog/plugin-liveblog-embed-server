@@ -61,6 +61,10 @@ define(['backbone-custom', 'lib/gettext'], function(Backbone, gt) {
                                 console.log('We have tried ' + this.retryLimit + ' times and it is still not working. We give in. Sorry.');
                             }
                             return false;
+                        } else {
+                            // if the request has faild still load requirejs module but with empty data.
+                            onLoad({});
+                            return true;
                         }
                     }
                 };

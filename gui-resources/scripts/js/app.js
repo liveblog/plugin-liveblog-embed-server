@@ -144,7 +144,14 @@ app.get('/', function(req, res) {
         'views/layout',
         'i18n!livedesk_embed'
     ], function(Layout) {
-        var layout = new Layout();
+        // send error property when fetching blog,
+        //   in this way we can catch an request error and send a error
+        //   mesage in response body.
+        var layout = new Layout({fetchBlogOptions: {
+            error: function() {
+                res.send('Requesting blog resource failed!');
+            }
+        }});
         layout.blogModel.get('publishedPosts').on('sync', function() {
             res.send(layout.render().$el.html());
         });
