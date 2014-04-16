@@ -17,5 +17,13 @@ module.exports = {
     less: {
         files: ['<%= dir.theme %>/themes/**/*.less'],
         tasks: ['less:all']
+    },
+    mocha: {
+        files: [
+            '<%= jshint.source.src %>',
+            '<%= jshint.tests.src %>',
+            '!<%= dir.test %>/client/**/*.js'
+        ],
+        tasks: ['simplemocha:all']
     }
 };

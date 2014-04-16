@@ -5,6 +5,22 @@ module.exports = {
         jshintrc: true,
         ignores: ['<%= dir.script  %>/bower_components/**']
     },
+    source: {
+        src: [
+            '<%= dir.script  %>/**/*.js',
+            '<%= dir.theme  %>/**/*.js'
+        ]
+    },
+    tests: {
+        src: [
+            '<%= dir.test %>/**/*.js'
+        ]
+    },
+    grunt: {
+        src: [
+            'Gruntfile.js'
+        ]
+    },
     all: {
         src: [
             'Gruntfile.js',
