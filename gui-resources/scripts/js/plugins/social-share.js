@@ -10,24 +10,29 @@ define([
     'lib/gettext',
     'lib/helpers/fixed-encodeURIComponent',
     'lib/helpers/visibility-toggle',
-    'config/social-share-plugin'
+    'config/social-share-plugin',
+    'tmpl!themeBase/plugins/social-share-anchor',
+    'tmpl!themeBase/plugins/social-share'
 ], function(Backbone, _, plugins, utils, dust, gt,
     fixedEncodeURIComp, visibilityToggle, shareConf) {
 
     if (utils.isClient){
 
         plugins['social-share'] = function(config) {
-
             utils.dispatcher.on('initialize.post-view', function(view) {
-                view.clientEvents({'click .sf-share': 'share'});
+
+                dust.renderThemed('themeBase/plugins/social-share-anchor', {}, function(err, out) {
+                    view.$('[data-gimme="post.social-share-placeholder"]').html(out);
+                });
+                view.clientEvents({'click [data-gimme="post.social"]': 'share'});
 
                 view.share = function(e) {
                     e.preventDefault();
 
                     if (!view.socialShareBoxAdded) {
-                        dust.renderThemed('themeBase/item/social-share', socialParams(view),
+                        dust.renderThemed('themeBase/plugins/social-share', socialParams(view),
                           function(err, out) {
-                            view.$('.sf-share').after(out);
+                            view.$('[data-gimme="post.social-share-placeholder"]').append(out);
                             view.socialShareBoxAdded = true;
                         });
                     }
