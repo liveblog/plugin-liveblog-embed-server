@@ -9,5 +9,8 @@ module.exports = {
     ci: {
         singleRun: true,
         browsers: ['PhantomJS']
+    },
+    once: {
+        singleRun: true
     }
 };

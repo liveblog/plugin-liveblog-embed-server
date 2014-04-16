@@ -52,7 +52,12 @@
     "karma-sinon-chai": "^0.1.5",
     "grunt-karma": "^0.8.2",
     "karma-requirejs": "^0.2.1",
-    "karma-phantomjs-launcher": "^0.1.4"
+    "karma-phantomjs-launcher": "^0.1.4",
+    "mocha": "^1.18.2",
+    "chai": "^1.9.1",
+    "sinon": "^1.9.1",
+    "sinon-chai": "^2.5.0",
+    "grunt-simple-mocha": "^0.4.0"
   },
   "optionalDependencies": {
     "grunt-forever": "^0.4.4",
