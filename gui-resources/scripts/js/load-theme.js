@@ -4,9 +4,13 @@
 define([
     'module',
     'underscore',
-    'plugins'
-], function(module, _, plugins) {
-
+    'plugins',
+    'lib/utils'
+], function(module, _, plugins, utils) {
+    var undefineTheme = function() {
+        requirejs.undef('theme');
+        requirejs.undef('themeFile');
+    };
     // Set theme and theme file paths.
     // Once the paths are correctly set, load the files,
     //  create the blogView and use it as param for the callback function.
@@ -29,6 +33,7 @@ define([
             }
         });
         // Load (apply) theme config
+        undefineTheme();
         require([
             'themeFile',
             'lib/helpers/find-environment'
@@ -42,8 +47,7 @@ define([
                     liveblog.environment = theme.environments[environment] ?
                         theme.environments[environment] : theme.environments['default'];
                 }
-                requirejs.undef('theme');
-                requirejs.undef('themeFile');
+                undefineTheme();
                 requirejs.config({
                     paths: {
                         theme: module.config().themesPath + liveblog.theme + '/' + liveblog.environment,
@@ -52,10 +56,16 @@ define([
                 });
                 requirejs(['themeFile'], function() {
                     loadPlugins();
+                }, function(err) {
+                    undefineTheme();
+                    utils.dispatcher.trigger('sub-theme-file.request-failed');
                 });
             } else {
                 loadPlugins();
             }
+        }, function(err) {
+            undefineTheme();
+            utils.dispatcher.trigger('theme-file.request-failed');
         });
     };
 });

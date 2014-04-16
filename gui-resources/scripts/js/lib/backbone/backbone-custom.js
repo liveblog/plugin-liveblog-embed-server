@@ -60,6 +60,7 @@ define([
 
         // Parse response to json
         options.json = true;
+        options.timeout = 1000;
 
         // Set the query string with the options.data params
         if (options.data) {

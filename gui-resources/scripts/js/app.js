@@ -41,21 +41,21 @@ fs.exists(paths.logs, function(exists) {
     }
 });
 // Set a vector for caching on requirejs object.
-requirejs.cache = [];
+requirejs.cache = {};
 
 // This method is triggered by requirejs when a module is added,
 //   so we keep all of the module id into the requirejs cache object.
 requirejs.onResourceLoad = function (context, map, depArray) {
-    requirejs.cache.push(map.id);
+    requirejs.cache[map.id] = true;
 };
 
 // Check the require cache object for the matching pattern,
 //    and if modules with the pattern are found undefine them form requirejs.
 requirejs.clearCache = function(pattern) {
     var srex = new RegExp(pattern);
-    lodash.each(requirejs.cache, function(name, idx) {
-        if (srex.test(name)) {
-            requirejs.cache.splice(idx, 1);
+    lodash.each(requirejs.cache, function(value, name) {
+        if (value && srex.test(name)) {
+            requirejs.cache[name] = false;
             requirejs.undef(name);
         }
     });
@@ -125,9 +125,12 @@ var configLiveblog = function(config, server) {
         });
     return config;
 };
+requirejs.onError = function(err) {
+    var failedId = err.requireModules && err.requireModules[0];
+    requirejs.undef(failedId);
+};
 
 app.get('/', function(req, res) {
-
     var queryString = qs.stringify(req.query);
     liveblogLogger.info('App request query string' +
         (queryString ? ': "' + queryString + '"' : ' is empty'));
@@ -142,11 +145,38 @@ app.get('/', function(req, res) {
     requirejs.clearCache('^(i18n!|css!|theme|themeFile)');
     requirejs([
         'views/layout',
+        'lib/utils',
         'i18n!livedesk_embed'
-    ], function(Layout) {
+    ], function(Layout, utils) {
+        var sent = false;
+        // if this will work in the future it will be good.
+        //   removeing all namespaced events.
+        //utils.dispatcher.off('.request-failed');
+        utils.dispatcher.off('theme-file.request-failed');
+        utils.dispatcher.off('blog-model.request-failed');
+        utils.dispatcher.once('blog-model.request-failed', function() {
+            if (!sent) {
+                sent = true;
+                //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
+                res.send('Request for blog has failed.');
+            }
+        });
+        utils.dispatcher.once('theme-file.request-failed', function() {
+            if (!sent) {
+                sent = true;
+                //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
+                res.send('Request for theme file has failed.');
+            }
+        });
         var layout = new Layout();
         layout.blogModel.get('publishedPosts').on('sync', function() {
-            res.send(layout.render().$el.html());
+            if (!sent) {
+                sent = true;
+                res.send(layout.render().$el.html());
+            }
         });
+    }, function(err) {
+        //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
+        res.send(err);
     });
 });

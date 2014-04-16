@@ -26,11 +26,16 @@ define([
             }
             this.model = new Liveblog(liveblog);
             this.blogModel = new Blog({Id: liveblog.id});
-            this.blogModel.fetch({success: function() {
-                loadTheme(self.blogModel.get('EmbedConfig'), function() {
-                    self.insertView('[data-gimme="liveblog-layout"]', new BlogView({model: self.blogModel}));
-                });
-            }});
+            this.blogModel.fetch({
+                success: function() {
+                    loadTheme(self.blogModel.get('EmbedConfig'), function() {
+                        self.insertView('[data-gimme="liveblog-layout"]', new BlogView({model: self.blogModel}));
+                    });
+                },
+                error: function() {
+                    utils.dispatcher.trigger('blog-model.request-failed');
+                }
+            });
             self.insertView('[data-gimme="liveblog-embed-code"]', new EmbedCode({model: this.model}));
             this.setTemplate('layout');
         },
