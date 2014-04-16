@@ -125,9 +125,12 @@ var configLiveblog = function(config, server) {
         });
     return config;
 };
+requirejs.onError = function(err) {
+    var failedId = err.requireModules && err.requireModules[0];
+    requirejs.undef(failedId);
+};
 
 app.get('/', function(req, res) {
-
     var queryString = qs.stringify(req.query);
     liveblogLogger.info('App request query string' +
         (queryString ? ': "' + queryString + '"' : ' is empty'));
@@ -142,18 +145,35 @@ app.get('/', function(req, res) {
     requirejs.clearCache('^(i18n!|css!|theme|themeFile)');
     requirejs([
         'views/layout',
+        'lib/utils',
         'i18n!livedesk_embed'
-    ], function(Layout) {
-        // send error property when fetching blog,
-        //   in this way we can catch an request error and send a error
-        //   mesage in response body.
-        var layout = new Layout({fetchBlogOptions: {
-            error: function() {
-                res.send('Requesting blog resource failed!');
+    ], function(Layout, utils) {
+        var sended = false;
+        // if this will work in the future it will be good.
+        //   removeing all namespaced events.
+        //utils.dispatcher.off('.request-failed');
+        utils.dispatcher.off('theme-file.request-failed');
+        utils.dispatcher.off('blog-model.request-failed');
+        utils.dispatcher.once('blog-model.request-failed', function() {
+            if (!sended) {
+                sended = true;
+                res.send('Request for blog has failed.');
             }
-        }});
-        layout.blogModel.get('publishedPosts').on('sync', function() {
-            res.send(layout.render().$el.html());
         });
+        utils.dispatcher.once('theme-file.request-failed', function() {
+            if (!sended) {
+                sended = true;
+                res.send('Request for theme file has failed.');
+            }
+        });
+        var layout = new Layout();
+        layout.blogModel.get('publishedPosts').on('sync', function() {
+            if (!sended) {
+                sended = true;
+                res.send(layout.render().$el.html());
+            }
+        });
+    }, function(err) {
+        res.send(err);
     });
 });

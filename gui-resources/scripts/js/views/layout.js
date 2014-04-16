@@ -13,9 +13,6 @@ define([
 ], function(_, BaseView, BlogView, EmbedCode, Blog, Liveblog, loadTheme, utils) {
 
     return BaseView.extend({
-        // Additional options for fetching the blog model.
-        //   they are merged with the success option, before fetch is send.
-        fetchBlogOptions: {},
 
         initialize: function() {
             var self = this;
@@ -29,11 +26,16 @@ define([
             }
             this.model = new Liveblog(liveblog);
             this.blogModel = new Blog({Id: liveblog.id});
-            this.blogModel.fetch(_.extend({success: function() {
-                loadTheme(self.blogModel.get('EmbedConfig'), function() {
-                    self.insertView('[data-gimme="liveblog-layout"]', new BlogView({model: self.blogModel}));
-                });
-            }}, this.fetchBlogOptions));
+            this.blogModel.fetch({
+                success: function() {
+                    loadTheme(self.blogModel.get('EmbedConfig'), function() {
+                        self.insertView('[data-gimme="liveblog-layout"]', new BlogView({model: self.blogModel}));
+                    });
+                },
+                error: function() {
+                    utils.dispatcher.trigger('blog-model.request-failed');
+                }
+            });
             self.insertView('[data-gimme="liveblog-embed-code"]', new EmbedCode({model: this.model}));
             this.setTemplate('layout');
         },
