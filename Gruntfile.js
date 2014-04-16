@@ -76,6 +76,6 @@ module.exports = function(grunt) {
     grunt.registerTask('hint', ['jshint:all', 'jscs:all']);
     grunt.registerTask('test', ['karma:dev']);
     grunt.registerTask('build', ['hint', 'less:all', 'requirejs']);
-    grunt.registerTask('ci:travis', ['hint']);
+    grunt.registerTask('ci:travis', ['hint', 'karma:ci']);
     grunt.registerTask('default', ['githooks', 'server']);
 };

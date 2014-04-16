@@ -5,5 +5,9 @@ module.exports = {
     },
     dev: {
         reporters: 'dots'
+    },
+    ci: {
+        singleRun: true,
+        browsers: ['PhantomJS']
     }
 };
