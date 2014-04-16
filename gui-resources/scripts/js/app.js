@@ -148,32 +148,35 @@ app.get('/', function(req, res) {
         'lib/utils',
         'i18n!livedesk_embed'
     ], function(Layout, utils) {
-        var sended = false;
+        var sent = false;
         // if this will work in the future it will be good.
         //   removeing all namespaced events.
         //utils.dispatcher.off('.request-failed');
         utils.dispatcher.off('theme-file.request-failed');
         utils.dispatcher.off('blog-model.request-failed');
         utils.dispatcher.once('blog-model.request-failed', function() {
-            if (!sended) {
-                sended = true;
+            if (!sent) {
+                sent = true;
+                //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
                 res.send('Request for blog has failed.');
             }
         });
         utils.dispatcher.once('theme-file.request-failed', function() {
-            if (!sended) {
-                sended = true;
+            if (!sent) {
+                sent = true;
+                //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
                 res.send('Request for theme file has failed.');
             }
         });
         var layout = new Layout();
         layout.blogModel.get('publishedPosts').on('sync', function() {
-            if (!sended) {
-                sended = true;
+            if (!sent) {
+                sent = true;
                 res.send(layout.render().$el.html());
             }
         });
     }, function(err) {
+        //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
         res.send(err);
     });
 });
