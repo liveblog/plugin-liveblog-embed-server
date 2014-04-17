@@ -158,7 +158,7 @@
     //     function logout(request, isManual, whereAmI, onSuccess) {
     //     // ...
     //     }
-    "maxparams": 5,
+    "maxparams": 7,
 
     // This option lets you control how nested do you want your blocks to be:
     // /*jshint maxdepth:2 */
