@@ -22,7 +22,7 @@ module.exports = {
         files: [
             '<%= jshint.source.src %>',
             '<%= jshint.tests.src %>',
-            '!<%= dir.test %>/client/**/*.js'
+            '!<%= paths.test %>/client/**/*.js'
         ],
         tasks: ['simplemocha:all']
     }

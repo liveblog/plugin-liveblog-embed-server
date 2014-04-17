@@ -10,8 +10,8 @@ module.exports = {
 
     all: {
         src: [
-            '<%= dir.test %>/server/spechelper.js',
-            '<%= dir.test %>/server/**/*.spec.js'
+            '<%= paths.test %>/server/spechelper.js',
+            '<%= paths.test %>/server/**/*.spec.js'
         ]
     }
 };
