@@ -10,20 +10,20 @@ module.exports = {
             spawn: false
         }
     },
-    'check-own': {
-        files: ['<%= jshint.own.src %>'],
-        tasks: ['jshint:own', 'jscs:own']
-    },
-    'check-libs': {
-        files: ['<%= jshint.libs.src %>'],
-        tasks: ['jshint:libs', 'jscs:libs']
-    },
-    'check-all': {
+    hint: {
         files: ['<%= jshint.all.src %>'],
         tasks: ['jshint:all', 'jscs:all']
     },
     less: {
         files: ['<%= dir.theme %>/themes/**/*.less'],
         tasks: ['less:all']
+    },
+    mocha: {
+        files: [
+            '<%= jshint.source.src %>',
+            '<%= jshint.tests.src %>',
+            '!<%= dir.test %>/client/**/*.js'
+        ],
+        tasks: ['simplemocha:all']
     }
 };

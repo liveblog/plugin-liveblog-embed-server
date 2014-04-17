@@ -14,7 +14,8 @@
         "script": "gui-resources/scripts/js",
         "theme": "gui-themes",
         "build": "build",
-        "log": "logs"
+        "log": "logs",
+        "test": "test"
     },
     "app": {
         "hostname": "localhost",
