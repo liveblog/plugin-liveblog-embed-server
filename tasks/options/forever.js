@@ -1,8 +1,8 @@
 module.exports = {
     liveblog: {
         options: {
-            index: '<%= paths.script %>/server.js',
-            logDir: '<%= paths.log %>'
+            index: '<%= paths.scripts %>/server.js',
+            logDir: '<%= paths.logs %>'
         }
     }
 };

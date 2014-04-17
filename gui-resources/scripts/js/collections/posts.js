@@ -30,7 +30,7 @@ define([
         pollInterval: 10000,
 
         url: function() {
-            return liveblog.host + '/resources/LiveDesk/Blog/' + this.blogId + '/Post/Published/';
+            return liveblog.servers.rest + '/resources/LiveDesk/Blog/' + this.blogId + '/Post/Published/';
         },
 
         initialize: function(models, options) {

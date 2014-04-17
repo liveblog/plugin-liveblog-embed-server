@@ -25,6 +25,7 @@ define([
         };
         // Set liveblog theme
         liveblog.theme = liveblog.theme ? liveblog.theme : config.theme;
+        liveblog.language = liveblog.language ? liveblog.language : config.lanugage;
         // Set the path for theme template files and theme config file
         require.config({
             paths: {
@@ -36,7 +37,8 @@ define([
         undefineTheme();
         require([
             'themeFile',
-            'lib/helpers/find-environment'
+            'lib/helpers/find-environment',
+            'i18n!livedesk_embed'
         ], function(theme, findEnvironment) {
             // If the theme has different environments reset the
             //  path to theme template files and theme config file to use

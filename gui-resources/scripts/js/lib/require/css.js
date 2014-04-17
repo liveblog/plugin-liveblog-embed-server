@@ -128,7 +128,8 @@ define(['lib/utils', 'plugins/css', 'backbone'], function(utils, pluginCss, Back
     cssAPI.load = function(name, req, onload, config) {
         var configCss = config.config.css;
         if (utils.isServer) {
-            var path = require('path'),
+            var url,
+                path = require('path'),
             // calculate the base folder of the file
             fileBase = configCss.siteRoot ? path.join(config.baseUrl, configCss.siteRoot) : config.baseUrl,
             // get the relative path from the file base
@@ -137,12 +138,12 @@ define(['lib/utils', 'plugins/css', 'backbone'], function(utils, pluginCss, Back
             if (utils.isWindows) {
                 relativePath = relativePath.replace(/\\/g, '/');
             }
-            var url = configCss.host + '/' + relativePath;
+            url = configCss.url + '/' + relativePath;
             pluginCss.setData('<link type="text/css" rel="stylesheet" href="' + url + '">');
             onload();
         }
         if (utils.isClient) {
-            var loaded = Backbone.$('link[href="' + req.toUrl(configCss.host + '/' + name + '.css') + '"]');
+            var loaded = Backbone.$('link[href="' + req.toUrl(configCss.url + '/' + name + '.css') + '"]');
             (useImportLoad ? importLoad : linkLoad)(req.toUrl(name + '.css'), onload);
             // @TODO uncomment the lines below when main view is defined
             //if(!loaded) {

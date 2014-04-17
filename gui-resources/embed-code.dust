@@ -1,36 +1,43 @@
 <script type="text/javascript">
 /* <![CDATA[ */{~n}
     var liveblog = (function(d){
-        var self = this;
-
-        self.data = {
+        var config = {
             id: {id},
             el: '[data-gimme="liveblog"]',
-            {?language}
+        {?language}
             'language': '{language}',
-            {/language}
-            {?theme}
+        {/language}
+        {?theme}
             theme: '{theme}',
-            {/theme}
-            frontendServer: '{frontendServer}',
-            host: '{host}',
-            scriptsPath: '/scripts/js/',
-            script: d.scripts[d.scripts.length - 1],
-            limit: {limit},
-            dev: true
+        {/theme}
+            servers: {
+                frontend: '{servers.frontend}',
+                rest: '{servers.rest}'
+            },
+            paths: {
+                scripts: '{paths.scripts}'
+            },
+            {?dev}
+                dev: true,
+            {/dev}
+            {?limit}
+                limit: {limit},
+            {/limit}
+            fallback: {
+                language: "{fallback.language}"
+            }
         };
-
-        self.data.baseUrl = self.data.frontendServer + self.data.scriptsPath;
-        self.data.loadJs = function(path) {
+        config.baseUrl = config.servers.frontend + config.paths.scripts;
+        config.loadJs = function(path) {
                     var ls = d.createElement('script'), s = d.getElementsByTagName('script')[0];
                     ls.type = "text/javascript"; s.async = true;
                     ls.src = path.indexOf('//') === -1 ?
-                        self.data.baseUrl + path + '.js?version=' + (self.data.version || parseInt((new Date()).getTime()/600000)):
+                        config.baseUrl + path + '.js?version=' + (config.version || parseInt((new Date()).getTime()/600000)):
                         path;
                     s.parentNode.insertBefore( ls, s ); return ls;
         };
-        self.data.loadJs('loader');
-        return self.data;
+        config.loadJs('loader');
+        return config;
     })(document);
 {~n}/* ]]> */
 </script>

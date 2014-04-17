@@ -1,85 +1,71 @@
 'use strict';
 
-var requirejs = require('requirejs'),
+var requirejs = require('./lib/nodejs/requirejs-clear-cache'),
     express   = require('express'),
     path      = require('path'),
     fs        = require('fs'),
     qs        = require('qs'),
     Logger    = require('./lib/logger'),
+    urlHref   = require('./lib/nodejs/url-href'),
+    grunt     = require('grunt'),
     lodash    = require('lodash');
 
-var app = module.exports = express(),
-    paths = {
-        app: '../../../'
+var nodejsUrl,
+    app = module.exports = express(),
+    config = {
+        paths: {
+            root: '../../../'
+        }
     };
-paths.guiThemes = paths.app + 'gui-themes';
-paths.guiResources = paths.app + 'gui-resources';
-paths.themes = paths.guiThemes + '/themes';
-paths.node_modules = paths.app + 'node_modules';
+config = lodash.merge(grunt.file.readJSON(path.join(__dirname, config.paths.root, 'config.json')), config);
+// parse the grunt configuration style to an proper obj.
+grunt.initConfig(config);
 
-var config = JSON.parse(fs.readFileSync(path.join(__dirname, paths.app, 'config.json')));
-
+config = grunt.config.get();
+// prase the nodejs property to a url object.
+//   so that we can have the port, protocol and hostname for later use.
+var nodejsUrl = urlHref.parseForceHref(config.servers.nodejs);
 app.configure(function() {
-    app.set('port', process.env.PORT || config.server.port);
-    app.use(express['static'](path.join(__dirname, paths.guiResources)));
-    app.use(express['static'](path.join(__dirname, paths.guiThemes)));
+    app.set('port', nodejsUrl.port); // maybe add this in the future process.env.PORT || nodejsUrl.port
+    app.use(express['static'](path.join(__dirname, config.paths.scriptsRoot)));
+    app.use(express['static'](path.join(__dirname, config.paths.themesRoot)));
     app.use('/scripts/js/node_modules',
-                express['static'](path.join(__dirname, paths.node_modules)));
+                express['static'](path.join(__dirname, config.paths.nodeModules)));
 });
 
-paths.logs = path.join(__dirname, paths.app, config.paths.log);
+config.paths.logs = path.join(__dirname, config.paths.logs);
 
 // Create logger for the app
-fs.exists(paths.logs, function(exists) {
+fs.exists(config.paths.logs, function(exists) {
     if (exists) {
-        var logFile = fs.createWriteStream(path.join(paths.logs, config.logging.app),
+        var logFile = fs.createWriteStream(path.join(config.paths.logs, config.logging.nodejs),
                                             {'flags': 'a'});
         GLOBAL.liveblogLogger = new Logger('info', logFile);
     } else {
-        console.log(paths.log + ' folder missing, to create it run ' +
+        console.log(config.paths.log + ' folder missing, to create it run ' +
                         '"grunt create-logs-folder" or "grunt server"');
     }
 });
-// Set a vector for caching on requirejs object.
-requirejs.cache = {};
-
-// This method is triggered by requirejs when a module is added,
-//   so we keep all of the module id into the requirejs cache object.
-requirejs.onResourceLoad = function (context, map, depArray) {
-    requirejs.cache[map.id] = true;
-};
-
-// Check the require cache object for the matching pattern,
-//    and if modules with the pattern are found undefine them form requirejs.
-requirejs.clearCache = function(pattern) {
-    var srex = new RegExp(pattern);
-    lodash.each(requirejs.cache, function(value, name) {
-        if (value && srex.test(name)) {
-            requirejs.cache[name] = false;
-            requirejs.undef(name);
-        }
-    });
-};
 
 requirejs.config({
     baseUrl: __dirname,
     config: {
         'load-theme': {
-            themesPath: path.join(__dirname, paths.themes) + '/'
+            themesPath: path.join(__dirname, config.paths.themes) + '/'
         },
         'css': {
-            siteRoot: paths.guiThemes
+            siteRoot: config.paths.themesRoot
         }
     },
     paths: {
-        'backbone-custom':         'lib/backbone/backbone-custom',
-        layout:                  '../../layout',
+        'backbone-custom':      'lib/backbone/backbone-custom',
+        layout:                 '../../layout',
         'embed-code':           '../../embed-code',
         dust:                   'lib/dust',
         tmpl:                   'lib/require/tmpl',
         i18n:                   'lib/require/i18n',
-        themeBase:              paths.themes + '/base',
-        'lodash.compat':    paths.node_modules + '/lodash/dist/lodash.compat',
+        themeBase:              config.paths.themes + '/base',
+        'lodash.compat':        config.paths.nodeModules + '/lodash/dist/lodash.compat',
         'css':                  'lib/require/css'
     },
     map: {
@@ -91,39 +77,27 @@ requirejs.config({
     nodeRequire: require
 });
 
-var configLiveblog = function(config, server) {
-    if (config.host) {
-        var authority,
-            host = config.host,
-            hostParts = host.toLowerCase().match(/((http:|https:)?\/\/)([^/?#]*)/);
-        if (hostParts) {
-            if(hostParts[1] !== '//') {
-                config.protocol = hostParts[1];
-            }
-            authority = hostParts[3];
-        } else {
-            authority = host;
-        }
-        if (authority.indexOf(':') !== -1) {
-            var authorityParts = authority.split(':');
-            config.hostname = authorityParts[0];
-            config.port = authorityParts[1];
-        } else {
-            config.hostname = authority;
-            delete config.port;
-        }
+var configLiveblog = function(liveblog, config) {
+    liveblog.servers.rest = urlHref.reformatSever(liveblog.servers.rest);
 
+    if (!liveblog.servers.frontend) {
+        liveblog.servers.frontend = urlHref.reformatSever(config.servers.proxy ? config.servers.proxy : config.servers.nodejs);
     }
-    config.host = config.protocol + config.hostname + (config.port ? (':' + config.port) : '');
-    config.frontendServer = server.protocol + server.hostname + (server.port ? (':' + server.port) : '');
+    if (!liveblog.servers.css) {
+        liveblog.servers.css = urlHref.reformatSever(liveblog.servers.rest);
+    }
+    var livereloadObj = urlHref.parseForceHref(liveblog.servers.frontend);
+    livereloadObj.port = config.servers.livereload;
+    liveblog.servers.livereload = urlHref.formatBrowser(livereloadObj);
+
     requirejs.config({
         config: {
                 css: {
-                    host: '//' + config.hostname + (config.port ? (':' + config.port) : '') + '/content/lib/livedesk-embed'
+                    url: urlHref.reformatBrowser(liveblog.servers.css) + liveblog.paths.css
                 }
             }
         });
-    return config;
+    return liveblog;
 };
 requirejs.onError = function(err) {
     var failedId = err.requireModules && err.requireModules[0];
@@ -131,22 +105,21 @@ requirejs.onError = function(err) {
 };
 
 app.get('/', function(req, res) {
-    var queryString = qs.stringify(req.query);
+
     liveblogLogger.info('App request query string' +
-        (queryString ? ': "' + queryString + '"' : ' is empty'));
+        (req.query ? ': "' + qs.stringify(req.query) + '"' : ' is empty'));
 
     // override the default configuration parameters with
     // the GET query given ones if there are any.
     GLOBAL.liveblog = configLiveblog(lodash.extend(
-                        lodash.clone(config.app),
-                        req.query), config.server);
+                        lodash.clone(config.liveblog),
+                        req.query.liveblog), config);
     // for requirejs to reload internationalization and css,
     //   we need to clear the theme and themeFile aswell beside i18n and css modules.
     requirejs.clearCache('^(i18n!|css!|theme|themeFile)');
     requirejs([
         'views/layout',
-        'lib/utils',
-        'i18n!livedesk_embed'
+        'lib/utils'
     ], function(Layout, utils) {
         var sent = false;
         // if this will work in the future it will be good.

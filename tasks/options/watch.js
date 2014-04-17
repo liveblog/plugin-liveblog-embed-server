@@ -1,12 +1,12 @@
 module.exports = {
     express: {
-        files: ['<%= paths.script  %>/**/*.js', '<%= paths.theme %>/**/*.js', '<%= paths.theme %>/**/*.dust'],
+        files: ['<%= paths.scripts %>/**/*.js', '<%= paths.themes %>/**/*.js', '<%= paths.themes %>/**/*.dust'],
 
         tasks: ['express:dev'],
         options: {
             // According to express docu, 'spawn: false' is needed for the
             // server to reload
-            livereload: true,
+            livereload: '<%= servers.livereload %>',
             spawn: false
         }
     },

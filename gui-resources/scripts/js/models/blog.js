@@ -17,7 +17,7 @@ define([
         pollInterval: 10000,
 
         urlRoot: function() {
-            return liveblog.host + '/resources/LiveDesk/Blog/';
+            return liveblog.servers.rest + '/resources/LiveDesk/Blog/';
         },
 
         initialize: function() {

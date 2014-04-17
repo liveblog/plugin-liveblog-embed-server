@@ -8,13 +8,13 @@ module.exports = {
     // Compile all base-theme.less files to liveblog.css files
     all: {
         expand: true,
-        cwd: '<%= paths.theme %>/themes/',
+        cwd: '<%= paths.themes %>/',
         src: [
             '**/*.less',
             '!zeit/**/*.less',
             '!zeit_solo/**/*.less'
         ],
-        dest: '<%= paths.theme %>/themes/',
+        dest: '<%= paths.themes %>/',
         ext: '.css',
         rename: function(dest, src) {
             return path.join(dest, src.replace(/base-theme/, 'liveblog'));
@@ -24,8 +24,8 @@ module.exports = {
     // environment in config.json to liveblog.css
     theme: {
         files: {
-            '<%= paths.theme %>/themes/<%= app.theme %>/<%= app.environment %>/liveblog.css':
-            '<%= paths.theme %>/themes/<%= app.theme %>/<%= app.environment %>/base-theme.less'
+            '<%= paths.themes %>/<%= liveblog.liveblog %>/<%= liveblog.environment %>/liveblog.css':
+            '<%= paths.themes %>/<%= liveblog.theme %>/<%= liveblog.environment %>/base-theme.less'
         }
     }
 };
