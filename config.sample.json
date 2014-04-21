@@ -9,21 +9,20 @@
     },
     "paths": {
         "root": "./",
-        "nodeModules": "<%= paths.root %>node_modules",
+        "nodeModules": "<%= paths.root %>node_modules/",
         "scriptsRoot": "<%= paths.root %>gui-resources/",
         "scripts": "<%= paths.scriptsRoot %>scripts/js/",
-        "themesRoot": "<%= paths.root %>gui-themes",
-        "themes": "<%= paths.themesRoot %>/themes",
-        "build": "<%= paths.root %>build",
-        "logs": "<%= paths.root %>logs",
-        "test": "<%= paths.root %>test"
+        "themesRoot": "<%= paths.root %>gui-themes/",
+        "themes": "<%= paths.themesRoot %>themes/",
+        "build": "<%= paths.root %>build/",
+        "logs": "<%= paths.root %>logs/",
+        "test": "<%= paths.root %>test/",
+        "docs": "<%= paths.root %>docs/"
     },
     "liveblog": {
         "id": 1,
         "servers": {
-            "frontend": "<%= servers.proxy %>",
-            "rest": "http://localhost:8080",
-            "backend": "<%= liveblog.servers.rest %>"
+            "frontend": "<%= servers.proxy %>"
         },
         "paths": {
             "scripts": "/scripts/js/",

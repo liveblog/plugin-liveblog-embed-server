@@ -31,6 +31,8 @@ app.configure(function() {
     app.use(express['static'](path.join(__dirname, config.paths.themesRoot)));
     app.use('/scripts/js/node_modules',
                 express['static'](path.join(__dirname, config.paths.nodeModules)));
+    app.use('/docs',
+                express['static'](path.join(__dirname, config.paths.docs)));
 });
 
 config.paths.logs = path.join(__dirname, config.paths.logs);
@@ -78,14 +80,23 @@ requirejs.config({
 });
 
 var configLiveblog = function(liveblog, config) {
-    liveblog.servers.rest = urlHref.reformatSever(liveblog.servers.rest);
+    if(liveblog.servers.rest) {
+        liveblog.servers.rest = urlHref.reformatSever(liveblog.servers.rest);
+    }
 
-    if (!liveblog.servers.frontend) {
-        liveblog.servers.frontend = urlHref.reformatSever(config.servers.proxy ? config.servers.proxy : config.servers.nodejs);
-    }
-    if (!liveblog.servers.css) {
-        liveblog.servers.css = urlHref.reformatSever(liveblog.servers.rest);
-    }
+    liveblog.servers.frontend = urlHref.reformatSever(
+        liveblog.servers.frontend ?
+            liveblog.servers.frontend :
+                (config.servers.proxy ?
+                    config.servers.proxy :
+                    config.servers.nodejs)
+            );
+
+    liveblog.servers.css = urlHref.reformatSever(
+        liveblog.servers.css ?
+            liveblog.servers.css :
+            liveblog.servers.rest);
+
     var livereloadObj = urlHref.parseForceHref(liveblog.servers.frontend);
     livereloadObj.port = config.servers.livereload;
     liveblog.servers.livereload = urlHref.formatBrowser(livereloadObj);
@@ -114,42 +125,46 @@ app.get('/', function(req, res) {
     GLOBAL.liveblog = configLiveblog(lodash.extend(
                         lodash.clone(config.liveblog),
                         req.query.liveblog), config);
-    // for requirejs to reload internationalization and css,
-    //   we need to clear the theme and themeFile aswell beside i18n and css modules.
-    requirejs.clearCache('^(i18n!|css!|theme|themeFile)');
-    requirejs([
-        'views/layout',
-        'lib/utils'
-    ], function(Layout, utils) {
-        var sent = false;
-        // if this will work in the future it will be good.
-        //   removeing all namespaced events.
-        //utils.dispatcher.off('.request-failed');
-        utils.dispatcher.off('theme-file.request-failed');
-        utils.dispatcher.off('blog-model.request-failed');
-        utils.dispatcher.once('blog-model.request-failed', function() {
-            if (!sent) {
-                sent = true;
-                //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
-                res.send('Request for blog has failed.');
-            }
+    if (!liveblog.servers.rest) {
+        res.redirect('/docs');
+    } else {
+        // for requirejs to reload internationalization and css,
+        //   we need to clear the theme and themeFile aswell beside i18n and css modules.
+        requirejs.clearCache('^(i18n!|css!|theme|themeFile)');
+        requirejs([
+            'views/layout',
+            'lib/utils'
+        ], function(Layout, utils) {
+            var sent = false;
+            // if this will work in the future it will be good.
+            //   removeing all namespaced events.
+            //utils.dispatcher.off('.request-failed');
+            utils.dispatcher.off('theme-file.request-failed');
+            utils.dispatcher.off('blog-model.request-failed');
+            utils.dispatcher.once('blog-model.request-failed', function() {
+                if (!sent) {
+                    sent = true;
+                    //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
+                    res.send('Request for blog has failed.');
+                }
+            });
+            utils.dispatcher.once('theme-file.request-failed', function() {
+                if (!sent) {
+                    sent = true;
+                    //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
+                    res.send('Request for theme file has failed.');
+                }
+            });
+            var layout = new Layout();
+            layout.blogModel.get('publishedPosts').on('sync', function() {
+                if (!sent) {
+                    sent = true;
+                    res.send(layout.render().$el.html());
+                }
+            });
+        }, function(err) {
+            //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
+            res.send(err);
         });
-        utils.dispatcher.once('theme-file.request-failed', function() {
-            if (!sent) {
-                sent = true;
-                //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
-                res.send('Request for theme file has failed.');
-            }
-        });
-        var layout = new Layout();
-        layout.blogModel.get('publishedPosts').on('sync', function() {
-            if (!sent) {
-                sent = true;
-                res.send(layout.render().$el.html());
-            }
-        });
-    }, function(err) {
-        //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
-        res.send(err);
-    });
+    }
 });

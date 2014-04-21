@@ -19,6 +19,21 @@ After you can start local dev server on port `9000`:
 ```
 grunt server
 ```
+## Documentation
+
+Documentation can be generated with two options:
+
+With [docco](http://jashkenas.github.io/docco/), this doesn't provide an index.html file for docs folder nor a structure.
+Docco is the most used documentation server and it is up-to-date from official repo.
+
+a) grunt docco:all # for script files
+   grunt docco:test # for test files
+
+With [docco husky](https://github.com/mbrevoort/docco-husky), this provides an index.html with stats.
+Docco husky isn't keep up to date at this point 2years passed and no commits where done.
+Now is running a fork from `nistormihai` repo witch is keeped up to date by author.
+
+b) grunt docco-husky:all 
 
 ## Info for contributors
 
