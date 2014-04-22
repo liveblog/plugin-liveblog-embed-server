@@ -21,8 +21,6 @@ define([
             }
         },
 
-        socialShareBoxAdded: false,
-
         initialize: function() {
             _.defaultsDeep(this, this.propertiesObj);
             utils.dispatcher.trigger('initialize.post-view', this);

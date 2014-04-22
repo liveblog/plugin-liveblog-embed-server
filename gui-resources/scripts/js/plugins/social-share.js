@@ -16,43 +16,69 @@ define([
 ], function(Backbone, _, plugins, utils, dust, gt,
     fixedEncodeURIComp, visibilityToggle, shareConf) {
 
+    // Social share plugin only works on client
     if (utils.isClient){
 
         plugins['social-share'] = function(config) {
+
+            // On post view initialization
             utils.dispatcher.on('initialize.post-view', function(view) {
 
-                dust.renderThemed('themeBase/plugins/social-share-anchor', {}, function(err, out) {
-                    view.$('[data-gimme="post.social-share-placeholder"]').html(out);
-                });
+                // Add social share link to the view
+                dust.renderThemed('themeBase/plugins/social-share-anchor', {},
+                    function(err, out) {
+                        view.$('[data-gimme="post.social-share-placeholder"]').html(out);
+                    });
+
+                // Add event to call 'share' method when share link clicked
                 view.clientEvents({'click [data-gimme="post.social"]': 'share'});
 
+                // Render the social share box containing buttons to share
+                // the post in different social networks
                 view.share = function(e) {
                     e.preventDefault();
 
-                    if (!view.socialShareBoxAdded) {
-                        dust.renderThemed('themeBase/plugins/social-share', socialParams(view),
-                          function(err, out) {
-                            view.$('[data-gimme="post.social-share-placeholder"]').append(out);
-                            view.socialShareBoxAdded = true;
-                        });
-                    }
+                    var self = this,
+                        urlParams = socialUrlParams(self);
 
-                    var socialShareBox = view.$('[data-gimme="post.share-social"]');
-                    var postShare = view.$('[data-gimme^="post.share"]');
+                    // Store the share urls for the different social networks
+                    self.socialShareUrls = socialUrls(urlParams);
+
+                    // Add the box after the social share link
+                    dust.renderThemed('themeBase/plugins/social-share',
+                        socialParams(urlParams),
+                        function(err, out) {
+                            self.$('[data-gimme="post.social-share-placeholder"]').append(out);
+                        });
+
+                    // Bind events for social network buttons
+                    bindShareButtonsEvents(self);
+
+                    // Toggle visibility of social share box,
+                    // if the box is hidden, hide other share plugins markup too
+                    var socialShareBox = self.$('[data-gimme="post.share-social"]');
+                    var postShare = self.$('[data-gimme^="post.share"]');
                     if (socialShareBox.css('visibility') === 'hidden') {
                         visibilityToggle(postShare, false);
                     }
                     visibilityToggle(socialShareBox);
                 };
-            });
 
-            // Construct the window containing the social sharing links
-            Backbone.$.socialShareWindow = function(url, height, width) {
-                var options = 'resizable, height=' + height + ', width=' + width;
-                var socialShareWindow = window.open(url, '', options);
-                socialShareWindow.focus();
-                return false;
-            };
+                //Open a new window for sharing the post in the desired social network
+                view.openShareWindow = function(e) {
+                    e.preventDefault();
+
+                    var socialNetwork = this.$(e.target).data('gimme'),
+                        height        = shareConf.shareWindowSize[socialNetwork].h,
+                        width         = shareConf.shareWindowSize[socialNetwork].w,
+                        shareUrl      = this.socialShareUrls[socialNetwork];
+
+                    var options = 'resizable, height=' + height + ', width=' + width;
+                    var socialShareWindow = window.open(shareUrl, '', options);
+                    socialShareWindow.focus();
+                    return false;
+                };
+            });
 
             // Return the parameters to construct the social sharing urls
             var socialUrlParams = function(view) {
@@ -89,22 +115,39 @@ define([
                 return urlParams;
             };
 
-            // Return the parameters for the social sharing template
-            var socialParams = function(view) {
+            // Return the sharing urls for the different social networks
+            var socialUrls = function(urlParams) {
+                var urls = {};
 
-                var params = {},
-                    urlParams = socialUrlParams(view);
+                delete urlParams.email;
 
-                params.emailurl =  gt.sprintf(shareConf.urls.email, urlParams.email);
                 _.each(urlParams, function(value, key) {
-                    var url = gt.sprintf(shareConf.urls[key], urlParams[key]);
-                    params[key + 'click'] =
-                        gt.sprintf('$.socialShareWindow("%s",%u,%u); return false;',
-                            [url, shareConf.shareWindowSize[key].h,
-                                  shareConf.shareWindowSize[key].w]);
+                    urls[key] = gt.sprintf(shareConf.urls[key],
+                                            urlParams[key]);
                 });
 
+                return urls;
+            };
+
+            // Return the parameters for the social sharing template
+            var socialParams = function(urlParams) {
+                var params = {};
+
+                params.emailurl =  gt.sprintf(shareConf.urls.email, urlParams.email);
+
                 return params;
+            };
+
+            // Add click events for all social network buttons
+            var bindShareButtonsEvents = function(view) {
+                var events = {};
+
+                _.each(view.socialShareUrls, function(value, key) {
+                    events['click [data-gimme="' + key + '"]'] = 'openShareWindow';
+                });
+
+                view.clientEvents(events);
+                view.delegateEvents();
             };
         };
     }
