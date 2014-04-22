@@ -53,6 +53,7 @@ define([
 
         afterRender: function() {
             utils.dispatcher.trigger('after-render.posts-view', this);
+            utils.dispatcher.trigger('add-all.posts-view', this);
         },
 
         setViewOnReset: function() {
@@ -110,6 +111,7 @@ define([
             var postView = this.insertPostView(post);
             this.orderViews();
             postView.render();
+            utils.dispatcher.trigger('add-all.posts-view', this);
         },
 
         removePost: function(post) {
@@ -152,7 +154,6 @@ define([
                 var i = this._postViewIndex($el.attr(this.postRootDataAttr));
                 this._insertPostViewAt($root, $el, i);
             }
-            utils.dispatcher.trigger('add-all.posts-view', this);
         },
 
         // Create a new post view and insert it at the end of the views array
