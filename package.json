@@ -1,10 +1,24 @@
 {
   "name": "backbone-node-liveblog",
+  "contributors": [
+    {
+      "name": "Mihai Nistor",
+      "email": "Mihai.Nistor@sourcefabric.org"
+    },
+    {
+      "name": "Patricia García",
+      "email": "Patricia.garcia@sourcefabric.org"
+    },
+    {
+      "name": "Vlad Nicoara",
+      "email": "Vlad.Nicoara@sourcefabric.org"
+    }
+  ],
   "description": "A Backbone implementation of Liveblog Embed",
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "git://github.com/liveblog/plugin-liveblog-embed-server.git"
+    "url": "https://github.com/liveblog/plugin-liveblog-embed-server.git"
   },
   "bugs": {
     "url": "https://github.com/liveblog/plugin-liveblog-embed-server/issues"
@@ -57,7 +71,9 @@
     "chai": "^1.9.1",
     "sinon": "^1.9.1",
     "sinon-chai": "^2.5.0",
-    "grunt-simple-mocha": "^0.4.0"
+    "grunt-simple-mocha": "^0.4.0",
+    "grunt-docco-husky": "https://github.com/nistormihai/grunt-docco-husky/tarball/de78efc5c58358c8cc585dd037d5121b9970bd5a",
+    "docco-husky": "https://github.com/nistormihai/docco-husky/tarball/e707568770ccd3dbeef32b326a6ea14125453c70"
   },
   "optionalDependencies": {
     "grunt-forever": "^0.4.4",

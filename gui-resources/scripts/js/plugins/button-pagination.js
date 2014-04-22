@@ -5,15 +5,14 @@ define([
     'plugins/pagination',
     'dust',
     'lib/utils',
+    'lib/helpers/display-toggle',
     'tmpl!themeBase/item/base',
     'tmpl!themeBase/plugins/after-button-pagination',
     'tmpl!themeBase/plugins/before-button-pagination'
-], function(Backbone, plugins, paginationPlugin, dust, utils) {
+], function(Backbone, plugins, paginationPlugin, dust, utils, displayToggle) {
     delete plugins.pagination;
     plugins['button-pagination'] = function(config) {
         paginationPlugin(config);
-        var propName = 'display',
-            propValue = {'show': 'block', 'hide': 'none'};
 
         utils.dispatcher.on('initialize.blog-view', function(view) {
 
@@ -25,23 +24,26 @@ define([
             };
         });
 
-        utils.dispatcher.once('after-render.posts-view', function(view) {
+        utils.dispatcher.once('add-all.posts-view', function(view) {
             var data = {};
-
             data.baseItem = dust.themed('themeBase/item/base');
-            dust.renderThemed('themeBase/plugins/before-button-pagination', data, function(err, out) {
-                var  el = Backbone.$(out);
-                el.css(propName, propValue.hide);
-                view.$el.prepend(el);
-            });
-            dust.renderThemed('themeBase/plugins/after-button-pagination', data, function(err, out) {
-                var  el = Backbone.$(out);
-                el.css(propName, propValue.hide);
-                view.$el.append(el);
-            });
+            if (view.$('[data-gimme="posts.beforePage"]').length === 0) {
+                dust.renderThemed('themeBase/plugins/before-button-pagination', data, function(err, out) {
+                    var  el = Backbone.$(out);
+                    displayToggle(el, false);
+                    view.$el.prepend(el);
+                });
+            }
+            if (view.$('[data-gimme="posts.nextPage"]').length === 0) {
+                dust.renderThemed('themeBase/plugins/after-button-pagination', data, function(err, out) {
+                    var  el = Backbone.$(out);
+                    displayToggle(el, false);
+                    view.$el.append(el);
+                });
+            }
         });
 
-        utils.dispatcher.once('after-render.posts-view', function(view) {
+        utils.dispatcher.once('add-all.posts-view', function(view) {
             view.checkNextPage();
             view.checkTopPage();
         });
@@ -53,20 +55,10 @@ define([
             });
 
             view.checkTopPage = function(evt) {
-                var item = this.$('[data-gimme="posts.beforePage"]');
-                if (!this.hasTopPage()) {
-                    item.css(propName, propValue.hide);
-                } else {
-                    item.css(propName, propValue.show);
-                }
+                displayToggle(this.$('[data-gimme="posts.beforePage"]'), this.hasTopPage());
             };
             view.checkNextPage = function(evt) {
-                var item = this.$('[data-gimme="posts.nextPage"]');
-                if (!this.hasNextPage()) {
-                    item.css(propName, propValue.hide);
-                } else {
-                    item.css(propName, propValue.show);
-                }
+                displayToggle(this.$('[data-gimme="posts.nextPage"]'), this.hasNextPage());
             };
 
             view.buttonNextPage = function(evt) {
@@ -90,7 +82,7 @@ define([
                 view.flags.topPage = false;
                 view.topPage().done(function() {
                     item.removeClass('loading');
-                    item.css(propName, propValue.hide);
+                    displayToggle(item, false);
                 });
 
             };

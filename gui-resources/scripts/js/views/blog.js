@@ -3,7 +3,7 @@ define([
     'views/base-view',
     'views/posts',
     'lib/utils',
-    'lib/helpers/displayToggle',
+    'lib/helpers/display-toggle',
     'underscore',
     'tmpl!themeBase/container'
 ], function(BaseView, PostsView, utils, displayToggle, _) {

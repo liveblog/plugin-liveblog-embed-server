@@ -10,8 +10,11 @@ define(['backbone-custom', 'lib/gettext'], function(Backbone, gt) {
 
         load: function(name, req, onLoad, config) {
             // Append '.json' if no filename given:
-            var urlPreCached = liveblog.host + '/content/cache/locale/plugin-' + name + '-' + liveblog.language + '.json',
-                urlPre = liveblog.host + '/resources/Admin/Plugin/' + name + '/JSONLocale/' + liveblog.language,
+            if(!liveblog.language) {
+                liveblog.language = liveblog.fallback.language;
+            }
+            var urlPreCached = liveblog.servers.rest + '/content/cache/locale/plugin-' + name + '-' + liveblog.language + '.json',
+                urlPre = liveblog.servers.rest + '/resources/Admin/Plugin/' + name + '/JSONLocale/' + liveblog.language,
                 urlCached = req.toUrl(urlPreCached),
                 url = req.toUrl(urlPre);
 

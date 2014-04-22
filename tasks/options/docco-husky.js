@@ -6,6 +6,7 @@ module.exports = {
         }
     },
     all: {
+        name: 'Liveblog embed working on nodejs',
         src: [
             '<%= paths.scripts %>/**/*.js',
             '!<%= paths.scripts %>/bower_components/**'

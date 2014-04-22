@@ -1,35 +1,38 @@
 {
-    "livereload": {
-        "port": 35729
-    },
-    "server": {
-        "hostname": "localhost",
-        "port": 9000,
-        "protocol": "http://"
+    "servers": {
+        "nodejs": "http://localhost:9000",
+        "proxy": "<%= servers.nodejs %>",
+        "livereload": 35729
     },
     "logging": {
-        "app": "appjs.log"
+        "nodejs": "appjs.log"
     },
-    "dir": {
-        "script": "gui-resources/scripts/js",
-        "theme": "gui-themes",
-        "build": "build",
-        "log": "logs",
-        "test": "test"
+    "paths": {
+        "root": "./",
+        "nodeModules": "<%= paths.root %>node_modules/",
+        "scriptsRoot": "<%= paths.root %>gui-resources/",
+        "scripts": "<%= paths.scriptsRoot %>scripts/js/",
+        "themesRoot": "<%= paths.root %>gui-themes/",
+        "themes": "<%= paths.themesRoot %>themes/",
+        "build": "<%= paths.root %>build/",
+        "logs": "<%= paths.root %>logs/",
+        "test": "<%= paths.root %>test/",
+        "docs": "<%= paths.root %>docs/"
     },
-    "app": {
-        "hostname": "localhost",
-        "port": 8080,
-        "protocol": "http://",
-        "theme": "default",
-        "environment": "desktop",
+    "liveblog": {
         "id": 1,
-        "limit": 20,
-        "language": "en",
-        "render": {
-            "index": true,
-            "embed": true,
-            "seo": true
-        }
+        "servers": {
+            "frontend": "<%= servers.proxy %>"
+        },
+        "paths": {
+            "scripts": "/scripts/js/",
+            "css": "/content/lib/livedesk-embed"
+        },
+        "render": "index,seo,embed,livereload",
+        "theme": "default",
+        "fallback": {
+            "language": "en"
+        },
+        "dev": true
     }
 }

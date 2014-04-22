@@ -1,6 +1,6 @@
 module.exports = {
     options: {
-        configFile: '<%= dir.test %>/client/karma.conf.js',
+        configFile: '<%= paths.test %>/client/karma.conf.js',
         browsers: ['Chrome']
     },
     dev: {

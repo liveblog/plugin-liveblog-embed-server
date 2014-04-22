@@ -1,12 +1,12 @@
 module.exports = {
     express: {
-        files: ['<%= dir.script  %>/**/*.js', '<%= dir.theme %>/**/*.js', '<%= dir.theme %>/**/*.dust'],
+        files: ['<%= paths.scripts %>/**/*.js', '<%= paths.themes %>/**/*.js', '<%= paths.themes %>/**/*.dust'],
 
         tasks: ['express:dev'],
         options: {
             // According to express docu, 'spawn: false' is needed for the
             // server to reload
-            livereload: true,
+            livereload: '<%= servers.livereload %>',
             spawn: false
         }
     },
@@ -15,14 +15,14 @@ module.exports = {
         tasks: ['jshint:all', 'jscs:all']
     },
     less: {
-        files: ['<%= dir.theme %>/themes/**/*.less'],
+        files: ['<%= paths.theme %>/themes/**/*.less'],
         tasks: ['less:all']
     },
     mocha: {
         files: [
             '<%= jshint.source.src %>',
             '<%= jshint.tests.src %>',
-            '!<%= dir.test %>/client/**/*.js'
+            '!<%= paths.test %>/client/**/*.js'
         ],
         tasks: ['simplemocha:all']
     }
