@@ -4,6 +4,8 @@ define([
     'underscore',
     'models/base-model'
 ], function(_, BaseModel) {
+    // @TODO: refactor url-href in a much cleaner way,
+    //   also add the with the liveblog browserUrl method.
     var browserUrl = function(urlString) {
         var regxProtocol = /^(http[s]?:)?\/{2}/,
             regxServer = /^(http[s]?:)?\/{2}([0-9.\-A-Za-z]+)(?::(\d+))?/;

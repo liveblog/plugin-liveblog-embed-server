@@ -104,7 +104,7 @@ var configLiveblog = function(liveblog, config) {
     requirejs.config({
         config: {
                 css: {
-                    url: urlHref.reformatBrowser(liveblog.servers.css) + liveblog.paths.css
+                    url: urlHref.reformatBrowser(liveblog.servers.css) + (liveblog.paths.css ? liveblog.paths.css : '')
                 }
             }
         });

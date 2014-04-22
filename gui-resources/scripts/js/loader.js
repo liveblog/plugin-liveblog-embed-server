@@ -45,12 +45,19 @@ if ((qs.indexOf('liveblog[dev]') !== -1) || liveblog.dev) {
 if (!liveblog.paths.scripts) {
     liveblog.paths.scripts = '/content/lib/livedesk-embed/scripts/js/';
 }
-// method to fix the url for relative protocol and force that protocol.
+// regex to catch all relevant parts of an url.
+//   parameter[1] = protocol if there is one.
+//   parameter[2] = hostname.
+//   parameter[3] = port if there is one.
+var urlRegex = /^(http[s]?:)?\/{2}([0-9.\-A-Za-z]+)(?::(\d+))?/,
+    // regex to catch if the urlString has a http(s) or a relative protocol.
+    protocolRegex = /^(http[s]?:)?\/{2}/;
+
+// fix a urlString, forceing a relative protocol if the protocol http(s).
+//   a url for browser always need a relative protocol see https bug @LB-1154
 liveblog.browserUrl = function(urlString) {
-    var regxProtocol = /^(http[s]?:)?\/{2}/,
-        regxServer = /^(http[s]?:)?\/{2}([0-9.\-A-Za-z]+)(?::(\d+))?/;
-    urlString = regxProtocol.test(urlString) ? urlString : '//' + urlString;
-    urlString = urlString.replace(regxServer, function(all, protocol, hostname, port) {
+    urlString = protocolRegex.test(urlString) ? urlString : '//' + urlString;
+    urlString = urlString.replace(urlRegex, function(all, protocol, hostname, port) {
         return '//' +
                 hostname +
                 ((port !== '80' && port !== '443') ? ':' + port : '');
@@ -59,6 +66,8 @@ liveblog.browserUrl = function(urlString) {
 };
 // fix servers frontend url
 liveblog.servers.frontend = liveblog.browserUrl(liveblog.servers.frontend);
+// fix the rest
+liveblog.servers.rest = liveblog.browserUrl(liveblog.servers.rest);
 
 // after aditional properties where added remake the baseUrl for loader and require.
 liveblog.baseUrl = liveblog.require.baseUrl = liveblog.servers.frontend + liveblog.paths.scripts;
