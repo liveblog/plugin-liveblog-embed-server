@@ -9,7 +9,6 @@ var requirejs = require('./lib/nodejs/requirejs-clear-cache'),
     urlHref   = require('./lib/nodejs/url-href'),
     grunt     = require('grunt'),
     lodash    = require('lodash');
-
 var nodejsUrl,
     app = module.exports = express(),
     config = {
@@ -79,36 +78,36 @@ requirejs.config({
     nodeRequire: require
 });
 
-var configLiveblog = function(liveblog, config) {
-    if(liveblog.servers.rest) {
-        liveblog.servers.rest = urlHref.reformatSever(liveblog.servers.rest);
+var configLiveblog = function(liveconfig, config) {
+    if (liveconfig.servers.rest) {
+        liveconfig.servers.rest = urlHref.reformatSever(liveconfig.servers.rest);
     }
 
-    liveblog.servers.frontend = urlHref.reformatSever(
-        liveblog.servers.frontend ?
-            liveblog.servers.frontend :
+    liveconfig.servers.frontend = urlHref.reformatSever(
+        liveconfig.servers.frontend ?
+            liveconfig.servers.frontend :
                 (config.servers.proxy ?
                     config.servers.proxy :
                     config.servers.nodejs)
             );
 
-    liveblog.servers.css = urlHref.reformatSever(
-        liveblog.servers.css ?
-            liveblog.servers.css :
-            liveblog.servers.rest);
+    liveconfig.servers.css = urlHref.reformatSever(
+        liveconfig.servers.css ?
+            liveconfig.servers.css :
+            liveconfig.servers.rest);
 
-    var livereloadObj = urlHref.parseForceHref(liveblog.servers.frontend);
+    var livereloadObj = urlHref.parseForceHref(liveconfig.servers.frontend);
     livereloadObj.port = config.servers.livereload;
-    liveblog.servers.livereload = urlHref.formatBrowser(livereloadObj);
+    liveconfig.servers.livereload = urlHref.formatBrowser(livereloadObj);
 
     requirejs.config({
         config: {
                 css: {
-                    url: urlHref.reformatBrowser(liveblog.servers.css) + (liveblog.paths.css ? liveblog.paths.css : '')
+                    url: urlHref.reformatBrowser(liveconfig.servers.css) + (liveconfig.paths.css ? liveconfig.paths.css : '')
                 }
             }
         });
-    return liveblog;
+    return liveconfig;
 };
 requirejs.onError = function(err) {
     var failedId = err.requireModules && err.requireModules[0];
@@ -120,10 +119,10 @@ app.get('/', function(req, res) {
     liveblogLogger.info('App request query string' +
         (req.query ? ': "' + qs.stringify(req.query) + '"' : ' is empty'));
 
-    // override the default configuration parameters with
+    // override the default configuration parametners with
     // the GET query given ones if there are any.
-    GLOBAL.liveblog = configLiveblog(lodash.extend(
-                        lodash.clone(config.liveblog),
+    GLOBAL.liveblog = configLiveblog(lodash.merge(
+                        lodash.cloneDeep(config.liveblog),
                         req.query.liveblog), config);
     if (!liveblog.servers.rest) {
         res.redirect('/docs');
