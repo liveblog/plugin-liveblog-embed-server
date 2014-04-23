@@ -24,6 +24,6 @@ module.exports = {
             '<%= jshint.tests.src %>',
             '!<%= paths.test %>/client/**/*.js'
         ],
-        tasks: ['simplemocha:all']
+        tasks: ['mochaTest:all']
     }
 };
