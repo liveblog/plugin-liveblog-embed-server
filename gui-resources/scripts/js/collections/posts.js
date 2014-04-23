@@ -55,7 +55,9 @@ define([
         },
 
         updateDataParse: function(data, options) {
-            this.updateLastCId(parseInt(data.lastCId, 10));
+            if (data.lastCId) {
+                this.updateLastCId(parseInt(data.lastCId, 10));
+            }
 
             // Filter updates of posts: remove post updates from following pages
             if (data.PostList.length) {
@@ -77,8 +79,10 @@ define([
             // new cId are outside this range the API won't include them here.
             // To get the changes we need to request the updates from the old lastCId.
             // Therefore set lastCId only if it's yet undefined.
+            // If there is no lastCId provided by the API set it to the default 0.
             if (_.isUndefined(this.lastCId())) {
-                this.updateLastCId(parseInt(data.lastCId, 10));
+                var lastCId = _.isUndefined(data.lastCId) ? 0 : parseInt(data.lastCId, 10);
+                this.updateLastCId(lastCId);
             }
 
             this.filterProps.total = parseInt(data.total, 10);
