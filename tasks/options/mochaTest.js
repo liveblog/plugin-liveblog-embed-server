@@ -7,11 +7,17 @@ module.exports = {
         ui: 'bdd',
         reporter: 'dot'
     },
-
     all: {
         src: [
             '<%= paths.test %>/server/spechelper.js',
             '<%= paths.test %>/server/**/*.spec.js'
         ]
+    },
+    bamboo: {
+        src: '<%= mochaTest.all.src %>',
+        options: {
+            reporter: 'xunit',
+            captureFile: 'server-test-results.xml'
+        }
     }
 };
