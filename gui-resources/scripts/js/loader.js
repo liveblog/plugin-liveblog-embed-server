@@ -60,7 +60,7 @@ liveblog.browserUrl = function(urlString) {
     urlString = urlString.replace(urlRegex, function(all, protocol, hostname, port) {
         return '//' +
                 hostname +
-                ((port !== '80' && port !== '443') ? ':' + port : '');
+                (port && (port !== '80' && port !== '443') ? ':' + port : '');
     });
     return urlString;
 };
