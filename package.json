@@ -15,7 +15,7 @@
     }
   ],
   "description": "A Backbone implementation of Liveblog Embed",
-  "version": "0.0.1",
+  "version": "1.6.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/liveblog/plugin-liveblog-embed-server.git"
