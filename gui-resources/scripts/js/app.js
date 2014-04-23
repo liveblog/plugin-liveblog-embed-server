@@ -144,15 +144,13 @@ app.get('/', function(req, res) {
             utils.dispatcher.once('blog-model.request-failed', function() {
                 if (!sent) {
                     sent = true;
-                    //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
-                    res.send('Request for blog has failed.');
+                    res.send(400, 'Request for blog has failed.');
                 }
             });
             utils.dispatcher.once('theme-file.request-failed', function() {
                 if (!sent) {
                     sent = true;
-                    //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
-                    res.send('Request for theme file has failed.');
+                    res.send(400, 'Request for theme file has failed.');
                 }
             });
             var layout = new Layout();
@@ -163,8 +161,7 @@ app.get('/', function(req, res) {
                 }
             });
         }, function(err) {
-            //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
-            res.send(err);
+            res.send(400, err);
         });
     }
 });

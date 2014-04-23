@@ -17,7 +17,7 @@ var urlHref = {
         urlString = urlString.replace(urlRegex, function(all, protocol, hostname, port) {
             return '//' +
                     hostname +
-                    ((port !== '80' && port !== '443') ? ':' + port : '');
+                    (port && (port !== '80' && port !== '443') ? ':' + port : '');
         });
         return urlString;
     },
@@ -30,7 +30,7 @@ var urlHref = {
             // if the protocol is relative add a http: default protocol.
             protocol = protocol ? protocol : 'http:';
             return protocol + '//' + hostname +
-                    ((port !== '80' && port !== '443') ? ':' + port : '');
+                    (port && (port !== '80' && port !== '443') ? ':' + port : '');
         });
         return urlString;
     },
