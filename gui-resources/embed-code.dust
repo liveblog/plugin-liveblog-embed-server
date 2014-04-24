@@ -16,6 +16,9 @@
             },
             paths: {
                 scripts: '{paths.scripts}'
+                {?paths.css}
+                ,css: '{paths.css}'
+                {/paths.css}
             },
             {?dev}
                 dev: true,

@@ -6,7 +6,7 @@ require.config({
             themesPath:             '../../themes/'
         },
         css: {
-            url: liveblog.servers.frontend + '/content/lib/livedesk-embed'
+            url: liveblog.servers.frontend + liveblog.paths.css
         }
     },
     paths: {

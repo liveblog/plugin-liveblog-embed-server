@@ -26,7 +26,7 @@
         },
         "paths": {
             "scripts": "/scripts/js/",
-            "css": "/content/lib/livedesk-embed"
+            "css": "/"
         },
         "render": "index,seo,embed,livereload",
         "theme": "default",

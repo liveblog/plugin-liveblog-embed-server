@@ -11,16 +11,16 @@
     <title>Liveblog</title>
   </head>
   <body>
-    {+embedCode}{/embedCode}
     {+layout}{/layout}
+    {+embedCode}{/embedCode}
     {?render.livereload}
     <script src="{servers.livereload}/livereload.js"></script>
     {/render.livereload}
   </body>
 </html>
 {:else}
-    {+embedCode}{/embedCode}
     {+layout}{/layout}
+    {+embedCode}{/embedCode}
 {/render.index}
 {/index}
 
