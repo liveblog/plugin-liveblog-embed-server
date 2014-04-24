@@ -40,11 +40,17 @@ if ((qs.indexOf('liveblog[dev]') !== -1) || liveblog.dev) {
         }
     });
 }
-
+// @TODO: remove this defaults paths when backbone implementation will replace old one.
 // if no path for scripts was define use the default path from ally-py implemenation server.
 if (!liveblog.paths.scripts) {
     liveblog.paths.scripts = '/content/lib/livedesk-embed/scripts/js/';
 }
+// if no path for css was define use the default path from ally-py implemenation server.
+if (!liveblog.paths.css) {
+    liveblog.paths.css = '/content/lib/livedesk-embed/';
+}
+// @ENDTODO
+
 // regex to catch all relevant parts of an url.
 //   parameter[1] = protocol if there is one.
 //   parameter[2] = hostname.

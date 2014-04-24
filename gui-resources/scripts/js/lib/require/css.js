@@ -138,13 +138,23 @@ define(['lib/utils', 'plugins/css', 'backbone'], function(utils, pluginCss, Back
             if (utils.isWindows) {
                 relativePath = relativePath.replace(/\\/g, '/');
             }
-            url = configCss.url + '/' + relativePath;
+            url = configCss.url + relativePath;
             pluginCss.setData('<link type="text/css" rel="stylesheet" href="' + url + '">');
             onload();
         }
         if (utils.isClient) {
-            var cssUrl = req.toUrl(configCss.url + '/' + name + '.css'),
-                loaded = Backbone.$('link[href="' + cssUrl + '"]');
+            var fixPath = configCss.url,
+                cssUrl, loaded;
+            // remove last / because req.toUrl it will add it at begining.
+            fixPath = (fixPath[fixPath.length - 1] === '/') ?
+                            fixPath.substring(0, fixPath.length - 1) :
+                            fixPath;
+            cssUrl = fixPath + req.toUrl(name + '.css');
+            // make an absolute cssUrl from a cssUrl with ../ relative paths.
+            while (/\/\.\.\//.test(cssUrl)){
+                cssUrl = cssUrl.replace(/[^\/]+\/+\.\.\//g, '');
+            }
+            loaded = Backbone.$('link[href="' + cssUrl + '"]').length;
             if (!loaded) {
                 (useImportLoad ? importLoad : linkLoad)(cssUrl, onload);
             } else {
