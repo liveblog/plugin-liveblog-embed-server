@@ -1,11 +1,13 @@
 {
-  "name": "liveblog-backbone",
-  "version": "0.0.0",
-  "homepage": "https://github.com/nistormihai/liveblog-backbone",
-  "authors": [
-    "Nistor Mihai <Mihai.Nistor@sourcefabric.org>"
+  "name": "backbone-node-liveblog",
+  "version": "1.6.1",
+  "homepage": "https://github.com/liveblog/plugin-liveblog-embed-server.git",
+  "contributors": [
+    "Nistor Mihai <Mihai.Nistor@sourcefabric.org>",
+    "Patricia García <Patricia.garcia@sourcefabric.org>",
+    "Vlad Nicoara <Vlad.Nicoara@sourcefabric.org>"
   ],
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "ignore": [
     "**/.*",
     "node_modules",

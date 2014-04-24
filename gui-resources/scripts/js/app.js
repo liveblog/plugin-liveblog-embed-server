@@ -8,7 +8,9 @@ var requirejs = require('./lib/nodejs/requirejs-clear-cache'),
     Logger    = require('./lib/logger'),
     urlHref   = require('./lib/nodejs/url-href'),
     grunt     = require('grunt'),
-    lodash    = require('lodash');
+    lodash    = require('lodash'),
+    cors = require('./lib/nodejs/express/cors');
+
 var nodejsUrl,
     app = module.exports = express(),
     config = {
@@ -25,6 +27,7 @@ config = grunt.config.get();
 //   so that we can have the port, protocol and hostname for later use.
 var nodejsUrl = urlHref.parseForceHref(config.servers.nodejs);
 app.configure(function() {
+    app.use(cors);
     app.set('port', nodejsUrl.port); // maybe add this in the future process.env.PORT || nodejsUrl.port
     app.use(express['static'](path.join(__dirname, config.paths.scriptsRoot)));
     app.use(express['static'](path.join(__dirname, config.paths.themesRoot)));
