@@ -3,82 +3,55 @@
 //   parameter[1] = protocol if there is one.
 //   parameter[2] = hostname.
 //   parameter[3] = port if there is one.
-//   parameter[4] = pathname if there is one.
-//   parameter[5] = pathname if there is one.
-//   parameter[6] = hash if there is one.
-var urlRegex = /(http[s]?:)?\/{2}([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?/,
-    // private method to remove a default 80 port.
-    removeDefaultPort = function(urlObj) {
-        if(urlObj.port === '80') {
-            urlObj.host = urlObj.host.replace(':80', '');
-            delete urlObj.port;
-        }
-        return urlObj;
-    },
-    // private method to generate an urlString.
-    //   fallsback to relative protocol if none.
-    formatUrl = function(urlObj) {
-        var urlString = (urlObj.protocol ? urlObj.protocol : '') + '//' +
-               urlObj.hostname + (urlObj.port ? ':' + urlObj.port : '') +
-               (urlObj.pathname ? '/' + urlObj.pathname : '') +
-               (urlObj.query ? '?' + urlObj.query : '') +
-               (urlObj.hash ? '#' + urlObj.hash : '');
-        return urlString;
-    };
+var urlRegex = /^(http[s]?:)?\/{2}([0-9.\-A-Za-z]+)(?::(\d+))?/,
+    // regex to catch if the urlString has a http(s) or a relative protocol.
+    protocolRegex = /^(http[s]?:)?\/{2}/;
 
 // api to parse url
 var urlHref = {
-    // parse the urlString with forceing a href if the urlSring doesn't have a http(s) or relative protocol.
-    parseForceHref: function(urlString) {
-        var parts, urlObj = {};
-        if (!urlRegex.test(urlString)) {
-            urlString = '//' + urlString;
-        }
-        parts = urlString.match(urlRegex);
-        if (parts[1]) {
-            urlObj.protocol = parts[1];
-        }
-        urlObj.hostname = parts[2];
-        if (parts[3]) {
-            urlObj.port = parts[3];
-        }
-        urlObj.host = urlObj.hostname + (urlObj.port ? ':' + urlObj.port : '');
-        if (parts[4]) {
-            urlObj.pathname = parts[4];
-        }
-        if (parts[5]) {
-            urlObj.query   = parts[5];
-        }
-        if (parts[6]) {
-            urlObj.hash   = parts[6];
-        }
-        if (!urlObj.port) {
-            urlObj.port = urlObj.protocol && (urlObj.protocol === 'https:') ? '443' : '80';
-        }
-        urlObj.href = urlString;
-        return urlObj;
-    },
-    // format a urlObj to urlString, forceing a http protocol if the protocol is non or a relative protocol.
-    //   nodejs requst module needs a protocol http or https to request a url, relative protocols fails.
-    formatServer: function(urlObj) {
-        urlObj.protocol = urlObj.protocol ? urlObj.protocol : 'http:';
-        urlObj = removeDefaultPort(urlObj);
-        return formatUrl(urlObj);
-    },
-    // format a urlObj to urlString, forceing a relative protocol if the protocol http(s).
+    // fix urlString, forceing a relative protocol if the protocol http(s).
     //   a url for browser always need a relative protocol see https bug @LB-1154
-    formatBrowser: function(urlObj) {
-        delete urlObj.protocol;
-        urlObj = removeDefaultPort(urlObj);
-        return formatUrl(urlObj);
+    browserUrl: function(urlString) {
+        // if there isn't a http(s) or relative protocol add relative as default.
+        urlString = protocolRegex.test(urlString) ? urlString : '//' + urlString;
+        urlString = urlString.replace(urlRegex, function(all, protocol, hostname, port) {
+            return '//' +
+                    hostname +
+                    ((port !== '80' && port !== '443') ? ':' + port : '');
+        });
+        return urlString;
     },
-    // reformat a urlString to a browser relative protocol urlString.
-    reformatBrowser: function(urlString) {
-        return urlHref.formatBrowser(urlHref.parseForceHref(urlString));
+    // fix urlString, forceing a http: protocol if the protocol is non or a relative protocol.
+    //   nodejs requst module needs a protocol http or https to request a url, relative protocols fails.
+    serverUrl: function(urlString) {
+        // if there isn't a http(s) or relative protocol add relative as default.
+        urlString = protocolRegex.test(urlString) ? urlString : '//' + urlString;
+        urlString = urlString.replace(urlRegex, function(all, protocol, hostname, port) {
+            // if the protocol is relative add a http: default protocol.
+            protocol = protocol ? protocol : 'http:';
+            return protocol + '//' + hostname +
+                    ((port !== '80' && port !== '443') ? ':' + port : '');
+        });
+        return urlString;
     },
-    // reformat a urlString to a nodejs http(s) protocol urlString.
-    reformatSever: function(urlString) {
-        return urlHref.formatServer(urlHref.parseForceHref(urlString));
+    // get a port from a urlString
+    getPort: function(urlString) {
+        // if there isn't a http(s) or relative protocol add relative as default.
+        var newport = '80';
+        urlString = protocolRegex.test(urlString) ? urlString : '//' + urlString;
+        urlString.replace(urlRegex, function(all, protocol, hostname, port) {
+            newport = port ? port : newport;
+        });
+        return parseInt(newport, 10);
+    },
+    // replace a port into a urlString
+    replacePort: function(urlString, newport) {
+        urlString = urlString.replace(urlRegex, function(all, protocol, hostname, port) {
+            // if the protocol is relative add a http: default protocol.
+            return (protocol ? protocol: '') + '//' + hostname +
+                    ((newport !== '80' && newport !== '443') ? ':' + newport : '');
+        });
+        return urlString;
     }
 };
 

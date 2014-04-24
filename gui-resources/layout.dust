@@ -31,7 +31,7 @@
 {/embedCode}
 {<layout}
     {?render.seo}
-    <div data-gimme="liveblog-layout"></div>
+        <div data-gimme="liveblog-layout"></div>
     {:else}
         <div data-gimme="liveblog"></div>
     {/render.seo}
