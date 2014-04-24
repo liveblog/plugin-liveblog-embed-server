@@ -11,8 +11,7 @@ var requirejs = require('./lib/nodejs/requirejs-clear-cache'),
     lodash    = require('lodash'),
     cors = require('./lib/nodejs/express/cors');
 
-var nodejsUrl,
-    app = module.exports = express(),
+var app = module.exports = express(),
     config = {
         paths: {
             root: '../../../'
@@ -25,10 +24,9 @@ grunt.initConfig(config);
 config = grunt.config.get();
 // prase the nodejs property to a url object.
 //   so that we can have the port, protocol and hostname for later use.
-var nodejsUrl = urlHref.parseForceHref(config.servers.nodejs);
 app.configure(function() {
     app.use(cors);
-    app.set('port', nodejsUrl.port); // maybe add this in the future process.env.PORT || nodejsUrl.port
+    app.set('port', urlHref.getPort(config.servers.nodejs)); // maybe add this in the future process.env.PORT || nodejsUrl.port
     app.use(express['static'](path.join(__dirname, config.paths.scriptsRoot)));
     app.use(express['static'](path.join(__dirname, config.paths.themesRoot)));
     app.use('/scripts/js/node_modules',
@@ -82,11 +80,13 @@ requirejs.config({
 });
 
 var configLiveblog = function(liveconfig, config) {
+    // add loader browserUrl method to server liveblog global object.
+    liveconfig.browserUrl = urlHref.browserUrl;
     if (liveconfig.servers.rest) {
-        liveconfig.servers.rest = urlHref.reformatSever(liveconfig.servers.rest);
+        liveconfig.servers.rest = urlHref.serverUrl(liveconfig.servers.rest);
     }
 
-    liveconfig.servers.frontend = urlHref.reformatSever(
+    liveconfig.servers.frontend = urlHref.serverUrl(
         liveconfig.servers.frontend ?
             liveconfig.servers.frontend :
                 (config.servers.proxy ?
@@ -94,19 +94,17 @@ var configLiveblog = function(liveconfig, config) {
                     config.servers.nodejs)
             );
 
-    liveconfig.servers.css = urlHref.reformatSever(
+    liveconfig.servers.css = urlHref.serverUrl(
         liveconfig.servers.css ?
             liveconfig.servers.css :
             liveconfig.servers.rest);
 
-    var livereloadObj = urlHref.parseForceHref(liveconfig.servers.frontend);
-    livereloadObj.port = config.servers.livereload;
-    liveconfig.servers.livereload = urlHref.formatBrowser(livereloadObj);
+    liveconfig.servers.livereload = urlHref.replacePort(liveconfig.servers.frontend, config.servers.livereload);
 
     requirejs.config({
         config: {
                 css: {
-                    url: urlHref.reformatBrowser(liveconfig.servers.css) + (liveconfig.paths.css ? liveconfig.paths.css : '')
+                    url: urlHref.browserUrl(liveconfig.servers.css) + liveconfig.paths.css
                 }
             }
         });
@@ -146,15 +144,13 @@ app.get('/', function(req, res) {
             utils.dispatcher.once('blog-model.request-failed', function() {
                 if (!sent) {
                     sent = true;
-                    //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
-                    res.send('Request for blog has failed.');
+                    res.send(400, 'Request for blog has failed.');
                 }
             });
             utils.dispatcher.once('theme-file.request-failed', function() {
                 if (!sent) {
                     sent = true;
-                    //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
-                    res.send('Request for theme file has failed.');
+                    res.send(400, 'Request for theme file has failed.');
                 }
             });
             var layout = new Layout();
@@ -165,8 +161,7 @@ app.get('/', function(req, res) {
                 }
             });
         }, function(err) {
-            //@TODO: see if this will fit server side, maybe we will need to send some error codes aswell.
-            res.send(err);
+            res.send(400, err);
         });
     }
 });

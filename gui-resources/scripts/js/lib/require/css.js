@@ -143,14 +143,13 @@ define(['lib/utils', 'plugins/css', 'backbone'], function(utils, pluginCss, Back
             onload();
         }
         if (utils.isClient) {
-            var loaded = Backbone.$('link[href="' + req.toUrl(configCss.url + '/' + name + '.css') + '"]');
-            (useImportLoad ? importLoad : linkLoad)(req.toUrl(name + '.css'), onload);
-            // @TODO uncomment the lines below when main view is defined
-            //if(!loaded) {
-            //    (useImportLoad ? importLoad : linkLoad)(req.toUrl(name + '.css'), onload);
-            //} else {
-            //    onload();
-            //}
+            var cssUrl = req.toUrl(configCss.url + '/' + name + '.css'),
+                loaded = Backbone.$('link[href="' + cssUrl + '"]');
+            if (!loaded) {
+                (useImportLoad ? importLoad : linkLoad)(cssUrl, onload);
+            } else {
+                onload();
+            }
         }
     };
 

@@ -6,7 +6,7 @@ require.config({
             themesPath:             '../../themes/'
         },
         css: {
-            host: '//' + liveblog.hostname + (liveblog.port ? (':' + liveblog.port) : '') + '/content/lib/livedesk-embed'
+            url: liveblog.servers.frontend + '/content/lib/livedesk-embed'
         }
     },
     paths: {

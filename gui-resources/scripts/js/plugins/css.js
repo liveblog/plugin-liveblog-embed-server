@@ -6,8 +6,8 @@ define([
 ], function(plugins, utils) {
     var obj = function(config) {
         if(obj.hasData()) {
-            utils.dispatcher.once('after-render.blog-view', function(view) {
-                view.$el.prepend(obj.getData());
+            utils.dispatcher.once('after-render.layout-view', function(view) {
+                view.$('[data-gimme="liveblog-layout"]').prepend(obj.getData());
             });
         }
     };
