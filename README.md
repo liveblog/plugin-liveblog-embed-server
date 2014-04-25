@@ -3,7 +3,7 @@
 
 This plugin for Sourcefabric’s Superdesk, first released as part of Live Blog 2.0 beta,  provides a solution for ensuring that blog content is indexable by search engines. A static HTML version of each blog is now generated on the server. As a publisher, you can set your CMS to request this HTML and insert it into an article page before that page is delivered to the browser. When search engine crawlers visit the page, they will see the latest posts from the embedded blog and index them. New posts are automatically added to the page via Javascript.
 
-*License*: [AGPLv3](http://www.gnu.org/licenses/gpl-3.0.txt)
+*License*: [AGPLv3](http://www.gnu.org/licenses/agpl-3.0.txt)
 
 *Copyright*: [Sourcefabric z.ú.](http://www.sourcefabric.org)
 
