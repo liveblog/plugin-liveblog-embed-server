@@ -24,7 +24,7 @@ define(['dust', 'lib/require/i18n-parse'], function(dust, i18nParse) {
             callback(fs.readFileSync(path, 'utf8'));
         };
     } else if ((typeof window !== 'undefined' && window.navigator && window.document) || typeof importScripts !== 'undefined') {
-        fetchText = function (path, callback) {
+        fetchText = function (url, callback) {
             /*!
              * If dataType is requested as text then it fails due to some cdm issues with ie
              * so request it as json and in error method if is a json parsing issue we are good to go.
@@ -32,7 +32,7 @@ define(['dust', 'lib/require/i18n-parse'], function(dust, i18nParse) {
             require(['lib/jquery/xdomainrequest'], function($) {
                 $.ajax({
                     //dataType: 'json',
-                    url: liveblog.servers.frontend + path,
+                    url: url,
                     error: function(xhr, textStatus, errorThrown) {
                         if(textStatus === 'parsererror'){
                             callback(xhr.responseText);
