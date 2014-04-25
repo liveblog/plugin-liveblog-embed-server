@@ -86,7 +86,7 @@ liveblog.callbackVersion = function(ver) {
         /*jshint unused:false*/
         // set the require object for development mode.
         var require = liveblog.require;
-        liveblog.loadJs('node_modules/requirejs/require').setAttribute('data-main', liveblog.paths.scripts + 'main');
+        liveblog.loadJs('node_modules/requirejs/require').setAttribute('data-main', liveblog.baseUrl + 'main');
     } else {
         // if is the production then object liveblog.require was already setup.
         liveblog.loadJs('build/main.min');
