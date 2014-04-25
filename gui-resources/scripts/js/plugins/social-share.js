@@ -21,14 +21,16 @@ define([
 
         plugins['social-share'] = function(config) {
 
-            // On post view initialization
-            utils.dispatcher.on('initialize.post-view', function(view) {
-
+            utils.dispatcher.on('after-render.post-view', function(view) {
                 // Add social share link to the view
                 dust.renderThemed('themeBase/plugins/social-share-anchor', {},
                     function(err, out) {
                         view.$('[data-gimme="post.social-share-placeholder"]').html(out);
                     });
+            });
+
+            // On post view initialization
+            utils.dispatcher.on('initialize.post-view', function(view) {
 
                 // Add event to call 'share' method when share link clicked
                 view.clientEvents({'click [data-gimme="post.social"]': 'share'});
