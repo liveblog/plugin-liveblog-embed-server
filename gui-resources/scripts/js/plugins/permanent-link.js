@@ -9,11 +9,18 @@ define([
 ], function (plugins, utils, dust, visibilityToggle) {
     if (utils.isClient) {
         plugins.permalink = function (config) {
-            utils.dispatcher.on('initialize.post-view', function (view) {
-                //add the 'anchor' to the template
+            utils.dispatcher.on('after-render.post-view', function(view) {
+                 //add the 'anchor' to the template
                 dust.renderThemed('themeBase/plugins/permanent-link', {}, function(err, out) {
                     view.$('[data-gimme="post.permanent-link-placeholder"]').html(out);
                 });
+                var permLink = '';
+                if (view.permalink && typeof view.permalink === 'function') {
+                    permLink = view.permalink();
+                    view.$('[data-gimme="post.share-permalink"]').val(permLink);
+                }
+            });
+            utils.dispatcher.on('initialize.post-view', function (view) {
                 view.clientEvents({
                     'click [data-gimme="post.permalink"]': 'permalinkAction'
                 });
@@ -27,11 +34,7 @@ define([
                         box.trigger('focus');
                     }
                 };
-                var permLink = '';
-                if (view.permalink && typeof view.permalink === 'function') {
-                    permLink = view.permalink();
-                    view.$('[data-gimme="post.share-permalink"]').val(permLink);
-                }
+
                 //select all the content of the permalink input box for easy copying
                 view.clientEvents({
                     'click [data-gimme="post.share-permalink"]': 'permalinkInput',
