@@ -53,7 +53,6 @@ define([
 
         afterRender: function() {
             utils.dispatcher.trigger('after-render.posts-view', this);
-            utils.dispatcher.trigger('add-all.posts-view', this);
         },
 
         setViewOnReset: function() {
@@ -149,6 +148,7 @@ define([
             // on 'reset' append all elements to the root element
             if ($root.is(':empty')) {
                 $root.append($el);
+                utils.dispatcher.trigger('add-all.posts-view', this);
             } else {
             // on 'add' insert the new post in the right position
                 var i = this._postViewIndex($el.attr(this.postRootDataAttr));
