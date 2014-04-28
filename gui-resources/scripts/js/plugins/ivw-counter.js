@@ -11,7 +11,10 @@ define([
             view.clientEvents({'click [data-gimme="posts.nextPage"]': 'ivwCounter'});
             view.ivwCounter = function() {
                 /* global RPO */
-                RPO.reloadIVW();
+                view.buttonNextPage();
+                if ((typeof(RPO) !== 'undefined') && RPO.reloadIVW) {
+                    RPO.reloadIVW();
+                }
             };
         });
     };
