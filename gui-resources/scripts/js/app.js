@@ -53,7 +53,7 @@ requirejs.config({
     baseUrl: __dirname,
     config: {
         'load-theme': {
-            themesPath: path.join(__dirname, config.paths.themes) + '/'
+            themesPath: path.join(__dirname, config.paths.themes)
         },
         'css': {
             siteRoot: config.paths.themesRoot
