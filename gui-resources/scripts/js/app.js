@@ -97,7 +97,7 @@ var configLiveblog = function(liveconfig, config) {
     liveconfig.servers.css = urlHref.serverUrl(
         liveconfig.servers.css ?
             liveconfig.servers.css :
-            liveconfig.servers.rest);
+            liveconfig.servers.frontend);
 
     liveconfig.servers.livereload = urlHref.replacePort(liveconfig.servers.frontend, config.servers.livereload);
 
