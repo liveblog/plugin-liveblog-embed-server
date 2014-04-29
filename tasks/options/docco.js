@@ -2,16 +2,16 @@ module.exports = {
     test: {
         src: ['test/**/*.js'],
         options: {
-            output: 'docs/test'
+            output: 'docs/docco/test'
         }
     },
-    all: {
+    scripts: {
         src: [
             '<%= paths.scripts %>/**/*.js',
             '!<%= paths.scripts %>/bower_components/**'
         ],
         options: {
-            output: 'docs/scripts'
+            output: 'docs/docco/scripts'
         }
     }
 };

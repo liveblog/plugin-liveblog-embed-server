@@ -17,7 +17,9 @@
         "build": "<%= paths.root %>build/",
         "logs": "<%= paths.root %>logs/",
         "test": "<%= paths.root %>test/",
-        "docs": "<%= paths.root %>docs/"
+        "docs": "<%= paths.root %>docs/",
+        "docco": "<%= paths.docs %>docco/scripts",
+        "doccoHusky": "<%= paths.docs %>docco-husky/scripts"
     },
     "liveblog": {
         "id": 1,

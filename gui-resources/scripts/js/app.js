@@ -126,7 +126,13 @@ app.get('/', function(req, res) {
                         lodash.cloneDeep(config.liveblog),
                         req.query.liveblog), config);
     if (!liveblog.servers.rest) {
-        res.redirect('/docs');
+        //if there is a docco-husky index.html and redirect to that.
+        if(fs.existsSync(path.join(__dirname, config.paths.doccoHusky, 'index.html'))) {
+            res.redirect(config.paths.doccoHusky);
+        } else {
+            // docco is the fallback we have a index.html for docco in git.
+            res.redirect(config.paths.docco);
+        }
     } else {
         // for requirejs to reload internationalization and css,
         //   we need to clear the theme and themeFile aswell beside i18n and css modules.

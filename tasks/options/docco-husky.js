@@ -2,17 +2,17 @@ module.exports = {
     test: {
         src: ['test/**/*.js'],
         options: {
-            output: 'docs/test'
+            output: 'docs/docco-husky/test'
         }
     },
-    all: {
+    scripts: {
         name: 'Liveblog embed working on nodejs',
         src: [
             '<%= paths.scripts %>/**/*.js',
             '!<%= paths.scripts %>/bower_components/**'
         ],
         options: {
-            output: 'docs/scripts'
+            output: 'docs/docco-husky/scripts'
         }
     }
 };

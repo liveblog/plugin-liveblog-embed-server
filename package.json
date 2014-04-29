@@ -71,8 +71,8 @@
     "chai": "^1.9.1",
     "sinon": "^1.9.1",
     "sinon-chai": "^2.5.0",
-    "grunt-docco-husky": "https://github.com/nistormihai/grunt-docco-husky/tarball/de78efc5c58358c8cc585dd037d5121b9970bd5a",
-    "docco-husky": "https://github.com/nistormihai/docco-husky/tarball/e707568770ccd3dbeef32b326a6ea14125453c70",
+    "grunt-docco-husky": "https://github.com/nistormihai/grunt-docco-husky/tarball/a434c4c63bb388fc94c6f48a4e79af3f2d5f157b",
+    "docco-husky": "https://github.com/nistormihai/docco-husky/tarball/f66bb4282445868f112083ad80fe5750090e002a",
     "karma-junit-reporter": "^0.2.2",
     "grunt-mocha-test": "^0.10.2"
   },
