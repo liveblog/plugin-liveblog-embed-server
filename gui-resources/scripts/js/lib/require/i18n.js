@@ -25,6 +25,7 @@ define(['backbone-custom', 'lib/gettext'], function(Backbone, gt) {
                     url: urlCached,
                     dataType: 'json',
                     //timeout : 2500,
+                    cached: true,
                     processTime: 400,
                     tryCount: 0,
                     retryLimit: 2,
@@ -43,11 +44,12 @@ define(['backbone-custom', 'lib/gettext'], function(Backbone, gt) {
                     // if is not a timeout status then maybe a redirect issue is in ie or other browser
                     // so in this case call the urlCached of the internationalization
                     error: function(xhr, textStatus, errorThrown) {
-                        if(!this.errorTimeout(xhr, textStatus, errorThrown)) {
+                        if (!this.errorTimeout(xhr, textStatus, errorThrown)) {
 
                             // provide url option in the form of the urlCached
                             // also apply timeout retries for the urlCached
                             options.url = url;
+                            options.cached = false;
                             options.error =  this.errorTimeout;
                             Backbone.ajax(options);
                         }
@@ -64,11 +66,12 @@ define(['backbone-custom', 'lib/gettext'], function(Backbone, gt) {
                                 console.log('We have tried ' + this.retryLimit + ' times and it is still not working. We give in. Sorry.');
                             }
                             return false;
-                        } else {
+                        } else if (!this.cached) {
                             // if the request has faild still load requirejs module but with empty data.
                             onLoad({});
                             return true;
                         }
+                        return false;
                     }
                 };
             Backbone.ajax(options);
