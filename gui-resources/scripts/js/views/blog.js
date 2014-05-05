@@ -18,7 +18,7 @@ define([
             this.setTemplate('themeBase/container');
 
             this.listenTo(this.model, 'change', this.update);
-            this.listenTo(this.model, 'update', function(){
+            this.listenTo(this.model, 'update', function() {
                 console.log('model update');
             });
 
@@ -74,6 +74,15 @@ define([
         },
         serialize: function() {
             return this.model.toJSON();
+        },
+        // methods visible for plugins to control the poller mechanics.
+        stopPoller: function() {
+            this.model.stopPolling();
+            this.model.get('publishedPosts').stopPolling();
+        },
+        starPoller: function() {
+            this.model.startPolling();
+            this.model.get('publishedPosts').startPolling();
         }
     });
 });

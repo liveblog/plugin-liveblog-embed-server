@@ -1,17 +1,22 @@
 'use strict';
 define([
     'underscore',
-    'backbone',
+    'backbone-custom',
     'views/base-view',
-    'lib/helpers/displayToggle',
+    'lib/helpers/display-toggle',
     'models/comment'
 ], function(_, Backbone, BaseView, displayToggle, Comment) {
 
     return BaseView.extend({
-        
+
         messageDisplayTime: 5000,
         initialize: function() {
-            this.setClientEvents();
+            this.clientEvents({
+                'click [data-gimme="blog.comment"]': 'togglePopup',
+                'click #comment-message-btn': 'showAfterMessage',
+                'click .button.cancel': 'togglePopup',
+                'click .button.send': 'send'
+            });
             this.popup = this.$('[data-gimme="blog.comment-box-holder"]');
             displayToggle(this.popup, false);
             this.popup_message = this.$('[data-gimme="blog.comment-box-message"]');
@@ -24,38 +29,32 @@ define([
             this.backdropel.data('show-status', 0);
             this.lbpostlist = this.backdropel.parent();
         },
-        setClientEvents: function() {
-            this.clientEvents({
-                'click [data-gimme="blog.comment"]': 'togglePopup',
-                'click #comment-message-btn': 'showAfterMessage',
-                'click .button.cancel': 'togglePopup',
-                'click .button.send': 'send'
-            });
-        },
         togglePopup: function(e) {
             var view = this,
                 showStatus = view.backdropel.data('show-status');
             e.preventDefault();
-            switch(showStatus) {
+            switch (showStatus) {
                 case 0:
                     displayToggle(view.popup, true);
-                    view.backdropel.data('show-status',1);
+                    view.backdropel.data('show-status', 1);
                     displayToggle(view.backdropel, true);
                     view.lbpostlist.addClass('comment-active');
-                    //view.blogview.stop();
+                    view.blogview.stopPoller();
                     break;
                 case 1:
-                    view.backdropel.data('show-status',0).hide();
+                    view.backdropel.data('show-status', 0).hide();
                     displayToggle(view.popup_message, false);
                     view.resetInput();
                     view.lbpostlist.removeClass('comment-active');
                     displayToggle(view.popup, false);
+                    view.blogview.starPoller();
                     break;
                 case 2:
                     displayToggle(view.popup_message, false);
                     view.resetInput();
                     view.lbpostlist.removeClass('comment-active');
                     displayToggle(view.popup, false);
+                    view.blogview.starPoller();
                     break;
             }
         },
@@ -69,7 +68,7 @@ define([
                     UserName: this.username.val(),
                     CommentText: this.text.val()
                 };
-                console.log('is new ', comment.isNew() );
+                console.log('is new ', comment.isNew());
                 comment.setUrlRoot(this.model.get('CommentPost').href);
                 comment.save(attrs, {
                     success: function() {
@@ -94,14 +93,14 @@ define([
         },
         showAfterMessage: function(e) {
             var view = this;
-            view.backdropel.data('show-status',2);
+            view.backdropel.data('show-status', 2);
             displayToggle(view.backdropel, true);
             displayToggle(view.popup);
-            view.backdropel.data('show-status',1);
+            view.backdropel.data('show-status', 1);
             displayToggle(this.popup_message, true);
-            setTimeout(function(){
+            setTimeout(function() {
                 displayToggle(view.popup_message, false);
-                view.backdropel.data('show-status',0);
+                view.backdropel.data('show-status', 0);
                 displayToggle(view.backdropel, false);
             }, view.messageDisplayTime);
         },
