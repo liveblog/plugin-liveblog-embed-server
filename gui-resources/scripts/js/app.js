@@ -117,8 +117,9 @@ requirejs.onError = function(err) {
 
 app.get('/', function(req, res) {
 
-    liveblogLogger.info('App request query string' +
-        (req.query ? ': "' + qs.stringify(req.query) + '"' : ' is empty'));
+    liveblogLogger.info('App request, query string %s and user-agent %s',
+        (req.query ? ': "' + qs.stringify(req.query) + '"' : ' is empty'),
+         req.headers['user-agent']);
 
     // override the default configuration parametners with
     // the GET query given ones if there are any.
