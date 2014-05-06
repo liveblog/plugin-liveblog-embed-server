@@ -34,7 +34,7 @@ define(['dust', 'lib/require/i18n-parse'], function(dust, i18nParse) {
                     //dataType: 'json',
                     url: url,
                     error: function(xhr, textStatus, errorThrown) {
-                        if(textStatus === 'parsererror'){
+                        if (textStatus === 'parsererror'){
                             callback(xhr.responseText);
                         }
                     },

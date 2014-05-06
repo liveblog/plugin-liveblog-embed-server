@@ -410,7 +410,7 @@ define(function() {
                             next(',');
                             white();
                         } else {
-                            if(ch === '}') {
+                            if (ch === '}') {
                                 next('}');
                                 return '{' + key + '}';
                             } else {

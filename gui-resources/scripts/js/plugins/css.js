@@ -5,7 +5,7 @@ define([
     'lib/utils'
 ], function(plugins, utils) {
     var obj = function(config) {
-        if(obj.hasData()) {
+        if (obj.hasData()) {
             utils.dispatcher.once('after-render.layout-view', function(view) {
                 view.$('[data-gimme="liveblog-layout"]').prepend(obj.getData());
             });

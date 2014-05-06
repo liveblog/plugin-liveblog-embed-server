@@ -6,7 +6,7 @@ define(['dust/core', 'lib/gettext', 'underscore'], function(dust, gt, _) {
         if (_.has(params, 'param1')) {
             var aux = [], index;
             _.each(params, function(value, key) {
-                if(typeof value === 'function'){
+                if (typeof value === 'function'){
                     val = '';
                     chunk.tap(function(data) {
                         val += data;
@@ -24,7 +24,7 @@ define(['dust/core', 'lib/gettext', 'underscore'], function(dust, gt, _) {
             return aux;
         } else {
             _.each(params, function(value, key) {
-                if(typeof value === 'function'){
+                if (typeof value === 'function'){
                     val = '';
                     chunk.tap(function(data) {
                         val += data;
@@ -38,13 +38,13 @@ define(['dust/core', 'lib/gettext', 'underscore'], function(dust, gt, _) {
     };
 
     dust.helpers.i18n = function(chunk, context, bodies, params) {
-        if(params && params.msgid){
+        if (params && params.msgid){
             var msgid = params.msgid;
             delete params.msgid;
             var text = gt.dcnpgettext(params.domain, params.msgctxt, msgid, params.msgid_plural, params.n);
             chunk.write(gt.sprintf(text, parseAttributeParams(chunk, context, bodies, params)));
         } else {
-            if(console){
+            if (console){
                 console.log('No expression given!');
             }
         }
