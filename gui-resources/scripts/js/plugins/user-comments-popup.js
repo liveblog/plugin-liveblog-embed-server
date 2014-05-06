@@ -8,7 +8,7 @@ define([
 ], function(_, Backbone, BaseView, displayToggle, Comment) {
 
     return BaseView.extend({
-
+        //time to display the after submit message
         messageDisplayTime: 5000,
         initialize: function() {
             this.clientEvents({
@@ -17,6 +17,7 @@ define([
                 'click .button.cancel': 'togglePopup',
                 'click .button.send': 'send'
             });
+            //various initialization operations
             this.popup = this.$('[data-gimme="blog.comment-box-holder"]');
             displayToggle(this.popup, false);
             this.popup_message = this.$('[data-gimme="blog.comment-box-message"]');
@@ -30,6 +31,7 @@ define([
             this.lbpostlist = this.backdropel.parent();
         },
         togglePopup: function(e) {
+            //toggle the message box according to case
             var view = this,
                 showStatus = view.backdropel.data('show-status');
             e.preventDefault();
@@ -61,23 +63,22 @@ define([
         send: function(e) {
             e.preventDefault();
             var self = this;
-            console.log('model urlRoot is ', this.model.get('CommentPost').href);
             if (this.isValid()) {
+                //new comment model
                 var comment = new Comment();
                 var attrs = {
                     UserName: this.username.val(),
                     CommentText: this.text.val()
                 };
-                console.log('is new ', comment.isNew());
+                //set the save url
                 comment.setUrlRoot(this.model.get('CommentPost').href);
+                //save the comment
                 comment.save(attrs, {
                     success: function() {
-                        console.log('save success');
                         self.showAfterMessage(e);
                         self.resetInput();
                     },
                     error: function() {
-                        console.log('save error');
                         self.showAfterMessage(e);
                         self.resetInput();
                     },
@@ -87,11 +88,13 @@ define([
             }
         },
         resetInput: function() {
+            //clear the message box inputs and error message boxes
             this.username.val('');
             this.text.val('');
             displayToggle(this.$('.error'), false);
         },
         showAfterMessage: function(e) {
+            //show the message box after message submit
             var view = this;
             view.backdropel.data('show-status', 2);
             displayToggle(view.backdropel, true);
@@ -105,12 +108,13 @@ define([
             }, view.messageDisplayTime);
         },
         isValid: function() {
+            //validate username
             if (!this.username.val()) {
                 displayToggle(this.username.next('.error'), true);
             } else {
                 displayToggle(this.username.next('.error'), false);
             }
-
+            //validate text message
             if (!this.text.val()) {
                 displayToggle(this.text.next('.error'), true);
             } else {
