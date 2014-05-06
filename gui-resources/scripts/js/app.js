@@ -137,7 +137,7 @@ app.get('/', function(req, res) {
     } else {
         // for requirejs to reload internationalization and css,
         //   we need to clear the theme and themeFile aswell beside i18n and css modules.
-        requirejs.clearCache('^(i18n!|css!|theme|themeFile)');
+        requirejs.clearCache('^(i18n!|css!|tmpl!|theme|themeFile)');
         requirejs([
             'views/layout',
             'lib/utils'
