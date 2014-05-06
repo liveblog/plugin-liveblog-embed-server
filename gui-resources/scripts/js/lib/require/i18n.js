@@ -10,7 +10,7 @@ define(['backbone-custom', 'lib/gettext'], function(Backbone, gt) {
 
         load: function(name, req, onLoad, config) {
             // Append '.json' if no filename given:
-            if(!liveblog.language) {
+            if (!liveblog.language) {
                 liveblog.language = liveblog.fallback.language;
             }
             var urlPreCached = liveblog.servers.rest + '/content/cache/locale/plugin-' + name + '-' + liveblog.language + '.json',
@@ -77,7 +77,7 @@ define(['backbone-custom', 'lib/gettext'], function(Backbone, gt) {
             Backbone.ajax(options);
         },
         write: function(pluginName, moduleName, write) {
-            if(moduleName in buildMap){
+            if (moduleName in buildMap){
                 var content = buildMap[moduleName];
                 write('define("' + pluginName + '!' + moduleName + '", function(){ return ' + content + ';});\n');
             }

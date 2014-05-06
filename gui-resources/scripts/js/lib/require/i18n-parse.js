@@ -26,7 +26,7 @@ define(['lib/helpers/object-parse'], function(objectParse) {
                 /*jshint forin: false */
                 for (var i in fparams) {
                     if (fparams.hasOwnProperty(i)) {
-                        if(isNaN(i)) {
+                        if (isNaN(i)) {
                             fstr = fstr + ' ' + i + '="' + fparams[i] + '"';
                         } else {
                             fstr = fstr + ' param' + (parseInt(i, 10) + 1) + '="' + fparams[i] + '"';

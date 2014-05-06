@@ -63,7 +63,7 @@ define([
             if (data.PostList.length) {
                 var self = this;
                 data.PostList = data.PostList.filter(function(p) {
-                    if(p.Order) {
+                    if (p.Order) {
                         return parseFloat(p.Order) >= self.minPostOrder;
                     }
                     return true;

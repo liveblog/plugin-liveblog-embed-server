@@ -128,7 +128,7 @@ app.get('/', function(req, res) {
                         req.query.liveblog), config);
     if (!liveblog.servers.rest) {
         //if there is a docco-husky index.html and redirect to that.
-        if(fs.existsSync(path.join(__dirname, config.paths.doccoHusky, 'index.html'))) {
+        if (fs.existsSync(path.join(__dirname, config.paths.doccoHusky, 'index.html'))) {
             res.redirect(config.paths.doccoHusky);
         } else {
             // docco is the fallback we have a index.html for docco in git.
