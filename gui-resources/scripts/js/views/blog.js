@@ -18,6 +18,9 @@ define([
             this.setTemplate('themeBase/container');
 
             this.listenTo(this.model, 'change', this.update);
+            this.listenTo(this.model, 'update', function() {
+                console.log('model update');
+            });
 
             // When creating the PostsView, if there is server side generated HTML
             // attach the view to it
@@ -64,9 +67,22 @@ define([
             //Set title and description
             this.$('[data-gimme="blog.title"]').html(this.model.get('Title'));
             this.$('[data-gimme="blog.description"]').html(this.model.get('Description'));
+            //Trigger update config
+            if (!_.isEmpty(embedConfig)) {
+                utils.dispatcher.trigger('config-update.blog-view', this);
+            }
         },
         serialize: function() {
             return this.model.toJSON();
+        },
+        // methods visible for plugins to control the poller mechanics.
+        stopPoller: function() {
+            this.model.stopPolling();
+            this.model.get('publishedPosts').stopPolling();
+        },
+        starPoller: function() {
+            this.model.startPolling();
+            this.model.get('publishedPosts').startPolling();
         }
     });
 });

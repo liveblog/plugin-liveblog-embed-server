@@ -9,6 +9,7 @@ define([
     'plugins/permanent-link',
     'plugins/social-share',
     'plugins/wrappup-toggle',
+    'plugins/user-comments',
     'tmpl!theme/container',
     'tmpl!theme/item/base'
 ], function() {

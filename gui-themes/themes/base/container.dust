@@ -95,7 +95,7 @@
 {/actionTotop}
 
 {<actionUserComment}
-<a data-gimme="blog.comment" href="#" class="comment button" {#EmbedConfig.UserComments} style="display:block" {:else} style="display:none" {/EmbedConfig.UserComments}>_('comment');</a>
+<div data-gimme="blog.comment-action"></div>
 {/actionUserComment}
 
 {<userCommentBox}

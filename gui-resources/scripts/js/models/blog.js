@@ -11,7 +11,8 @@ define([
         syncParams: {
             headers: {
                 'X-Filter': 'Description, Title, EmbedConfig, Language.Code'
-            }
+            },
+            updates: {}
         },
 
         pollInterval: 10000,
@@ -22,11 +23,15 @@ define([
 
         initialize: function() {
             this.set('publishedPosts', new Posts([], {blogId: this.id}));
-            // if (utils.isClient) {
-            //     this.startPolling();
-            // }
+            if (utils.isClient) {
+                this.startPolling();
+            }
         },
-
+        // The function to be called for polling
+        poller: function(options) {
+            delete options.data;
+            this.fetch(options);
+        },
         parse: function(data) {
             if (data.EmbedConfig) {
                 data.EmbedConfig = JSON.parse(data.EmbedConfig);
