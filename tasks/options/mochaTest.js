@@ -1,6 +1,6 @@
 module.exports = {
     options: {
-        globals: ['expect', '_', 'Backbone'],
+        globals: ['expect', '_', 'Backbone', 'sinon', 'liveblog'],
         //globals: ['expect', 'sinon'],
         timeout: 3000,
         ignoreLeaks: false,

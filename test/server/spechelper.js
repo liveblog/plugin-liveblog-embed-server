@@ -6,8 +6,7 @@ var chai      = require('chai'),
 
 global.expect    = chai.expect;
 global.requirejs = require('requirejs');
-// Better require sinon explicitely in tests where it's needed
-//global.sinon  = require('sinon');
+global.sinon  = require('sinon');
 chai.use(sinonChai);
 
 requirejs.config({
