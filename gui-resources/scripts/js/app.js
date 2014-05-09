@@ -9,7 +9,8 @@ var requirejs = require('./lib/nodejs/requirejs-clear-cache'),
     urlHref   = require('./lib/nodejs/url-href'),
     grunt     = require('grunt'),
     lodash    = require('lodash'),
-    cors = require('./lib/nodejs/express/cors');
+    cors      = require('./lib/nodejs/express/cors'),
+    dust      = require('./lib/nodejs/dust-clear-cache');
 
 var app = module.exports = express(),
     config = {
@@ -137,7 +138,8 @@ app.get('/', function(req, res) {
     } else {
         // for requirejs to reload internationalization and css,
         //   we need to clear the theme and themeFile aswell beside i18n and css modules.
-        requirejs.clearCache('^(i18n!|css!|tmpl!|theme|themeFile)');
+        requirejs.clearCache('^(i18n!|css!|tmpl!theme\/|theme|themeFile)');
+        dust.clearCache('^(theme\/)');
         requirejs([
             'views/layout',
             'lib/utils'
