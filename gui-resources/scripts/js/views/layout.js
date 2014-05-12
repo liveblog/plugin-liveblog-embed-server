@@ -28,8 +28,11 @@ define([
             this.blogModel = new Blog({Id: liveblog.id});
             this.blogModel.fetch({
                 success: function() {
-                    var config = self.blogModel.get('EmbedConfig');
-                    config.language = self.blogModel.get('Language').Code;
+                    var config = self.blogModel.get('EmbedConfig'),
+                        lang = self.blogModel.get('Language');
+                    if (lang && lang.Code) {
+                        config.language = lang.Code;
+                    }
                     loadTheme(config, function() {
                         self.insertView('[data-gimme="liveblog-layout"]', new BlogView({model: self.blogModel}));
                     });
