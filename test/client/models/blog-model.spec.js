@@ -46,6 +46,7 @@ define(['jquery', 'models/blog', 'collections/posts'], function($, Blog, Posts) 
                 expect(dataEmbedConfig).to.have.deep.property('EmbedConfig.FrontendServer')
                                         .and.to.equal('//localhost:8080');
             });
+            blog.stopPolling();
         });
         // test the urlRoot method so it will always return the correct url for blog.
         describe('urlRoot', function() {
@@ -58,6 +59,7 @@ define(['jquery', 'models/blog', 'collections/posts'], function($, Blog, Posts) 
             it('get urlRoot for blog model', function() {
                 expect(blog.urlRoot()).to.equal('//localhost:8080/resources/LiveDesk/Blog/');
             });
+            blog.stopPolling();
         });
 
         describe('initialize', function() {
@@ -75,7 +77,7 @@ define(['jquery', 'models/blog', 'collections/posts'], function($, Blog, Posts) 
                 expect(blog.get('publishedPosts')).to.be.an.instanceof(Posts)
                     .and.to.have.property('blogId').to.equal(2);
             });
-
+            blog.stopPolling();
         });
 
         describe('properties', function() {
@@ -96,6 +98,7 @@ define(['jquery', 'models/blog', 'collections/posts'], function($, Blog, Posts) 
                                             .to.be.an('object').and
                                                 .to.be.empty;
             });
+            blog.stopPolling();
         });
 
         describe('fetch', function() {
@@ -124,6 +127,7 @@ define(['jquery', 'models/blog', 'collections/posts'], function($, Blog, Posts) 
                         rest: '//localhost:8080'
                     }
                 };
+                blog.stopPolling();
                 blog.fetch();
                 expect($.ajax.calledOnce).to.be.true;
                 expect($.ajax.getCall(0).args[0].url).to.equal('//localhost:8080/resources/LiveDesk/Blog/1');
@@ -144,7 +148,7 @@ define(['jquery', 'models/blog', 'collections/posts'], function($, Blog, Posts) 
             // with a spy.
             beforeEach(function() {
                 sinon.stub($, 'ajax').yieldsTo('success', {
-                    Id: 1,
+                    Id: 4,
                     Title: 'test title',
                     Language: {
                         Code: 'de'
@@ -158,21 +162,10 @@ define(['jquery', 'models/blog', 'collections/posts'], function($, Blog, Posts) 
             afterEach(function() {
                 $.ajax.restore();
             });
-            var blog = new Blog({Id: 1}),
-                options = {
-                    crossDomain: true,
-                    data: {
-                        some: 'kind',
-                        of: 'data'
-                    }
-                };
-            window.liveblog = {
-                servers: {
-                    rest: '//localhost:8080'
-                }
-            };
+
             it('blog model should make an ajax call to liveblog.server.rest', function(done) {
-                var blog = new Blog({Id: 1}),
+                var BlogFast = Blog.extend({pollInterval: 100});
+                var blog = new BlogFast({Id: 4}),
                     options = {
                         crossDomain: true,
                         data: {
@@ -185,20 +178,24 @@ define(['jquery', 'models/blog', 'collections/posts'], function($, Blog, Posts) 
                         rest: '//localhost:8080'
                     }
                 };
-
                 blog.poller(options);
                 expect($.ajax.calledOnce).to.be.true;
-                expect($.ajax.getCall(0).args[0].url).to.equal('//localhost:8080/resources/LiveDesk/Blog/1');
+                expect($.ajax.getCall(0).args[0].url).to.equal('//localhost:8080/resources/LiveDesk/Blog/4');
                 expect($.ajax.getCall(0).args[0].crossDomain).to.be.true;
                 expect($.ajax.getCall(0).args[0]).to.not.have.property('data');
-                expect(blog.get('Id')).equal(1);
+                expect(blog.get('Id')).equal(4);
                 expect(blog.get('EmbedConfig')).to.have.property('UserComments')
                                         .and.to.equal.true;
                 expect(blog.get('EmbedConfig')).to.have.property('FrontendServer')
                                         .and.to.equal('//localhost:8080');
                 expect(blog.get('Language')).to.have.property('Code')
                                         .and.to.equal('de');
-                done(); // let Mocha know we're done async testing
+                setTimeout(function() {
+                    expect($.ajax.getCall(0).args[0].url).to.equal('//localhost:8080/resources/LiveDesk/Blog/4');
+                    expect($.ajax.getCall(1).args[0].url).to.equal('//localhost:8080/resources/LiveDesk/Blog/4');
+                    done(); // let Mocha know we're done async testing
+
+                }, blog.pollInterval);
             });
 
         });
