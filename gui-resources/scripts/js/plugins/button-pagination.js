@@ -76,13 +76,11 @@ define([
 
                 var item = view.$('[data-gimme="posts.beforePage"]');
                 item.addClass('loading');
-                view.$el
-                        .children(':not([data-gimme="posts.beforePage"],[data-gimme="posts.nextPage"])')
-                            .remove();
                 view.flags.topPage = false;
                 view.topPage().done(function() {
                     item.removeClass('loading');
                     displayToggle(item, false);
+                    view.checkNextPage();
                 });
 
             };
