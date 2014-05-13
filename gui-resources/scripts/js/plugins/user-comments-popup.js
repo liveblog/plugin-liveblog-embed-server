@@ -105,6 +105,7 @@ define([
                 displayToggle(view.popup_message, false);
                 view.backdropel.data('show-status', 0);
                 displayToggle(view.backdropel, false);
+                view.blogview.starPoller();
             }, view.messageDisplayTime);
         },
         isValid: function() {

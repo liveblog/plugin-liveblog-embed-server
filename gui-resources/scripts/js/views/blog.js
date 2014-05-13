@@ -43,6 +43,7 @@ define([
                 //make sure that we update the seo generated markup with the latest changes
                 this.update();
             }
+            utils.dispatcher.trigger('conditional-render.blog-view', this);
         },
         afterRender: function() {
             utils.dispatcher.trigger('after-render.blog-view', this);
