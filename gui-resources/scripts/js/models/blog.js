@@ -1,10 +1,11 @@
 'use strict';
 
 define([
+    'underscore',
     'models/base-model',
     'collections/posts',
     'lib/utils'
-], function(BaseModel, Posts, utils) {
+], function(_, BaseModel, Posts, utils) {
 
     return BaseModel.extend({
 
@@ -33,9 +34,10 @@ define([
             this.fetch(options);
         },
         parse: function(data) {
-            if (data.EmbedConfig) {
+            if (_.isString(data.EmbedConfig)) {
                 data.EmbedConfig = JSON.parse(data.EmbedConfig);
-            } else {
+            }
+            if (_.isUndefined(data.EmbedConfig)) {
                 data.EmbedConfig = {};
             }
             return data;
