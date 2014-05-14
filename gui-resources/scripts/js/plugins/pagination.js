@@ -20,9 +20,10 @@ define([
             };
 
             view.topPage = function() {
-                this.collection.clearPaginationParams();
                 delete this.collection.syncParams.pagination['order.end'];
-                return this.collection.fetchPage();
+                //reset offset to first element
+                this.collection.syncParams.pagination.offset = 0;
+                return this.collection.fetchPage({reset: true});
             };
 
             view.nextPage = function() {
