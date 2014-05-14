@@ -2,66 +2,66 @@
 'use strict';
 
 define([
+    'underscore',
     'models/base-model',
-    'lib/helpers/trimTag',
-    'moment'
-], function(BaseModel, trimTag, moment) {
+    'lib/helpers/trim-tag',
+    'lib/gettext'
+], function(_, BaseModel, trimTag, gt) {
 
     return BaseModel.extend({
 
         parse: function(data) {
             if (data.Meta) {
+                data.Meta = data.Meta
+                            .replace(new RegExp('http://', 'g'), '//')
+                            .replace(new RegExp('https://', 'g'), '//');
                 data.Meta = JSON.parse(data.Meta);
+            } else {
+                data.Meta = {};
+            }
 
-                if (data.AuthorName) {
-                    data.Meta.Creator = {'Name': data.AuthorName};
-                }
+            if (data.AuthorName) {
+                data.Meta.Creator = {'Name': data.AuthorName};
+            }
 
-                if (data.Meta.annotation) {
-                    data.Meta.annotation = this._manageAnnotations(data.Meta.annotation);
-                }
+            if (data.Meta.annotation) {
+                data.Meta.annotation = this._manageAnnotations(data.Meta.annotation);
             }
 
             if (data.Author) {
                 if (data.Author.Source.Type.Key === 'smsblog') {
+                    // ugly hack is ugly
+                    // @TODO remove this when is resolved on rest server.
                     data.item = 'source/sms';
                 } else {
                     if (data.Author.Source.IsModifiable ===  'True' ||
                             data.Author.Source.Name === 'internal') {
                         data.item = 'posttype/' + data.Type.Key;
-                    } else if (data.Type) {
+                    } else if (data.Author.Source.Name === 'google'){
+                        data.item  = 'source/google/' + data.Meta.type;
+                    } else {
                         data.item = 'source/' + data.Author.Source.Name;
                     }
                 }
+                if ((data.item === 'source/comments') && data.Meta && data.Meta.AuthorName) {
+                    data.Meta.AuthorName = gt.sprintf(
+                        gt.gettext('%(full_name)s commentator'), {'full_name': data.Meta.AuthorName});
+                }
+                data.item = data.item.replace('/advertisement', '/infomercial');
             }
 
-            // TODO: move this to a dust filter
-            if (data.CreatedOn) {
-                var createdOn = moment(data.CreatedOn);
-                // TODO: use locale for date format
-                // & !! check that the content of _('post-date') makes sense for moment.js
-                //data.CreatedOn = createdOn.format(_('post-date'));
-                data.CreatedOn = createdOn.format('DD/MM/YYYY HH:mm');
-                data.CreatedOnISO = createdOn.valueOf();
+            // liveblog can be set into two instances,
+            // frontend is the one that servers the embed and backend could be another instance for admin area.
+            // but when we server content with images, links and so on we need to give it frontend url.
+            if (data.Content && liveblog && liveblog.servers.backend) {
+                data.Content = data.Content.replace(liveblog.servers.backend, liveblog.servers.frontend);
             }
-
-            // TODO: move this to a dust filter
-            if (data.PublishedOn) {
-                var publishedOn = moment(data.PublishedOn);
-                // TODO: use locale for date format
-                // & !! check that the content of _('post-date') makes sense for moment.js
-                //data.PublishedOn = publishedOn.format(_('post-date'));
-                data.PublishedOn = publishedOn.format('DD/MM/YYYY HH:mm');
-                data.PublishedOnISO = publishedOn.valueOf();
-            }
-
-            // TODO: We may need to use these lines to update the admin server
-            //if (data.Content && liveblog && liveblog.adminServer && livedesk && livedesk.frontendServer) {
-                //data.Content = data.Content.replace(liveblog.adminServer, livedesk.frontendServer);
-            //}
-
-            if (liveblog && liveblog.frontendServer) {
-                data.frontendServer = liveblog.frontendServer;
+            // send servers.frontend to template so some templates can use it
+            // ex: quirks mode use avatar image witch needs to have be set fullpath.
+            if (liveblog && liveblog.servers.backend) {
+                data.servers = data.servers ? data.servers : {};
+                data.servers.frontend = liveblog.servers.frontend;
+                data.servers.backend = liveblog.servers.backend;
             }
 
             return data;
@@ -69,28 +69,29 @@ define([
 
         _manageAnnotations: function(apiAnnotation) {
             var annotation = apiAnnotation;
+            // an old implementation is using array if it has before and after annotation
+            // or a string if it only has before annotation
+            if (_.isArray(apiAnnotation)) {
+                annotation = {
+                    before: apiAnnotation[0],
+                    after: apiAnnotation[1] ? apiAnnotation[1] : ''
+                };
+            }
 
-            if (annotation) {
-                if (annotation[1] === null) {
-                    annotation = annotation[0];
-                    annotation = trimTag(['<br>', '<br />'], annotation);
-                }
-                if (typeof annotation !== 'string') {
-                    if (annotation[0]) {
-                        var aux = annotation;
-                        annotation = {
-                            'before': trimTag(['<br>', '<br />'], aux[0]),
-                            'after': trimTag(['<br>', '<br />'], aux[1])
-                        };
-                    } else {
-                        annotation = {
-                            'before': trimTag(['<br>', '<br />'], annotation.before),
-                            'after': trimTag(['<br>', '<br />'], annotation.after)
-                        };
-                    }
-                } else {
-                    annotation = trimTag(['<br>', '<br />'], annotation);
-                }
+            if (_.isString(apiAnnotation)) {
+                annotation = {
+                    'before': apiAnnotation,
+                    'after': ''
+                };
+            }
+
+            // annotation now is according to the new api,
+            // remove the the trailing br tag.
+            if (_.isObject(annotation)) {
+                annotation = {
+                    'before': trimTag(['<br/>', '<br>', '<br />'], annotation.before),
+                    'after': trimTag(['<br/>', '<br>', '<br />'], annotation.after)
+                };
             }
 
             return annotation;

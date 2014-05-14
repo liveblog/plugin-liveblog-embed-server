@@ -65,11 +65,11 @@
 
 {! -- Main blocks !}
 {<createdDateContainer}
-    <span class="post-datetime"><time data-date="{CreatedOnISO}">{CreatedOn}</time></span>
+    <span class="post-datetime"><time data-date="{CreatedOn}">{CreatedOn|post-date}</time></span>
 {/createdDateContainer}
 
 {<publishedDateContainer}
-    <span class="post-datetime"><time data-date="{PublishedOnISO}">{PublishedOn}</time></span>
+    <span class="post-datetime"><time data-date="{PublishedOn}">{PublishedOn|post-date}</time></span>
 {/publishedDateContainer}
 
 {<postDateContainer}
