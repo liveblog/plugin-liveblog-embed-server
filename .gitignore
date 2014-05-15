@@ -1,4 +1,8 @@
-__init__.py
+*.py
+*.pyc
+gui-resources/*.html
+__plugin__
+setup.cfg
 npm-debug.log
 config.json
 node_modules/**
