@@ -80,7 +80,7 @@ var loadMain = function() {
         liveblog.loadJs('node_modules/requirejs/require').setAttribute('data-main', liveblog.baseUrl + 'main');
     } else {
         // if is the production then object liveblog.require was already setup.
-        liveblog.loadJs('build/main.min');
+        liveblog.loadJs('build/main');
     }
 };
 // this is the callback after the version was loaded.
