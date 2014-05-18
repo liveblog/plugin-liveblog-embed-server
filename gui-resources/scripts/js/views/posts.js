@@ -26,11 +26,12 @@ define([
                 return '[' + this.postRootDataAttr + ']';
             }
         },
-
         flags: {
+            //if false the items will not be displayed imediately
             autoRender: true
         },
-
+        //keeps count of how many currently pending items
+        pendingCounter: 0,
         initialize: function() {
             utils.dispatcher.trigger('initialize.posts-view', this);
             _.bindAll(this, 'insertPostView', 'orderViews', '_postViewIndex',
@@ -38,7 +39,8 @@ define([
             this.setTemplate('themeBase/posts-list');
             if (utils.isClient) {
                 this.listenTo(this.collection, 'reset', this.setViewOnReset);
-                this.listenTo(this.collection, 'add', this.addPost);
+                //this.listenTo(this.collection, 'add', this.addPost);
+                this.listenTo(this.collection, 'add', this.checkPending);
                 this.listenTo(this.collection, 'remove', this.removePost);
                 this.listenTo(this.collection, 'change:Order', this.reorderPost);
                 this.listenTo(this.collection, 'change:DeletedOn', this.removePostFromCollection);
@@ -105,7 +107,30 @@ define([
                 this.collection.remove(post);
             }
         },
-
+        //render all the pending items
+        renderPending: function() {
+            var self = this;
+            //cycle through all the collection
+            this.collection.each(function(item) {
+                if (item.get('pending')) {
+                    self.addPost(item);
+                    item.set('pending', false);
+                    self.pendingCounter --;
+                }
+            });
+            utils.dispatcher.trigger('rendered-pending.posts-view', this);
+        },
+        //check each post before rendering
+        checkPending: function(post) {
+            if (!this.flags.autoRender && post.get('updateItem')) {
+                //mark post as pending
+                post.set('pending', true);
+                this.pendingCounter ++;
+                utils.dispatcher.trigger('add-pending.posts-view', this);
+            } else {
+                this.addPost(post);
+            }
+        },
         addPost: function(post) {
             var postView = this.insertPostView(post);
             this.orderViews();

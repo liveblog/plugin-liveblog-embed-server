@@ -10,6 +10,7 @@ define([
     'plugins/social-share',
     'plugins/wrappup-toggle',
     'plugins/user-comments',
+    'plugins/pending-messages',
     'tmpl!theme/container',
     'tmpl!theme/item/base'
 ], function() {
