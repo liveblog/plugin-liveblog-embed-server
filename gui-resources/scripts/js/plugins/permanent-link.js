@@ -18,6 +18,7 @@ define([
                 if (view.permalink && typeof view.permalink === 'function') {
                     permLink = view.permalink();
                     view.$('[data-gimme="post.share-permalink"]').val(permLink);
+                    view.$('[data-gimme="post.permalink"]').attr('href', permLink);
                 }
             });
             utils.dispatcher.on('initialize.post-view', function (view) {

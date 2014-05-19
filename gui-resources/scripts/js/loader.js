@@ -30,7 +30,7 @@ if ((qs.indexOf('liveblog[dev]') !== -1) || liveblog.dev) {
     //     for the query parametes that starts with liveblog.
     //     override those properies over the existing global liveblog obj.
     //     parse only first and second level of the object.
-    qs.replace(/liveblog\[([^?=&\]]+)\](\[([^?=&\]]+)\])?(=([^&]*))?/g, function (match, key, hasSub, subkey, hasEquality, value) {
+    qs.replace(/liveblog\[([^?=&\]]+)\](\[([^?=&\]]+)\])?(=([^&#]*))?/g, function (match, key, hasSub, subkey, hasEquality, value) {
         value = decodeURIComponent(value);
         if (hasSub) {
             liveblog[key] = liveblog[key] ? liveblog[key] : {};

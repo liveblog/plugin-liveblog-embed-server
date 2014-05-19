@@ -56,7 +56,7 @@ require([
         require(['router', 'i18n!livedesk_embed'], function(Router) {
             /*jshint unused: false */
             var router = new Router();
-            Backbone.history.start({pushState: true});
+            Backbone.history.start({pushState: false});
         });
     });
 });
