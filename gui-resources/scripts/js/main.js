@@ -2,7 +2,8 @@
 require.config({
     config: {
         'load-theme': {
-            themesPath:             '../../themes/'
+            themesPath:             '../../themes/',
+            buildPath:              './build/themes/'
         }
     },
     paths: {
