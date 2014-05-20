@@ -18,6 +18,7 @@ require.config({
         'backbone-custom':          'lib/backbone/backbone-custom',
         'backbone.layoutmanager':   'node_modules/backbone.layoutmanager/backbone.layoutmanager',
         'moment':                   'node_modules/moment/moment',
+        'waypoints':                'bower_components/jquery-waypoints/waypoints',
         'themeBase':                '../../themes/base',
         'tmpl':                     'lib/require/tmpl',
         'i18n':                     'lib/require/i18n',
