@@ -36,13 +36,13 @@ define([
                     });
                     //when the pending posts are rendered remove the new posts link
                     utils.dispatcher.on('rendered-pending.posts-view', function(view) {
-                        blogView.$('[data-gimme="posts.pending-message"]').html('');
+                        blogView.$('[data-gimme="posts.pending-message"]').html('').toggle(false);
                     });
                     //when new pending posts are added, show the appropriate message
                     utils.dispatcher.on('add-pending.posts-view', function(view) {
                         var message = '', pending = view.pendingCounter;
                         message = gt.sprintf(gt.ngettext('one new post', '%(count)s new posts', pending), {count: pending});
-                        blogView.$('[data-gimme="posts.pending-message"]').html(message);
+                        blogView.$('[data-gimme="posts.pending-message"]').html(message).toggle(true);
                     });
                 }
             };

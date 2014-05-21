@@ -135,6 +135,7 @@ define([
             var postView = this.insertPostView(post);
             this.orderViews();
             postView.render();
+
             utils.dispatcher.trigger('add-all.posts-view', this);
         },
 
@@ -197,6 +198,11 @@ define([
         onlyOrderHasChanged: function(post) {
             return (_.size(post.changedAttributes()) > 2 &&
                 post.hasChanged('CId') && post.hasChanged('Order'));
+        },
+
+        // Returns the view for the first post in the list
+        firstPost: function(post) {
+            return this.views[''][0];
         },
 
         // Returns the index of the post view on the views array or -1
