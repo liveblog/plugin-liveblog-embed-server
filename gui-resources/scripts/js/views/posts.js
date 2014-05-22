@@ -225,7 +225,7 @@ define([
                 return -1;
             }
 
-            var orderedIds = this.views[''].map(function(v) { return v.model.id; });
+            var orderedIds = _.map(this.views[''], function(v) { return v.model.id; });
             return _.indexOf(orderedIds, postId);
         },
 
