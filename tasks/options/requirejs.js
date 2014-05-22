@@ -28,10 +28,28 @@ var makePath = function(base, path) {
     };
 
 var defaultOptions = {
+    paths: {
+        'themeBase':                themesPath('base'),
+        'tmpl':                     'lib/require/tmpl',
+        'i18n':                     'lib/require/i18n',
+        'dust':                     'lib/dust',
+        'css':                      'lib/require/css',
+        'css-build':                'lib/require/css-build',
+        'backbone-custom':          'lib/backbone/backbone-custom',
+        'dustjs-linkedin':          nodePath('dustjs-linkedin/dist/dust-full'),
+        'dustjs-helpers':           nodePath('dustjs-helpers/dist/dust-helpers'),
+        'jed':                      nodePath('jed/jed'),
+        'lodash.compat':            nodePath('lodash/dist/lodash.compat'),
+        'backbone':                 nodePath('backbone/backbone'),
+        'backbone.layoutmanager':   nodePath('backbone.layoutmanager/backbone.layoutmanager'),
+        'moment':                   nodePath('moment/min/moment-with-langs'),
+        'require-lib':              nodePath('requirejs/require'),
+        'underscore':               nodePath('lodash/dist/lodash.compat')
+    },
     namespace: 'liveblog',
     optimize: 'uglify2',
     preserveLicenseComments: false
-    // Add this later when closure is supported on nodejs.
+    // Add this later when closure will be supported on nodejs.
     // optimize: 'closure',
     // closure: {
     //     CompilerOptions: {
@@ -52,29 +70,17 @@ task = {
             name: 'main',
             out: outPath('main.js'),
             paths: {
-                'themeBase':                themesPath('base'),
-                'dustjs-linkedin':          nodePath('dustjs-linkedin/dist/dust-full'),
-                'dustjs-helpers':           nodePath('dustjs-helpers/dist/dust-helpers'),
-                'jed':                      nodePath('jed/jed'),
-                'lodash.compat':            nodePath('lodash/dist/lodash.compat'),
-                'backbone':                 nodePath('backbone/backbone'),
-                'backbone.layoutmanager':   nodePath('backbone.layoutmanager/backbone.layoutmanager'),
-                'moment':                   nodePath('moment/moment'),
-                'require-lib':              nodePath('requirejs/require'),
                 'themeFile':                'empty:'
             },
             include: [
                 'css',
                 'require-lib'
             ],
-            findNestedDependencies: true,
-            namespace: 'liveblog',
-            optimize: 'closure'
+            findNestedDependencies: true
         }
     }
 };
-task.main.options = _.extend(task.main.options, defaultOptions);
-
+_.merge(task.main.options, defaultOptions);
 var dir = 'gui-themes/themes',
     themes = [],
     theme, subtheme;
@@ -101,23 +107,8 @@ _.each(themes, function(theme) {
     task[theme] = {
         options: {
             paths: {
-                'themeBase':                themesPath('base'),
                 'theme':                    themesPath(theme),
                 'themeFile':                themesPath(theme),
-                'tmpl':                     'lib/require/tmpl',
-                'i18n':                     'lib/require/i18n',
-                'dust':                     'lib/dust',
-                'css':                      'lib/require/css',
-                'css-build':                'lib/require/css-build',
-                'backbone-custom':          'lib/backbone/backbone-custom',
-                'dustjs-linkedin':          nodePath('dustjs-linkedin/dist/dust-full'),
-                'dustjs-helpers':           nodePath('dustjs-helpers/dist/dust-helpers'),
-                'jed':                      nodePath('jed/jed'),
-                'lodash.compat':            nodePath('lodash/dist/lodash.compat'),
-                'backbone':                 nodePath('backbone/backbone'),
-                'backbone.layoutmanager':   nodePath('backbone.layoutmanager/backbone.layoutmanager'),
-                'moment':                   nodePath('moment/moment'),
-                'underscore':               nodePath('lodash/dist/lodash.compat'),
                 'jquery':                   'empty:'
             },
             shim: {
@@ -141,10 +132,12 @@ _.each(themes, function(theme) {
                 'dust/render-themed',
                 'dust/helpers/i18n',
                 'dust/helpers/trim',
+                'dust/helpers/date',
                 'dust/helpers/twitter',
                 'backbone-custom',
                 'backbone.layoutmanager',
                 'backbone',
+                'moment',
                 'lib/utils',
                 'lib/gettext',
                 'lib/require/i18n-parse',
@@ -157,6 +150,6 @@ _.each(themes, function(theme) {
             out:  outPath(['themes', theme + '.js'])
         }
     };
-    task[theme].options = _.extend(task[theme].options, defaultOptions);
+    _.merge(task[theme].options, defaultOptions);
 });
 module.exports = task;

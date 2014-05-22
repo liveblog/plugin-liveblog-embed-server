@@ -17,7 +17,7 @@ require.config({
         'backbone':                 'node_modules/backbone/backbone',
         'backbone-custom':          'lib/backbone/backbone-custom',
         'backbone.layoutmanager':   'node_modules/backbone.layoutmanager/backbone.layoutmanager',
-        'moment':                   'node_modules/moment/moment',
+        'moment':                   'node_modules/moment/min/moment-with-langs',
         'waypoints':                'bower_components/jquery-waypoints/waypoints',
         'themeBase':                '../../themes/base',
         'tmpl':                     'lib/require/tmpl',
@@ -54,7 +54,7 @@ require([
 ], function($, Backbone) {
     $(function() {
         // Router can't be required before liveblog global variable is defined
-        require(['router', 'i18n!livedesk_embed'], function(Router) {
+        require(['router'], function(Router) {
             /*jshint unused: false */
             var router = new Router();
             Backbone.history.start({pushState: false});
