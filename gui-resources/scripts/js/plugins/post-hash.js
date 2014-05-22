@@ -9,7 +9,7 @@ define([
 
         var href,
             hash = 'liveblog[item][id]',
-            hashMark = '?';
+            hashMark = liveblog.hashmark ? liveblog.hashmark : '?';
 
         if (utils.isClient) {
             href = window.location.href;
