@@ -18,6 +18,7 @@ define([
                 if (view.permalink && typeof view.permalink === 'function') {
                     permLink = view.permalink();
                     view.$('[data-gimme="post.share-permalink"]').val(permLink);
+                    //enable right click -> 'open new tab' on the permalink icon
                     view.$('[data-gimme="post.permalink"]').attr('href', permLink);
                 }
             });
