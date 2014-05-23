@@ -1,4 +1,5 @@
 'use strict';
+
 define([
     'css!theme/liveblog',
     'plugins/button-pagination',
@@ -7,4 +8,11 @@ define([
     'tmpl!theme/container',
     'tmpl!theme/item/base'
 ], function() {
+    return {
+        plugins: [
+            'button-pagination',
+            'twitter-widgets',
+            'post-hash'
+        ]
+    };
 });

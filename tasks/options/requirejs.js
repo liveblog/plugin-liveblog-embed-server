@@ -120,6 +120,7 @@ _.each(themes, function(theme) {
                 }
             },
             excludeShallow: [
+                'css',
                 'underscore',
                 'jed',
                 'tmpl',
@@ -142,7 +143,21 @@ _.each(themes, function(theme) {
                 'lib/gettext',
                 'lib/require/i18n-parse',
                 'lib/helpers/object-parse',
-                'tmpl!themeBase/item/base'
+                'lib/helpers/visibility-toggle',
+                'lib/helpers/display-toggle',
+                'lib/helpers/fixed-encodeURIComponent',
+                'lib/helpers/trim-tag',
+                'lib/poller',
+                'lib/backbone/model-collection-common',
+                'tmpl!themeBase/item/base',
+                'models/base-model',
+                'models/post',
+                'models/blog',
+                'models/liveblog',
+                'collections/base-collection',
+                'collections/posts',
+                'views/base-view',
+                'config/defaultPaginationParams'
             ],
             baseUrl: scriptsPath('/'),
             mainConfigFile: themesPath(theme + '.js', true),
