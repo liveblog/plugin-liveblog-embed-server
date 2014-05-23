@@ -2,8 +2,9 @@
 
 define([
     'plugins',
-    'lib/utils'
-], function(plugins, utils) {
+    'lib/utils',
+    'lib/helpers/escape-RegExp'
+], function(plugins, utils, escapeRegExp) {
 
     plugins['post-hash'] = function(config) {
 
@@ -29,7 +30,7 @@ define([
                 if (href.indexOf(_hashMark) === -1) {
                     permalink = href + _hashMark + newHash;
                 } else if (href.indexOf(hash + '=') !== -1) {
-                    var regexHash = new RegExp(hash + '=[^&]*');
+                    var regexHash = new RegExp(escapeRegExp(hash) + '=[^&#]*');
                     permalink = href.replace(regexHash, newHash);
                 } else {
                     permalink = href + '&' + newHash;
