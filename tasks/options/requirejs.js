@@ -36,6 +36,7 @@ var defaultOptions = {
         'css':                      'lib/require/css',
         'css-build':                'lib/require/css-build',
         'backbone-custom':          'lib/backbone/backbone-custom',
+        'waypoints':                'bower_components/jquery-waypoints/waypoints',
         'dustjs-linkedin':          nodePath('dustjs-linkedin/dist/dust-full'),
         'dustjs-helpers':           nodePath('dustjs-helpers/dist/dust-helpers'),
         'jed':                      nodePath('jed/jed'),
@@ -44,10 +45,12 @@ var defaultOptions = {
         'backbone.layoutmanager':   nodePath('backbone.layoutmanager/backbone.layoutmanager'),
         'moment':                   nodePath('moment/min/moment-with-langs'),
         'require-lib':              nodePath('requirejs/require'),
-        'underscore':               nodePath('lodash/dist/lodash.compat')
+        'underscore':               nodePath('lodash/dist/lodash.compat'),
+        'twitterWidgets':           'empty:'
     },
     namespace: 'liveblog',
     optimize: 'uglify2',
+    findNestedDependencies: true,
     preserveLicenseComments: false
     // Add this later when closure will be supported on nodejs.
     // optimize: 'closure',
@@ -75,8 +78,7 @@ task = {
             include: [
                 'css',
                 'require-lib'
-            ],
-            findNestedDependencies: true
+            ]
         }
     }
 };
@@ -143,9 +145,9 @@ _.each(themes, function(theme) {
                 'lib/gettext',
                 'lib/require/i18n-parse',
                 'lib/helpers/object-parse',
-                'lib/helpers/visibility-toggle',
+//                'lib/helpers/visibility-toggle',
                 'lib/helpers/display-toggle',
-                'lib/helpers/fixed-encodeURIComponent',
+//                'lib/helpers/fixed-encodeURIComponent',
                 'lib/helpers/trim-tag',
                 'lib/poller',
                 'lib/backbone/model-collection-common',
