@@ -1,16 +1,17 @@
 'use strict';
 
-var requirejs = require('./lib/nodejs/requirejs-clear-cache'),
-    express   = require('express'),
-    path      = require('path'),
-    fs        = require('fs'),
-    qs        = require('qs'),
-    Logger    = require('./lib/logger'),
-    urlHref   = require('./lib/nodejs/url-href'),
-    grunt     = require('grunt'),
-    lodash    = require('lodash'),
-    cors      = require('./lib/nodejs/express/cors'),
-    dust      = require('./lib/nodejs/dust-clear-cache');
+var requirejs     = require('./lib/nodejs/requirejs-clear-cache'),
+    express       = require('express'),
+    path          = require('path'),
+    fs            = require('fs'),
+    qs            = require('qs'),
+    Logger        = require('./lib/logger'),
+    urlHref       = require('./lib/nodejs/url-href'),
+    grunt         = require('grunt'),
+    lodash        = require('lodash'),
+    cors          = require('./lib/nodejs/express/cors'),
+    dust          = require('./lib/nodejs/dust-clear-cache'),
+    queryLiveblog = require('./lib/nodejs/query-liveblog');
 
 var app = module.exports = express(),
     config = {
@@ -120,7 +121,7 @@ app.get('/', function(req, res) {
     // the GET query given ones if there are any.
     GLOBAL.liveblog = configLiveblog(lodash.merge(
                         lodash.cloneDeep(config.liveblog),
-                        req.query.liveblog), config);
+                        queryLiveblog(req.originalUrl)), config);
     if (!liveblog.servers.rest) {
         //if there is a docco-husky index.html and redirect to that.
         if (fs.existsSync(path.join(__dirname, config.paths.doccoHusky, 'index.html'))) {
