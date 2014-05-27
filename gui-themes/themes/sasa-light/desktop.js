@@ -2,7 +2,7 @@
 
 define([
     'css!theme/liveblog',
-    'plugins/button-pagination',
+    'plugins/scroll-pagination',
     'plugins/twitter-widgets',
     'plugins/post-hash',
     'plugins/permanent-link',
@@ -14,7 +14,7 @@ define([
 ], function() {
     return {
         plugins: [
-            'button-pagination',
+            'scroll-pagination',
             'twitter-widgets',
             'post-hash',
             'permanent-link',
