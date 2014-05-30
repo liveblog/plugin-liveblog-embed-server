@@ -26,21 +26,23 @@ define([
         if (utils.isClient) {
             // Add event for "To Top" button, for coming back to the top of the posts list
             utils.dispatcher.on('initialize.blog-view', function(view) {
-                activateToTopButton(view);
+                require(['waypoints'], function() {
+                    activateToTopButton(view);
+                });
             });
 
-            require(['waypoints'], function() {
-                utils.dispatcher.on('pagination-next-updated.posts-view', function(view) {
-                    // After updating pagination buttons, add a waypoint for
-                    // showing the next page on scroll (if there are any)
-                    if (view.hasNextPage()) {
-                        addBottomWaypoint(view, view.$('[data-gimme="posts.nextPage"]'));
-                    }
-                });
-                utils.dispatcher.once('pagination-next-updated.posts-view', function(view) {
-                    // Add a waypoint for detecting scrolling down
-                    addTopScrollDownWaypoint(view);
-                });
+            // require(['waypoints'], function() {
+            // });
+            utils.dispatcher.on('pagination-next-updated.posts-view', function(view) {
+                // After updating pagination buttons, add a waypoint for
+                // showing the next page on scroll (if there are any)
+                if (view.hasNextPage()) {
+                    addBottomWaypoint(view, view.$('[data-gimme="posts.nextPage"]'));
+                }
+            });
+            utils.dispatcher.once('pagination-next-updated.posts-view', function(view) {
+                // Add a waypoint for detecting scrolling down
+                addTopScrollDownWaypoint(view);
             });
         }
 
