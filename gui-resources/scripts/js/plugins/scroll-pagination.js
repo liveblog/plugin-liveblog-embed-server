@@ -26,9 +26,7 @@ define([
         if (utils.isClient) {
             // Add event for "To Top" button, for coming back to the top of the posts list
             utils.dispatcher.on('initialize.blog-view', function(view) {
-                require(['waypoints'], function() {
-                    activateToTopButton(view);
-                });
+                activateToTopButton(view);
             });
 
             // require(['waypoints'], function() {
@@ -60,13 +58,15 @@ define([
 
         // When scroll reachs the "load more" button, render next page
         var addBottomWaypoint = function(view, nextPageButton) {
-            nextPageButton.waypoint(function() {
-                view.buttonNextPage();
-            }, {
-                continuous: false, // Fire ALL waypoints triggered in one scroll
-                triggerOnce: true,
-                offset: '100%',
-                context: view.el
+            require(['waypoints'], function() {
+                nextPageButton.waypoint(function() {
+                    view.buttonNextPage();
+                }, {
+                    continuous: false, // Fire ALL waypoints triggered in one scroll
+                    triggerOnce: true,
+                    offset: '100%',
+                    context: view.el
+                });
             });
         };
 
@@ -76,19 +76,21 @@ define([
             // Use the "before page" button (always at the top of the posts list) to
             // detect the user scrolling down
             var beforePageButton = view.$('[data-gimme="posts.beforePage"]');
-            beforePageButton.waypoint(function(direction) {
-                if (direction === 'down') {
-                    view.pauseAutoRender();
-                    // Destroy the waypoint to prevent it for being fired several
-                    // times while the user scrolls down
-                    beforePageButton.waypoint('destroy');
-                    addTopScrollUpWaypoint(view);
-                }
-            },
-            {
-                continuous: false,
-                offset: pluginConfig.nextPageTriggerOffset,
-                context: view.el
+            require(['waypoints'], function() {
+                beforePageButton.waypoint(function(direction) {
+                    if (direction === 'down') {
+                        view.pauseAutoRender();
+                        // Destroy the waypoint to prevent it for being fired several
+                        // times while the user scrolls down
+                        beforePageButton.waypoint('destroy');
+                        addTopScrollUpWaypoint(view);
+                    }
+                },
+                {
+                    continuous: false,
+                    offset: pluginConfig.nextPageTriggerOffset,
+                    context: view.el
+                });
             });
         };
 
@@ -96,18 +98,20 @@ define([
         // enable auto rendering and add a waypoint for detecting the user scrolling down
         var addTopScrollUpWaypoint = function(view) {
             var firstPost = view.firstPost().$el;
-            firstPost.waypoint(function(direction) {
-                if (direction === 'up') {
-                    view.renderPending();
-                    view.resumeAutoRender();
-                    // Destroy waypoint once fired while going up
-                    firstPost.waypoint('destroy');
-                    addTopScrollDownWaypoint(view);
-                }
-            }, {
-                continuous: false,
-                offset: -1, // Using -1 because with offset 0, the waypoint is not triggered
-                context: view.el
+            require(['waypoints'], function() {
+                firstPost.waypoint(function(direction) {
+                    if (direction === 'up') {
+                        view.renderPending();
+                        view.resumeAutoRender();
+                        // Destroy waypoint once fired while going up
+                        firstPost.waypoint('destroy');
+                        addTopScrollDownWaypoint(view);
+                    }
+                }, {
+                    continuous: false,
+                    offset: -1, // Using -1 because with offset 0, the waypoint is not triggered
+                    context: view.el
+                });
             });
         };
     };
