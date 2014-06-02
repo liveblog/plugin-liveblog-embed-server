@@ -82,23 +82,27 @@ define([
             if (this._cacheData.itemName) {
                 return this._cacheData.itemName;
             }
-            var item,
+            // item posttype/normal is the fallback
+            // if the is no Author with Author.Source or Type with Type.Key
+            //    in the post data.
+            var item = 'item/posttype/normal',
                 post = this.model;
-            if (post.get('Author') &&
-                post.get('Author').Source.IsModifiable ===  'True' ||
-                post.get('Author').Source.Name === 'internal') {
-                if (post.get('Type').Key === 'advertisement') {
-                    item = 'item/posttype/infomercial';
+            if (_.has(post.get('Author'), 'Source') && _.has(post.get('Type'), 'Key')) {
+                if (post.get('Author').Source.IsModifiable ===  'True' ||
+                        post.get('Author').Source.Name === 'internal') {
+                    if (post.get('Type').Key === 'advertisement') {
+                        item = 'item/posttype/infomercial';
+                    } else {
+                        item = 'item/posttype/' + post.get('Type').Key;
+                    }
+                } else if (post.get('Author').Source.Name === 'google') {
+                    item = 'item/source/google/' + post.get('Meta').type;
                 } else {
-                    item = 'item/posttype/' + post.get('Type').Key;
-                }
-            } else if (post.get('Author').Source.Name === 'google') {
-                item = 'item/source/google/' + post.get('Meta').type;
-            } else {
-                if (post.get('Author').Source.Name === 'advertisement') {
-                    item = 'item/source/infomercial';
-                } else {
-                    item = 'item/source/' + post.get('Author').Source.Name;
+                    if (post.get('Author').Source.Name === 'advertisement') {
+                        item = 'item/source/infomercial';
+                    } else {
+                        item = 'item/source/' + post.get('Author').Source.Name;
+                    }
                 }
             }
             this._cacheData.itemName = 'themeBase/' + item;
