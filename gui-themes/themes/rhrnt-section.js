@@ -7,12 +7,12 @@ define([
 	'tmpl!theme/container',
 	'tmpl!theme/item/base',
 	'css!theme/liveblog'
-], function(){
+], function() {
 	return {
 		plugins: [
-			'wrappup-toggle', 
+			'wrappup-toggle',
 			'permanent-link',
 			'twitter-widgets'
 		]
-	}
+	};
 });
