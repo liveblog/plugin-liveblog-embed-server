@@ -9,14 +9,14 @@ define([
 	'tmpl!theme/container',
 	'tmpl!theme/item/base',
 	'css!theme/liveblog'
-], function(){
+], function() {
 	return {
-		plugins: [ 
+		plugins: [
 			'wrappup-toggle',
 			'permanent-link',
 			'user-comments',
 			'twitter-widgets',
 			'social-share'
 		]
-	}
+	};
 });
