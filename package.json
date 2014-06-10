@@ -74,7 +74,10 @@
     "grunt-docco-husky": "https://github.com/nistormihai/grunt-docco-husky/tarball/7d1688e1fcb0add1473046a5d6d4efe855476402",
     "karma-junit-reporter": "^0.2.2",
     "grunt-mocha-test": "^0.10.2",
-    "phantomjs": "^1.9.7-5"
+    "phantomjs": "^1.9.7-5",
+    "karma-jasmine": "~0.1.0",
+    "protractor": "^0.23.1",
+    "protractor-screenshot-reporter": "~0.0.4"
   },
   "optionalDependencies": {
     "grunt-forever": "^0.4.4",
