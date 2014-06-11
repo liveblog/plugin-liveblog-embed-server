@@ -2,6 +2,7 @@
 var qsReg = 'liveblog[\\[\\.]dev[\\]]?(=([^&#]*))?';
 
 var queryLiveblog = function(qs) {
+    qs = decodeURIComponent(qs);
     var liveblog = {};
     // parse the current location href
     //     for the query parametes that starts with liveblog.
