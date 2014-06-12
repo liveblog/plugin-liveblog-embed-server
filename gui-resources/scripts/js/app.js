@@ -28,7 +28,11 @@ config = grunt.config.get();
 //   so that we can have the port, protocol and hostname for later use.
 app.configure(function() {
     app.use(cors);
-    app.set('port', urlHref.getPort(config.servers.nodejs)); // maybe add this in the future process.env.PORT || nodejsUrl.port
+    if (config.servers.port) {
+        app.set('port', config.servers.port);
+    } else {
+        app.set('port', urlHref.getPort(config.servers.nodejs));
+    }
     app.use(express['static'](path.join(__dirname, config.paths.scriptsRoot)));
     app.use(express['static'](path.join(__dirname, config.paths.themesRoot)));
     app.use('/scripts/js/node_modules',
