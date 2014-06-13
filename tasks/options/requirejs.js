@@ -77,7 +77,8 @@ task = {
             },
             include: [
                 'css',
-                'require-lib'
+                'require-lib',
+                'lib/jquery/xdomainrequest'
             ]
         }
     }
