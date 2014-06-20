@@ -1,12 +1,13 @@
 var reset_app = require("./fixtures").reset_app ;
 
-beforeEach(function() {
-    // runs before every spec
-    console.log("begin beforeEach");
-    var result = reset_app();
-    console.log("end beforeEach");
-});
+// runs before every spec
+beforeEach(function(done)
+  { reset_app(done)
+  }
+);
 
-afterEach(function() {
-    // runs after every spec
-});
+// runs after every spec
+afterEach(function()
+  {
+  }
+);

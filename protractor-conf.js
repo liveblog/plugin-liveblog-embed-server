@@ -6,8 +6,10 @@ var ScreenShotReporter = require('protractor-screenshot-reporter');
 
 exports.config = 
 { params:
-  { baseBackendUrl: 'http://master.lb-test.sourcefabric.org/resources'
-  , baseUrl: 'http://nodejs-dev.sourcefabric.org'
+  { baseBackendUrl: 'http://master.lb-test.sourcefabric.org/resources/'
+  , baseUrl: 'http://nodejs-dev.sourcefabric.org/'
+  , login: 'admin'
+  , password: 'admin'
   }
 , specs:
   [ 'spec/setup.js'

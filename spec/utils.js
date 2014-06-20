@@ -5,9 +5,8 @@ exports.getUrl = getUrl;
 exports.getBackendUrl = getBackendUrl;
 
 // construct url from uri
-// @TODO: rstrip('/')
 function constructUrl(base, uri){
-  return base + uri
+  return base.replace(/\/$/, '') + uri
 }
 
 // construct app url from uri
