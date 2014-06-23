@@ -4,7 +4,7 @@ var resetApp = require("./fixtures").resetApp ;
 beforeEach(function(done)
   { //resetApp(done)
   ; var uploadSmthsFixtures = require("./fixtures").uploadPostFixtures ;
-  ; uploadSmthsFixtures(done)
+  ; uploadSmthsFixtures(done, 2)
   }
 );
 

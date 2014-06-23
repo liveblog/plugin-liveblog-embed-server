@@ -29,15 +29,12 @@ function backendRequest(params, callback)
 };
 
 
-// @TODO: refactor
-var responseCounter =
-{ newData: function(done, number)
-  {
-  ; this.number = number
-  ; this.done = done
-  ; this.counter = 0
-  }
-, consumeData: function()
+var responseCounter = function(done, number)
+{
+; this.done = done
+; this.number = number
+; this.counter = 0
+; this.consumeData = function()
   {
   ; this.counter++
   ; if (this.counter == this.number) { this.done() }
@@ -47,21 +44,21 @@ var responseCounter =
 
 function resetAppRequest(callback)
 {
-; backendRequest(
-    { url: getBackendUrl("/Tool/TestFixture/default")
-    , method: "PUT"
-    , json:
-      { 'Name': 'default'
-      , 'ApplyOnDatabase': true
-      , 'ApplyOnFiles': true
-      }
+; backendRequest
+( { url: getBackendUrl("/Tool/TestFixture/default")
+  , method: "PUT"
+  , json:
+    { 'Name': 'default'
+    , 'ApplyOnDatabase': true
+    , 'ApplyOnFiles': true
     }
-  , callback
-  )
+  }
+, callback
+)
 };
 
 
-function prepopulateOnePost(token)
+function prepopulateOnePost(token, responseCounterInstance)
 {
 ; backendRequest
 ( { url: getBackendUrl("/my/LiveDesk/Blog/1/Post")
@@ -77,7 +74,6 @@ function prepopulateOnePost(token)
 , function(error, response, json)
   {
   ; var id = getIdFromHref(json.href)
-  ;
   ; backendRequest
   ( { url: getBackendUrl('/my/LiveDesk/Blog/1/Post/'+id+'/Publish')
     , method: 'POST'
@@ -85,7 +81,7 @@ function prepopulateOnePost(token)
     }
   , function(error, response, json)
     {
-    ; responseCounter.consumeData()
+    ; responseCounterInstance.consumeData()
     }
   )
   }
@@ -96,8 +92,7 @@ function prepopulateOnePost(token)
 exports.resetApp = function(done)
 {
 ; resetAppRequest
-(
-  function(e,r,b)
+( function(e,r,b)
   {
   ; done()
   }
@@ -108,17 +103,16 @@ exports.resetApp = function(done)
 exports.uploadPostFixtures = function(done, number)
 {
 ; number = number || 1
-; responseCounter.newData(done, number)
+; var responseCounterInstance = new responseCounter(done, number)
 ; resetAppRequest
 ( function(e,r,b)
   {
   ; getToken().then
-    (
-      function(token)
+    ( function(token)
       {
       ; for (var i=0; i < number ;i++)
         {
-        ; prepopulateOnePost(token)
+        ; prepopulateOnePost(token, responseCounterInstance)
         }
       }
     )
