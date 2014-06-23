@@ -1,7 +1,5 @@
 'use strict';
 
-var request = require('request');
-
 var utils = require("./utils")
 var getBackendUrl = utils.getBackendUrl
 var UUIDv4 = utils.UUIDv4
@@ -10,36 +8,12 @@ var getIdFromHref = utils.getIdFromHref
 
 var getToken = require("./auth").getToken
 
-
-function backendRequest(params, callback)
-{
-; request
-( params
-, function(error, response, body)
-  {
-  ; if (error) {throw new Error(error)}
-  ; if ( (response.statusCode != 200) && (response.statusCode != 201) )
-    {
-    ; console.log(body)
-    ; throw new Error("Status code: " + response.statusCode)
-    }
-  ; callback(error, response, body)
-  }
-)
-};
+var backendRequest = require("./helpers/liveblog_common.js").backendRequest
+var backendRequestAuth = require("./helpers/liveblog_common.js").backendRequestAuth
 
 
-var responseCounter = function(done, number)
-{
-; this.done = done
-; this.number = number
-; this.counter = 0
-; this.consumeData = function()
-  {
-  ; this.counter++
-  ; if (this.counter == this.number) { this.done() }
-  }
-}
+exports.resetApp = resetApp
+exports.uploadPostFixtures = uploadPostFixtures
 
 
 function resetAppRequest(callback)
@@ -53,35 +27,13 @@ function resetAppRequest(callback)
     , 'ApplyOnFiles': true
     }
   }
-, callback
-)
-};
-
-
-function prepopulateOnePost(token, responseCounterInstance)
-{
-; backendRequest
-( { url: getBackendUrl("/my/LiveDesk/Blog/1/Post")
-  , method: 'POST'
-  , headers: { Authorization: token }
-  , json:
-    { 'Meta': {}
-    , 'Content': 'test_' + UUIDv4()
-    , 'Type': 'normal'
-    , 'Creator': '1'
-    }
-  }
-, function(error, response, json)
+, function(e,r,b)
   {
-  ; var id = getIdFromHref(json.href)
-  ; backendRequest
-  ( { url: getBackendUrl('/my/LiveDesk/Blog/1/Post/'+id+'/Publish')
-    , method: 'POST'
-    , headers: { Authorization: token }
-    }
-  , function(error, response, json)
+  ; getToken().then
+  ( function(t)
     {
-    ; responseCounterInstance.consumeData()
+    ; protractor.getInstance().params.token = t
+    ; callback(e,r,b)
     }
   )
   }
@@ -89,7 +41,77 @@ function prepopulateOnePost(token, responseCounterInstance)
 };
 
 
-exports.resetApp = function(done)
+var responseCounter = function(done, number)
+{
+; this.done = done
+; this.number = number
+; this.counter = 0
+; this.result = {}
+; this.consumeData = function(variableSymbol, id)
+  {
+  ; this.result[variableSymbol] = id
+  ; this.counter++
+  ; if (this.counter == this.number)
+    {
+    ; protractor.getInstance().params.fixtures = this.result
+    ; this.done()
+    }
+  }
+}
+
+
+function postPublish(postId, callback)
+{
+; backendRequestAuth
+( { url: getBackendUrl('/my/LiveDesk/Blog/1/Post/'+postId+'/Publish')
+  , method: 'POST'
+  }
+, callback
+)
+}
+
+
+function postCreate(postContent, callback)
+{
+; backendRequestAuth
+( { url: getBackendUrl("/my/LiveDesk/Blog/1/Post")
+  , method: 'POST'
+  , json:
+    { 'Meta': {}
+    , 'Content': postContent
+    , 'Type': 'normal'
+    , 'Creator': '1'
+    }
+  }
+, function(e,r,j)
+  {
+  ; callback(e,r,j)
+  }
+)
+}
+
+
+function prepopulateOnePost(responseCounterInstance, variableSymbol)
+{
+; variableSymbol = variableSymbol || UUIDv4()
+; postCreate
+( 'test_' + variableSymbol
+, function(e, r, json)
+  {
+  ; var id = getIdFromHref(json.href)
+  ; postPublish
+  ( id
+  , function(e,r,j)
+    {
+    ; responseCounterInstance.consumeData(variableSymbol, id)
+    }
+  )
+  }
+)
+};
+
+
+function resetApp(done)
 {
 ; resetAppRequest
 ( function(e,r,b)
@@ -100,22 +122,17 @@ exports.resetApp = function(done)
 };
 
 
-exports.uploadPostFixtures = function(done, number)
+function uploadPostFixtures(done, number)
 {
 ; number = number || 1
 ; var responseCounterInstance = new responseCounter(done, number)
 ; resetAppRequest
 ( function(e,r,b)
   {
-  ; getToken().then
-    ( function(token)
-      {
-      ; for (var i=0; i < number ;i++)
-        {
-        ; prepopulateOnePost(token, responseCounterInstance)
-        }
-      }
-    )
+  ; for (var i=0; i < number ;i++)
+    {
+    ; prepopulateOnePost(responseCounterInstance, i+1)
+    }
   }
 )
 };
