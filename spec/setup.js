@@ -1,8 +1,10 @@
-var reset_app = require("./fixtures").reset_app ;
+var resetApp = require("./fixtures").resetApp ;
 
 // runs before every spec
 beforeEach(function(done)
-  { reset_app(done)
+  { //resetApp(done)
+  ; var uploadSmthsFixtures = require("./fixtures").uploadSmthsFixtures ;
+  ; uploadSmthsFixtures(done)
   }
 );
 

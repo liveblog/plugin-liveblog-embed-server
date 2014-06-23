@@ -8,7 +8,7 @@ exports.config =
 { params:
   { baseBackendUrl: 'http://master.lb-test.sourcefabric.org/resources/'
   , baseUrl: 'http://nodejs-dev.sourcefabric.org/'
-  , login: 'admin'
+  , username: 'admin'
   , password: 'admin'
   }
 , specs:
