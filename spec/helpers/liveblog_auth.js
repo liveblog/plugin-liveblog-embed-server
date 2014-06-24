@@ -1,6 +1,6 @@
-/*global protractor */
-
 'use strict';
+
+/*global protractor */
 
 var request = require('request');
 var jsSHA = require('jssha');

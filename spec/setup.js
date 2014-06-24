@@ -1,6 +1,6 @@
-/*global beforeEach, afterEach */
-
 'use strict';
+
+/*global beforeEach, afterEach */
 
 var resetApp = require('./helpers/liveblog_fixtures').resetApp;
 

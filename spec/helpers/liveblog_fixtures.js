@@ -1,5 +1,6 @@
-/*global protractor */
 'use strict';
+
+/*global protractor */
 
 var utils = require('./utils');
 var UUIDv4 = utils.UUIDv4;

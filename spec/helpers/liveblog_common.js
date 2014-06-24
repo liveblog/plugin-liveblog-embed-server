@@ -1,6 +1,6 @@
-/*global protractor, browser */
-
 'use strict';
+
+/*global protractor, browser */
 
 var request = require('request');
 var constructUrl = require('./utils').constructUrl;
