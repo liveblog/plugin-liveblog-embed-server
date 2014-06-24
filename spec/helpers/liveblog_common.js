@@ -41,7 +41,7 @@ exports.backendRequest = function(params, callback) {
             if (
                 (response.statusCode !== 200) && (response.statusCode !== 201)
             ) {
-                throw new Error("Status code: " + response.statusCode);
+                throw new Error('Status code: ' + response.statusCode);
             }
             callback(error, response, body);
         }

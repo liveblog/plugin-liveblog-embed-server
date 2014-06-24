@@ -1,7 +1,6 @@
 /*global protractor */
 'use strict';
 
-
 var utils = require('./utils');
 var UUIDv4 = utils.UUIDv4;
 var getIdFromHref = utils.getIdFromHref;
@@ -14,7 +13,6 @@ var backendRequest = liveblogCommon.backendRequest;
 var liveblogPosts = require('./liveblog_posts.js');
 var postCreate = liveblogPosts.postCreate;
 var postPublish = liveblogPosts.postPublish;
-
 
 function resetAppRequest(callback) {
     backendRequest({
@@ -66,7 +64,7 @@ exports.uploadPostFixtures = function uploadPostFixtures(done, number) {
             prepopulateOnePost(
                 i + 1, //for readability
                 function(e, r, j, id) {
-                    results[counter + 1] = id; //here "+1" for readability too
+                    results[counter + 1] = id; //here '+1' for readability too
                     counter++;
                     if (counter === number) {
                         protractor.getInstance().params.fixtures = results;

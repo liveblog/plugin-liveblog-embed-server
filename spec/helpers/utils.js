@@ -1,6 +1,5 @@
 'use strict';
 
-
 exports.UUIDv4 = function b(a) {
     return a
         ? (a ^ Math.random() * 16 >> a / 4).toString(16)
