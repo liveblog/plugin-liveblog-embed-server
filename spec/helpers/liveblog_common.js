@@ -1,6 +1,6 @@
-// make linter happy:
-var protractor = protractor;
-var browser = browser;
+/*global protractor, browser */
+
+'use strict';
 
 var request = require('request');
 var constructUrl = require("./utils").constructUrl;
