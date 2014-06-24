@@ -77,7 +77,6 @@
     "phantomjs": "^1.9.7-5",
     "protractor": "^0.23.1",
     "protractor-screenshot-reporter": "~0.0.4",
-    "q": "^1.0.1",
     "request": "^2.33.0",
     "sinon": "^1.9.1",
     "sinon-chai": "^2.5.0"

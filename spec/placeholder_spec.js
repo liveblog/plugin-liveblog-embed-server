@@ -1,4 +1,4 @@
-var goto = require("./utils").goto
+var goto = require("./helpers/liveblog_common").goto
 
 
 describe

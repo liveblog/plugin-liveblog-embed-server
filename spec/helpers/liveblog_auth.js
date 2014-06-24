@@ -1,10 +1,9 @@
 'use strict';
 
 var request = require('request');
-var Q = require('q');
 var jsSHA = require('jssha');
 
-var getBackendUrl = require("./utils").getBackendUrl
+var getBackendUrl = require("./liveblog_common").getBackendUrl
 
 
 var hashToken = function(username, password, loginToken)
@@ -19,12 +18,11 @@ var hashToken = function(username, password, loginToken)
 };
 
 
-exports.getToken = function()
+exports.getToken = function(callback)
 // acquire auth token using API
 {
 ; var username = protractor.getInstance().params.username
     , password = protractor.getInstance().params.password
-    , defer = new Q.defer()
 ; request.post
 ( { url: getBackendUrl("/Security/Authentication")
   , json: { 'userName': username }
@@ -45,12 +43,12 @@ exports.getToken = function()
     {
     ; if (error)
       {
-      ; defer.reject(new Error(error))
+      ; throw new Error(error)
       }
-    ; defer.resolve(json.Session)
+    ; protractor.getInstance().params.token = json.Session
+    ; callback(error, response, json)
     }
   )
   }
 )
-; return defer.promise
 };

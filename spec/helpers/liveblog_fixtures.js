@@ -1,15 +1,15 @@
 'use strict';
 
 var utils = require("./utils")
-var getBackendUrl = utils.getBackendUrl
 var UUIDv4 = utils.UUIDv4
-var waitUntil = utils.waitUntil
 var getIdFromHref = utils.getIdFromHref
 
-var getToken = require("./auth").getToken
+var getToken = require("./liveblog_auth").getToken
 
-var backendRequest = require("./helpers/liveblog_common.js").backendRequest
-var backendRequestAuth = require("./helpers/liveblog_common.js").backendRequestAuth
+var liveblogCommon = require("./liveblog_common")
+var getBackendUrl = liveblogCommon.getBackendUrl
+var backendRequest = liveblogCommon.backendRequest
+var backendRequestAuth = liveblogCommon.backendRequestAuth
 
 
 exports.resetApp = resetApp
@@ -27,37 +27,17 @@ function resetAppRequest(callback)
     , 'ApplyOnFiles': true
     }
   }
-, function(e,r,b)
+, function(e,r,j)
   {
-  ; getToken().then
-  ( function(t)
+  ; getToken
+  ( function(e2,r2,j2)
     {
-    ; protractor.getInstance().params.token = t
-    ; callback(e,r,b)
+    ; callback(e,r,j)
     }
   )
   }
 )
 };
-
-
-var responseCounter = function(done, number)
-{
-; this.done = done
-; this.number = number
-; this.counter = 0
-; this.result = {}
-; this.consumeData = function(variableSymbol, id)
-  {
-  ; this.result[variableSymbol] = id
-  ; this.counter++
-  ; if (this.counter == this.number)
-    {
-    ; protractor.getInstance().params.fixtures = this.result
-    ; this.done()
-    }
-  }
-}
 
 
 function postPublish(postId, callback)
@@ -66,7 +46,10 @@ function postPublish(postId, callback)
 ( { url: getBackendUrl('/my/LiveDesk/Blog/1/Post/'+postId+'/Publish')
   , method: 'POST'
   }
-, callback
+, function(e,r,j)
+  {
+  ; callback(e,r,j, postId)
+  }
 )
 }
 
@@ -91,7 +74,7 @@ function postCreate(postContent, callback)
 }
 
 
-function prepopulateOnePost(responseCounterInstance, variableSymbol)
+function prepopulateOnePost(variableSymbol, callback)
 {
 ; variableSymbol = variableSymbol || UUIDv4()
 ; postCreate
@@ -99,13 +82,7 @@ function prepopulateOnePost(responseCounterInstance, variableSymbol)
 , function(e, r, json)
   {
   ; var id = getIdFromHref(json.href)
-  ; postPublish
-  ( id
-  , function(e,r,j)
-    {
-    ; responseCounterInstance.consumeData(variableSymbol, id)
-    }
-  )
+  ; postPublish(id, callback)
   }
 )
 };
@@ -121,17 +98,29 @@ function resetApp(done)
 )
 };
 
-
 function uploadPostFixtures(done, number)
 {
 ; number = number || 1
-; var responseCounterInstance = new responseCounter(done, number)
+; var results = {}
+    , counter = 0
 ; resetAppRequest
 ( function(e,r,b)
   {
   ; for (var i=0; i < number ;i++)
     {
-    ; prepopulateOnePost(responseCounterInstance, i+1)
+    ; prepopulateOnePost
+    ( i + 1 //for readability
+    , function(e,r,j, id)
+      {
+      ; results[counter + 1] = id //here "+1" for readability too
+      ; counter++
+      ; if (counter == number)
+        {
+        ; protractor.getInstance().params.fixtures = results
+        ; done()
+        }
+      }
+    )
     }
   }
 )

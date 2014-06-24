@@ -1,5 +1,31 @@
 var request = require('request');
+var constructUrl = require("./utils").constructUrl
 
+
+exports.getBackendUrl = function getBackendUrl(uri)
+// construct app url from uri
+{
+; return constructUrl
+( protractor.getInstance().params.baseBackendUrl, uri )
+}
+
+exports.getUrl = function getUrl(uri)
+// construct backend url from uri
+{
+; return constructUrl
+( protractor.getInstance().params.baseUrl, uri )
+}
+
+exports.goto = function gotoUri(uri)
+// go to app's uri
+{
+; return function()
+  {
+  ; var url = exports.getUrl(uri)
+  ; browser.driver.get(url)
+  ; console.log(url)
+  }
+}
 
 exports.backendRequest = function(params, callback, token)
 {
