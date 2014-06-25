@@ -10,6 +10,13 @@ exports.getIdFromHref = function(href) {
     return href.match(/\d+$/g)[0];
 };
 
+exports.constructGetParameters = function(data) {
+    return '?' + Object.keys(data).map(
+        function(key) {
+            return [key, data[key]].map(encodeURIComponent).join('=');
+    }).join('&');
+};
+
 // construct url from uri
 exports.constructUrl = function(base, uri) {
     return base.replace(/\/$/, '') + uri;

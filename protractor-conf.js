@@ -6,8 +6,10 @@ var ScreenShotReporter = require('protractor-screenshot-reporter');
 
 exports.config = {
     params: {
-        baseBackendUrl: 'http://master.lb-test.sourcefabric.org/resources/',
+
+        baseBackendUrl: 'http://devel.lb-test.sourcefabric.org/resources/',
         baseUrl: 'http://nodejs-dev.sourcefabric.org/',
+        baseGetParams: { 'liveblog.servers.rest': 'devel.lb-test.sourcefabric.org' },
         username: 'admin',
         password: 'admin'
     },

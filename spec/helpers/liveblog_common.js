@@ -3,7 +3,9 @@
 /*global protractor, browser */
 
 var request = require('request');
-var constructUrl = require('./utils').constructUrl;
+var utils = require('./utils');
+var constructUrl = utils.constructUrl;
+var constructGetParameters = utils.constructGetParameters;
 
 exports.getBackendUrl = function getBackendUrl(uri)
 {
@@ -22,7 +24,7 @@ exports.getUrl = function getUrl(uri)
 exports.gotoUri = function gotoUri(uri)
 // go to app's uri
 {
-    var url = exports.getUrl(uri);
+    var url = exports.getUrl(uri) + constructGetParameters(protractor.getInstance().params.baseGetParams);
     browser.driver.get(url);
     console.log(url);
 };
