@@ -1,35 +1,24 @@
 'use strict';
 
-/*global protractor, browser */
+/*global protractor */
 
 var request = require('request');
+
 var utils = require('./utils');
 var constructUrl = utils.constructUrl;
-var constructGetParameters = utils.constructGetParameters;
 
-exports.getBackendUrl = function getBackendUrl(uri)
+exports.getBackendUrl = getBackendUrl;
+exports.backendRequest = backendRequest;
+exports.backendRequestAuth = backendRequestAuth;
+
+function getBackendUrl(uri)
 {
     return constructUrl(
         protractor.getInstance().params.baseBackendUrl, uri
     );
-};
+}
 
-exports.getUrl = function getUrl(uri)
-{
-    return constructUrl(
-        protractor.getInstance().params.baseUrl, uri
-    );
-};
-
-exports.gotoUri = function gotoUri(uri)
-// go to app's uri
-{
-    var url = exports.getUrl(uri) + constructGetParameters(protractor.getInstance().params.baseGetParams);
-    browser.driver.get(url);
-    console.log(url);
-};
-
-exports.backendRequest = function(params, callback) {
+function backendRequest(params, callback) {
     if (params.uri) {
         params.url = exports.getBackendUrl(params.uri);
         delete params.uri;
@@ -48,9 +37,9 @@ exports.backendRequest = function(params, callback) {
             callback(error, response, body);
         }
     );
-};
+}
 
-exports.backendRequestAuth = function(params, callback) {
+function backendRequestAuth (params, callback) {
     var token = protractor.getInstance().params.token;
     if (!token) {
         throw new Error('No auth token');
@@ -60,4 +49,4 @@ exports.backendRequestAuth = function(params, callback) {
     }
     params.headers.Authorization = token;
     exports.backendRequest(params, callback);
-};
+}
