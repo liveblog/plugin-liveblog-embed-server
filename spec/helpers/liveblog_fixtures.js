@@ -1,21 +1,23 @@
 'use strict';
 
-/*global protractor */
+/*global protractor, jasmine */
 
 var utils = require('./utils');
-var UUIDv4 = utils.UUIDv4;
 var getIdFromHref = utils.getIdFromHref;
 
 var getToken = require('./liveblog_auth').getToken;
 
-var liveblogCommon = require('./liveblog_common');
-var backendRequest = liveblogCommon.backendRequest;
+var liveblogBackend = require('./liveblog_backend');
+var backendRequest = liveblogBackend.backendRequest;
 
 var liveblogPosts = require('./liveblog_posts.js');
 var postCreate = liveblogPosts.postCreate;
 var postPublish = liveblogPosts.postPublish;
 
-function resetAppRequest(callback) {
+exports.resetApp = resetApp;
+exports.uploadFixtures = uploadFixtures;
+
+function resetApp(callback) {
     backendRequest({
         uri: '/Tool/TestFixture/default',
         method: 'PUT',
@@ -31,49 +33,45 @@ function resetAppRequest(callback) {
     });
 }
 
-exports.resetApp = function resetApp(done) {
-    // ignore empty e,r,j in request callback:
-    /*jslint unparam: true */
-    resetAppRequest(
-        function(e, r, b) {
-            done();
-        });
-    /*jslint unparam: false */
-};
-
-function prepopulateOnePost(variableSymbol, callback) {
-    variableSymbol = variableSymbol || UUIDv4();
-    // ignore empty e,r,j in request callback:
-    /*jslint unparam: true */
-    postCreate(
-        'test_' + variableSymbol,
-        function(e, r, json) {
-            var id = getIdFromHref(json.href);
-            postPublish(id, callback);
-        });
-    /*jslint unparam: false */
-}
-
-exports.uploadPostFixtures = function uploadPostFixtures(done, number) {
+function uploadFixtures(name, number, callback) {
     number = number || 1;
-    var results = {}, counter = 0,
-        i;
-    // ignore empty e,r,j in request callback:
-    /*jslint unparam: true */
-    resetAppRequest(function(e, r, b) {
+    var results = {},
+        counter = 0,
+        i,
+        fixtureFunction,
+        fixtureFunctions,
+        inProgressCallback = function(e, r, j) {
+            // raising the number of uploaded fixtures:
+            counter++;
+            // and then all the fixtures were uploaded:
+            if (counter === number) {
+                protractor.getInstance().params.fixtures = results;
+                callback(e, r, j);
+            }
+        };
+
+    fixtureFunctions = {
+        'posts': function(index) {
+            index = index + 1; // for readability
+            postCreate('test_' + index, function(e, r, json) {
+                var id = getIdFromHref(json.href);
+                results[index] = id;
+                postPublish(id, inProgressCallback);
+            });
+        }
+    };
+
+    fixtureFunction = fixtureFunctions[name];
+    if (!fixtureFunction){
+        throw new Error('No fixtures for "' + name + '".\n' +
+                        'Available fixtures:\n' +
+                        jasmine.pp(Object.keys(fixtureFunctions)));
+    }
+
+    // let's do it!
+    resetApp(function(e, r, b) {
         for (i = 0; i < number; i++) {
-            prepopulateOnePost(
-                i + 1, //for readability
-                function(e, r, j, id) {
-                    results[counter + 1] = id; //here '+1' for readability too
-                    counter++;
-                    if (counter === number) {
-                        protractor.getInstance().params.fixtures = results;
-                        done();
-                    }
-                }
-            )
+            fixtureFunction(i);
         }
     });
-    /*jslint unparam: false */
-};
+}

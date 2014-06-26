@@ -2,12 +2,12 @@
 
 /*global beforeEach, afterEach */
 
-//var resetApp = require('./helpers/liveblog_fixtures').resetApp;
+var resetApp = require('./helpers/liveblog_fixtures').resetApp;
 
 // runs before every spec
 beforeEach(function(done) {
-    //resetApp(done);
-    done();
+    resetApp(function() {done();});
+    //done();
 });
 
 // runs after every spec

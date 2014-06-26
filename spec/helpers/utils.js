@@ -17,7 +17,7 @@ exports.constructGetParameters = function(data) {
     }).join('&');
 };
 
-// construct url from uri
+// construct url from uri and base url
 exports.constructUrl = function(base, uri) {
     return base.replace(/\/$/, '') + uri;
 };
