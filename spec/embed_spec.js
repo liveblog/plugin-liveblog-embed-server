@@ -1,4 +1,4 @@
-/*global describe, beforeEach, expect, it */
+/*global describe, beforeEach, expect, it, element, by */
 
 var gotoUri = require('./helpers/liveblog_frontend').gotoUri;
 var uploadFixtures = require('./helpers/liveblog_fixtures').uploadFixtures;
@@ -10,8 +10,8 @@ describe('Embed', function() {
         beforeEach(
             function(done) {
                 uploadFixtures(
-                    'posts', 10,
-                    function (e,r,j) {
+                    'posts', 1,
+                    function(e, r, j) {
                         done();
                     }
                 );
@@ -20,13 +20,13 @@ describe('Embed', function() {
         );
 
         it('is rendered serverside', function() {
-            console.log('here "it" started');
-            console.log(protractor.getInstance().params.fixtures);
-            expect(true).toBe(true);
+            expect(
+                element(
+                    by.css('div[data-gimme="liveblog-layout"]')
+                ).isDisplayed()
+            ).toBe(true);
         });
 
-    // 'structure' describe end
     });
 
-// 'Tests' root describe end
 });

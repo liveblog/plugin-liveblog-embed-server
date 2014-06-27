@@ -20,6 +20,6 @@ function gotoUri(uri)
 // go to app's uri
 {
     var url = exports.getUrl(uri) + constructGetParameters(protractor.getInstance().params.baseGetParams);
-    browser.driver.get(url);
     console.log(url);
+    return browser.driver.get(url);
 }
