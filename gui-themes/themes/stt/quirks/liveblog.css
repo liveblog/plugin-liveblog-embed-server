@@ -557,7 +557,6 @@
   display: none;
 }
 #livedesk-root .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li.quote .post-core-content {
-  min-height: 30px;
   padding-left: 45px;
   background: url(img/quotes.png) no-repeat 0 0;
 }
@@ -922,28 +921,15 @@
 #livedesk-root.quirks {
   width: auto;
 }
-#livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-top .update-time {
-  float: left;
-}
 #livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle {
   height: none;
 }
-#livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-publisher-avatar.blank {
-  height: 48px;
-}
 #livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-buttons {
-  margin-right: 10px;
+  margin-right: 20px;
   display: block !important;
 }
 #livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-external {
   position: relative;
-}
-#livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .permalink-holder input {
-  height: 25px;
-}
-#livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-content-side {
-  position: relative;
-  z-index: 9999;
 }
 #livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-external-avatar-img {
   display: block;
@@ -952,9 +938,9 @@
   position: absolute;
   top: 0px;
 }
-#livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li.link .link-content .attributes img {
-  width: 16px;
-  height: 16px;
+#livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li.normal .post-core-content .post-text img {
+  width: 100% !important;
+  max-width: 100% !important;
 }
 #livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li.instagram .post-external-image-link,
 #livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li.flickr .post-external-image-link,
