@@ -16,10 +16,22 @@ function getUrl(uri)
     );
 }
 
-function gotoUri(uri)
+function gotoUri(uri, callback)
 // go to app's uri
 {
-    var url = exports.getUrl(uri) + constructGetParameters(protractor.getInstance().params.baseGetParams);
-    console.log(url);
-    return browser.driver.get(url);
+    var result,
+        url = exports.getUrl(uri) + constructGetParameters(protractor.getInstance().params.baseGetParams);
+    callback = callback || function() {};
+    browser.getCurrentUrl().then(
+        function(currentUrl) {
+            if (url === currentUrl) {
+                console.log('[BROWSER] refresh page');
+                result = browser.refresh();
+            } else {
+                console.log('[BROWSER] open ' + url);
+                result = browser.driver.get(url);
+            }
+            callback(result);
+        }
+    );
 }

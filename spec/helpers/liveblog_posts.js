@@ -3,7 +3,14 @@
 var liveblogBackend = require('./liveblog_backend');
 var backendRequestAuth = liveblogBackend.backendRequestAuth;
 
-exports.postCreate = function postCreate(postContent, callback) {
+var utils = require('./utils');
+var getIdFromHref = utils.getIdFromHref;
+
+exports.postCreate = postCreate;
+exports.postPublish = postPublish;
+exports.postCreateAndPublish = postCreateAndPublish;
+
+function postCreate(postContent, callback) {
     backendRequestAuth({
         method: 'POST',
         uri: '/my/LiveDesk/Blog/1/Post',
@@ -16,9 +23,9 @@ exports.postCreate = function postCreate(postContent, callback) {
     }, function(e, r, j) {
         callback(e, r, j);
     });
-};
+}
 
-exports.postPublish = function postPublish(postId, callback) {
+function postPublish(postId, callback) {
     backendRequestAuth({
         method: 'POST',
         uri: '/my/LiveDesk/Blog/1/Post/' + postId + '/Publish',
@@ -26,4 +33,15 @@ exports.postPublish = function postPublish(postId, callback) {
     }, function(e, r, j) {
         callback(e, r, j);
     });
-};
+}
+
+function postCreateAndPublish(postContent, callback) {
+    postCreate(postContent, function(e, r, json) {
+        var id = getIdFromHref(json.href);
+        postPublish(
+            id,
+            function(e,r,j) {
+                callback(e,r,j, id);
+            });
+    });
+}
