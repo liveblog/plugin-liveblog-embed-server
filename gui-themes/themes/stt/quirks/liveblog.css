@@ -969,6 +969,9 @@
   display: block;
   width: 100%;
 }
+#livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li.normal .post-core-content .post-text img{
+  width: 100%;
+}
 #livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li.wrapup .post-core-content {
   position: relative;
 }
@@ -981,9 +984,11 @@
 #livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li.wrapup .post-core-content .post-text {
   margin-top: -15px;
 }
+#livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li.youtube .post-external .post-frame-container {
+	position: relative;
+}
 #livedesk-root.quirks .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li.youtube .post-external .post-frame-container iframe {
-  padding-top: 0px;
-  padding-bottom: 60.25%;
+ 	padding-bottom: 25px;
 }
 #livedesk-root.quirks .comment-backdrop {
   background: #212121;
