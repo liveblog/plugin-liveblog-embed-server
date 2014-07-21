@@ -14,6 +14,10 @@ var liveblogPosts = require('./liveblog_posts.js');
 var postCreate = liveblogPosts.postCreate;
 var postPublish = liveblogPosts.postPublish;
 
+var blogCreate = require('./liveblog_blogs.js').blogCreate;
+
+var pp = protractor.getInstance().params;
+
 exports.resetApp = resetApp;
 exports.uploadFixtures = uploadFixtures;
 
@@ -43,9 +47,9 @@ function uploadFixtures(name, number, callback) {
         inProgressCallback = function(e, r, j) {
             // raising the number of uploaded fixtures:
             counter++;
-            // and then all the fixtures were uploaded:
+            // and when all the fixtures were uploaded:
             if (counter === number) {
-                protractor.getInstance().params.fixtures = results;
+                pp.fixtures = results;
                 callback(e, r, j);
             }
         };
@@ -53,25 +57,37 @@ function uploadFixtures(name, number, callback) {
     fixtureFunctions = {
         'posts': function(index) {
             index = index + 1; // for readability
-            postCreate('test_' + index, function(e, r, json) {
+            postCreate({
+                postContent: 'test_' + index
+            }, function(e, r, json) {
                 var id = getIdFromHref(json.href);
                 results[index] = id;
-                postPublish(id, inProgressCallback);
+                postPublish({
+                        postId: id
+                    },
+                    inProgressCallback
+                );
             });
         }
     };
 
     fixtureFunction = fixtureFunctions[name];
-    if (!fixtureFunction){
+    if (!fixtureFunction) {
         throw new Error('No fixtures for "' + name + '".\n' +
-                        'Available fixtures:\n' +
-                        jasmine.pp(Object.keys(fixtureFunctions)));
+            'Available fixtures:\n' +
+            jasmine.pp(Object.keys(fixtureFunctions)));
     }
 
     // let's do it!
-    resetApp(function(e, r, b) {
-        for (i = 0; i < number; i++) {
-            fixtureFunction(i);
+    //resetApp(function(e, r, b) {
+    blogCreate(
+        'New Blog',
+        function(e, r, j, id) {
+            pp.blogId = id;
+            for (i = 0; i < number; i++) {
+                fixtureFunction(i);
+            }
         }
-    });
+    );
+    //});
 }

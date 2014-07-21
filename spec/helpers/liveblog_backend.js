@@ -19,6 +19,7 @@ function getBackendUrl(uri)
 }
 
 function backendRequest(params, callback) {
+    callback = callback || function() {};
     if (params.uri) {
         params.url = exports.getBackendUrl(params.uri);
         delete params.uri;
@@ -32,6 +33,11 @@ function backendRequest(params, callback) {
             if (
                 (response.statusCode !== 200) && (response.statusCode !== 201)
             ) {
+                console.log('Request:');
+                console.log(response.request.href);
+                console.log(response.request);
+                console.log('Response:');
+                console.log(body);
                 throw new Error('Status code: ' + response.statusCode);
             }
             callback(error, response, body);
@@ -40,6 +46,7 @@ function backendRequest(params, callback) {
 }
 
 function backendRequestAuth (params, callback) {
+    callback = callback || function() {};
     var token = protractor.getInstance().params.token;
     if (!token) {
         throw new Error('No auth token');

@@ -1,27 +1,35 @@
 'use strict';
 
 /*global protractor, browser */
+var _ = require('lodash');
 
 var utils = require('./utils');
 var constructUrl = utils.constructUrl;
 var constructGetParameters = utils.constructGetParameters;
 
+var pp = protractor.getInstance().params;
+
 exports.getUrl = getUrl;
 exports.gotoUri = gotoUri;
 
-function getUrl(uri)
-{
+function getUrl(uri) {
     return constructUrl(
-        protractor.getInstance().params.baseUrl, uri
+        pp.baseUrl, uri
     );
 }
 
-function gotoUri(uri, callback)
 // go to app's uri
-{
-    var result,
-        url = exports.getUrl(uri) + constructGetParameters(protractor.getInstance().params.baseGetParams);
+function gotoUri(uri, callback) {
     callback = callback || function() {};
+    var result;
+    var url = exports.getUrl(uri) +
+        constructGetParameters(_.extend(
+            {
+                'liveblog.id': pp.blogId,
+                'liveblog.servers.rest': pp.backendServerHostname
+            },
+            pp.baseGetParams
+    ));
     browser.getCurrentUrl().then(
         function(currentUrl) {
             if (url === currentUrl) {

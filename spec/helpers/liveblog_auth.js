@@ -7,6 +7,8 @@ var jsSHA = require('jssha');
 
 var getBackendUrl = require('./liveblog_backend').getBackendUrl;
 
+var pp = protractor.getInstance().params;
+
 exports.getToken = getToken;
 
 // hash token using username and password
@@ -20,8 +22,8 @@ function hashToken(username, password, loginToken) {
 
 // acquire auth token using API
 function getToken(callback) {
-    var username = protractor.getInstance().params.username,
-        password = protractor.getInstance().params.password;
+    var username = pp.username,
+        password = pp.password;
     request.post({
             url: getBackendUrl('/Security/Authentication'),
             json: {
@@ -42,7 +44,7 @@ function getToken(callback) {
                 if (error) {
                     throw new Error(error);
                 }
-                protractor.getInstance().params.token = json.Session;
+                pp.token = json.Session;
                 callback(error, response, json);
             });
         }
