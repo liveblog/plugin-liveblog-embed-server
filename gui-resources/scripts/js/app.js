@@ -89,22 +89,22 @@ requirejs([
     utils.dispatcher.once('blog-model.request-failed', function() {
         if (!sent) {
             sent = true;
-            console.log('Request for blog has failed.');
+            console.log(JSON.stringify({code: 400, body: 'Request for blog has failed.'}));
         }
     });
     utils.dispatcher.once('theme-file.request-failed', function() {
         if (!sent) {
             sent = true;
-            console.log('Request for theme file has failed.');
+            console.log(JSON.stringify({code: 400, body: 'Request for theme file has failed.'}));
         }
     });
     var layout = new Layout();
     layout.blogModel.get('publishedPosts').on('sync', function() {
         if (!sent) {
             sent = true;
-            console.log(layout.render().$el.html());
+            console.log(JSON.stringify({code: 400, body: layout.render().$el.html()}));
         }
     });
 }, function(err) {
-    console.log(err);
+    console.log(JSON.stringify({code: 400, body: err}));
 });
