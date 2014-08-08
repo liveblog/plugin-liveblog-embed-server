@@ -102,7 +102,7 @@ requirejs([
     layout.blogModel.get('publishedPosts').on('sync', function() {
         if (!sent) {
             sent = true;
-            console.log(JSON.stringify({code: 400, body: layout.render().$el.html()}));
+            console.log(JSON.stringify({code: 200, body: layout.render().$el.html()}));
         }
     });
 }, function(err) {
