@@ -7,6 +7,7 @@ define([
     'plugins/post-hash',
     'plugins/social-share',
     'plugins/ivw-counter',
+    'plugins/status',
     'tmpl!theme/container',
     'tmpl!theme/item/base'
 ], function() {
