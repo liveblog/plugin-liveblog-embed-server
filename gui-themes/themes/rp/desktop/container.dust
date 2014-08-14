@@ -11,7 +11,6 @@
                             <div class="liveblog-content-top">
                                 {+contentTop}
                                     {+status}{/status}
-                                    {+actionTotop}{/actionTotop}
                                 {/contentTop}
                             </div>
                         {/contentTopContainer}
