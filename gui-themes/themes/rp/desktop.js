@@ -8,6 +8,8 @@ define([
     'plugins/social-share',
     'plugins/ivw-counter',
     'plugins/status',
+    'plugins/pending-messages',
+    'plugins/stop-auto-render',
     'tmpl!theme/container',
     'tmpl!theme/item/base'
 ], function() {
@@ -17,7 +19,10 @@ define([
             'twitter-widgets',
             'post-hash',
             'social-share',
-            'ivw-counter'
+            'ivw-counter',
+            'status',
+            'pending-messages',
+            'stop-auto-render'
         ]
     };
 });
