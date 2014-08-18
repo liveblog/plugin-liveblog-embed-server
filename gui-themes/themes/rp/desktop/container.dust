@@ -10,7 +10,7 @@
                         {+contentTopContainer}
                             <div class="liveblog-content-top">
                                 {+contentTop}
-                                    {+status}{/status}
+                                    {+refreshBlock}{/refreshBlock}
                                 {/contentTop}
                             </div>
                         {/contentTopContainer}
@@ -35,3 +35,12 @@
     {/main}
 </div>
 {/mainContainer}
+
+{<refreshBlock}
+<div class="refresh-block-container">
+    <div class="refresh-block">
+        <span class="refresh-text">There are 3 new posts</span>
+        <span class="refresh-icon"></span>
+    </div>
+</div>
+{/refreshBlock}
