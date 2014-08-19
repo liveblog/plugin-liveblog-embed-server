@@ -158,6 +158,7 @@
 .refresh-block-container {
 	max-width: 540px;
 	margin-bottom:20px;
+	display: none;
 }
 .refresh-block {
 	background: #fff5e2;
