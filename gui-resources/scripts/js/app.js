@@ -95,7 +95,7 @@ requirejs([
     utils.dispatcher.once('theme-file.request-failed', function() {
         if (!sent) {
             sent = true;
-            console.log(JSON.stringify({code: 400, body: 'Request for theme file has failed.'}));
+            console.log(JSON.stringify({code: 400, body: 'Request for theme file: "' + liveblog.theme + '" has failed.'}));
         }
     });
     var layout = new Layout();
