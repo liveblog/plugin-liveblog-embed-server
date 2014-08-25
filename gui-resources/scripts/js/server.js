@@ -101,7 +101,13 @@ server.get('/', function(req, res) {
         }
     } else {
         cp.exec('nodejs ' + path.join(__dirname, 'app.js'), {env: {NODE_ENV: 'production', liveblog: JSON.stringify(liveblog)}}, function(error, stdout, stderr) {
-            var out = JSON.parse(stdout);
+            var out = {};
+            try {
+                out = JSON.parse(stdout);
+            } catch (jsonerror) {
+                out.code = 400;
+                out.body = jsonerror.message;
+            }
             res.send(out.code, out.body);
         });
     }
