@@ -100,7 +100,7 @@ server.get('/', function(req, res) {
             res.redirect(config.paths.docco);
         }
     } else {
-        cp.exec('nodejs ' + path.join(__dirname, 'app.js'), {env: {NODE_ENV: 'production', liveblog: JSON.stringify(liveblog)}}, function(error, stdout, stderr) {
+        cp.exec('"' + process.execPath + '" ' + path.join(__dirname, 'app.js'), {env: {NODE_ENV: 'production', liveblog: JSON.stringify(liveblog)}}, function(error, stdout, stderr) {
             var out = {};
             try {
                 out = JSON.parse(stdout);
