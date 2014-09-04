@@ -57,14 +57,13 @@ describe('Embed', function() {
         }, pp.maxTimeout);
 
         it(' is updating to show just edited post', function() {
-            var postContent = randomText();
-            var newContent = randomText();
-            console.log(newContent);
-            console.log(postContent);
+            var postContent = randomText(),
+                newContent = randomText(),
+                postId;
             postCreateAndPublish({
                 postContent: postContent
             }, function(e, r, j, id) {
-                postEdit({postId: id, newContent: newContent});
+                postId = id;
             });
             browser.wait(function() {
                 return browser.isElementPresent(
@@ -75,6 +74,10 @@ describe('Embed', function() {
                 );
             }, pp.maxTimeout)
             .then(function() {
+                postEdit({
+                        postId: postId,
+                        newContent: newContent
+                });
                 browser.wait(function() {
                     return browser.isElementPresent(
                         by.cssContainingText(
@@ -83,9 +86,9 @@ describe('Embed', function() {
                         )
                     );
                 }, pp.maxTimeout);
+                expect(true).toBe(true);
             });
-            expect(true).toBe(true);
-          }, pp.maxTimeout * 2);
+        }, pp.maxTimeout * 2);
     });
 
 });

@@ -37,13 +37,12 @@ function postEdit(args, callback) {
         blogId = args.blogId || protractor.getInstance().params.blogId,
         postId = args.postId;
     backendRequestAuth({
-        method: 'POST',
+        method: 'PUT',
         uri: '/my/LiveDesk/Blog/' + blogId + '/Post/' + postId,
         json: {
             'Content': newContent
         },
         headers: {
-          'X-HTTP-Method-Override': 'PUT'
         }
     }, function(e, r, j) {
         callback(e, r, j);
