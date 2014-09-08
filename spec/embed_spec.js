@@ -6,6 +6,7 @@ var uploadFixtures = require('./helpers/liveblog_fixtures').uploadFixtures;
 var liveblogBackend = require('./helpers/liveblog_posts.js');
 var postCreateAndPublish = liveblogBackend.postCreateAndPublish;
 var postEdit = liveblogBackend.postEdit;
+var postDelete = liveblogBackend.postDelete;
 
 // Protractor Params:
 var pp = protractor.getInstance().params;
@@ -29,6 +30,7 @@ describe('Embed', function() {
             ).toBe(true);
         });
 
+    //describe
     });
 
     describe(' (when blank)', function() {
@@ -45,18 +47,21 @@ describe('Embed', function() {
             postCreateAndPublish({
                 postContent: postContent
             });
-            browser.wait(function() {
-                return browser.isElementPresent(
-                    by.cssContainingText(
-                        'div.liveblog-content p.post-text',
-                        postContent
-                    )
-                );
-            }, pp.maxTimeout)
-            .then(function() {
+            browser.wait(
+                function() {
+                    return browser.isElementPresent(
+                        by.cssContainingText(
+                            'div.liveblog-content p.post-text',
+                            postContent
+                        )
+                    );
+                }, pp.maxTimeout
+            ).then(function() {
                 expect(true).toBe(true);
             });
-        }, pp.maxTimeout);
+        },
+        //it
+        pp.maxTimeout);
 
         it(' is updating to show just edited post', function() {
             var postContent = randomText(),
@@ -68,31 +73,81 @@ describe('Embed', function() {
                 postId = id;
             });
             browser.wait(function() {
-                return browser.isElementPresent(
-                    by.cssContainingText(
-                        'div.liveblog-content p.post-text',
-                        postContent
-                    )
-                );
-            }, pp.maxTimeout)
-            .then(function() {
-                postEdit({
-                        postId: postId,
-                        newContent: newContent
-                });
-                browser.wait(function() {
                     return browser.isElementPresent(
                         by.cssContainingText(
                             'div.liveblog-content p.post-text',
-                            newContent
+                            postContent
                         )
                     );
-                }, pp.maxTimeout)
-                .then(function() {
+                }, pp.maxTimeout
+            ).then(function() {
+                postEdit({
+                    postId: postId,
+                    newContent: newContent
+                });
+                browser.wait(
+                    function() {
+                        return browser.isElementPresent(
+                            by.cssContainingText(
+                                'div.liveblog-content p.post-text',
+                                newContent
+                            )
+                        );
+                    }, pp.maxTimeout
+                ).then(function() {
                     expect(true).toBe(true);
                 });
             });
-        }, pp.maxTimeout * 2);
+        },
+        //it
+        pp.maxTimeout * 2);
+
+        it(' is updating to show just deleted post', function() {
+            var postContent = randomText(),
+                postId;
+            postCreateAndPublish({
+                postContent: postContent
+            }, function(e, r, j, id) {
+                postId = id;
+            });
+            browser.wait(
+                function() {
+                    return browser.isElementPresent(
+                        by.cssContainingText(
+                            'div.liveblog-content p.post-text',
+                            postContent
+                        )
+                    );
+                }, pp.maxTimeout,
+                'Just added post should appear on page.'
+            ).then(function() {
+                postDelete({
+                    postId: postId
+                });
+                browser.wait(
+                    function() {
+                        return element.all(
+                            by.cssContainingText(
+                                'div.liveblog-content p.post-text',
+                                postContent
+                            )
+                        ).count().then(
+                            function(count) {
+                                return count === 0;
+                            }
+                        );
+                    }, pp.maxTimeout,
+                    'Just deleted post should disappear from page.'
+                ).then(function() {
+                    expect(true).toBe(true);
+                });
+            });
+        },
+        //it
+        pp.maxTimeout * 2);
+
+    //describe
     });
 
+//describe Embed
 });
