@@ -52,8 +52,10 @@ describe('Embed', function() {
                         postContent
                     )
                 );
-            }, pp.maxTimeout);
-            expect(true).toBe(true);
+            }, pp.maxTimeout)
+            .then(function() {
+                expect(true).toBe(true);
+            });
         }, pp.maxTimeout);
 
         it(' is updating to show just edited post', function() {
@@ -85,8 +87,10 @@ describe('Embed', function() {
                             newContent
                         )
                     );
-                }, pp.maxTimeout);
-                expect(true).toBe(true);
+                }, pp.maxTimeout)
+                .then(function() {
+                    expect(true).toBe(true);
+                });
             });
         }, pp.maxTimeout * 2);
     });
