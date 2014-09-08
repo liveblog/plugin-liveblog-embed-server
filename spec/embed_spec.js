@@ -53,12 +53,11 @@ describe('Embed', function() {
                         by.cssContainingText(
                             'div.liveblog-content p.post-text',
                             postContent
-                        )
-                    );
-                }, pp.maxTimeout
-            ).then(function() {
-                expect(true).toBe(true);
-            });
+                    ));
+                },
+                pp.maxTimeout,
+                'Just added post should appear on page.'
+            );
         },
         //it
         pp.maxTimeout);
@@ -72,14 +71,16 @@ describe('Embed', function() {
             }, function(e, r, j, id) {
                 postId = id;
             });
-            browser.wait(function() {
+            browser.wait(
+                function() {
                     return browser.isElementPresent(
                         by.cssContainingText(
                             'div.liveblog-content p.post-text',
                             postContent
-                        )
-                    );
-                }, pp.maxTimeout
+                    ));
+                },
+                pp.maxTimeout,
+                'Just added post should appear on page.'
             ).then(function() {
                 postEdit({
                     postId: postId,
@@ -93,10 +94,10 @@ describe('Embed', function() {
                                 newContent
                             )
                         );
-                    }, pp.maxTimeout
-                ).then(function() {
-                    expect(true).toBe(true);
-                });
+                    },
+                    pp.maxTimeout,
+                    'Just edited post should be updated on page.'
+                );
             });
         },
         //it
@@ -116,9 +117,9 @@ describe('Embed', function() {
                         by.cssContainingText(
                             'div.liveblog-content p.post-text',
                             postContent
-                        )
-                    );
-                }, pp.maxTimeout,
+                    ));
+                },
+                pp.maxTimeout,
                 'Just added post should appear on page.'
             ).then(function() {
                 postDelete({
@@ -138,9 +139,7 @@ describe('Embed', function() {
                         );
                     }, pp.maxTimeout,
                     'Just deleted post should disappear from page.'
-                ).then(function() {
-                    expect(true).toBe(true);
-                });
+                );
             });
         },
         //it
