@@ -9,6 +9,8 @@ var getIdFromHref = utils.getIdFromHref;
 exports.postCreate = postCreate;
 exports.postEdit = postEdit;
 exports.postPublish = postPublish;
+exports.postUnpublish = postUnpublish;
+exports.postDelete = postDelete;
 exports.postCreateAndPublish = postCreateAndPublish;
 
 function postCreate(args, callback) {
@@ -61,6 +63,39 @@ function postPublish(args, callback) {
     backendRequestAuth({
         method: 'POST',
         uri: '/my/LiveDesk/Blog/' + blogId + '/Post/' + postId + '/Publish',
+        json: {}
+    }, function(e, r, j) {
+        callback(e, r, j);
+    });
+}
+
+function postUnpublish(args, callback) {
+    args = args || {};
+    callback = callback || function() {};
+    var blogId = args.blogId || protractor.getInstance().params.blogId,
+        postId = args.postId;
+    if (!postId) {
+        throw Error('No postId provided');
+    }
+    backendRequestAuth({
+        method: 'POST',
+        uri: '/my/LiveDesk/Blog/' + blogId + '/Post/' + postId + '/Unpublish',
+        json: {}
+    }, function(e, r, j) {
+        callback(e, r, j);
+    });
+}
+
+function postDelete(args, callback) {
+    args = args || {};
+    callback = callback || function() {};
+    var postId = args.postId;
+    if (!postId) {
+        throw Error('No postId provided');
+    }
+    backendRequestAuth({
+        method: 'DELETE',
+        uri: '/my/Data/Post/' + postId,
         json: {}
     }, function(e, r, j) {
         callback(e, r, j);
