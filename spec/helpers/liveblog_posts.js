@@ -8,6 +8,7 @@ var getIdFromHref = utils.getIdFromHref;
 
 exports.postCreate = postCreate;
 exports.postEdit = postEdit;
+exports.postsReorder = postsReorder;
 exports.postPublish = postPublish;
 exports.postUnpublish = postUnpublish;
 exports.postDelete = postDelete;
@@ -38,9 +39,6 @@ function postEdit(args, callback) {
     var newContent = args.newContent || 'Test post',
         blogId = args.blogId || protractor.getInstance().params.blogId,
         postId = args.postId;
-    if (!postId) {
-        throw Error('No postId provided');
-    }
     backendRequestAuth({
         method: 'PUT',
         uri: '/my/LiveDesk/Blog/' + blogId + '/Post/' + postId,
@@ -52,14 +50,27 @@ function postEdit(args, callback) {
     });
 }
 
+function postsReorder(args, callback) {
+    callback = callback || function() {};
+    args = args || {};
+    var blogId = args.blogId || protractor.getInstance().params.blogId,
+        postId = args.postId,
+        otherPostId = args.otherPostId,
+        before = args.before;
+    backendRequestAuth({
+        method: 'PUT',
+        uri: '/my/LiveDesk/Blog/' + blogId + '/Post/' + postId + '/Post/' +
+            otherPostId + '/Reorder?before=' + before.toString()
+    }, function(e, r, j) {
+        callback(e, r, j);
+    });
+}
+
 function postPublish(args, callback) {
     args = args || {};
     callback = callback || function() {};
     var blogId = args.blogId || protractor.getInstance().params.blogId,
         postId = args.postId;
-    if (!postId) {
-        throw Error('No postId provided');
-    }
     backendRequestAuth({
         method: 'POST',
         uri: '/my/LiveDesk/Blog/' + blogId + '/Post/' + postId + '/Publish',
@@ -74,9 +85,6 @@ function postUnpublish(args, callback) {
     callback = callback || function() {};
     var blogId = args.blogId || protractor.getInstance().params.blogId,
         postId = args.postId;
-    if (!postId) {
-        throw Error('No postId provided');
-    }
     backendRequestAuth({
         method: 'POST',
         uri: '/my/LiveDesk/Blog/' + blogId + '/Post/' + postId + '/Unpublish',
@@ -90,9 +98,6 @@ function postDelete(args, callback) {
     args = args || {};
     callback = callback || function() {};
     var postId = args.postId;
-    if (!postId) {
-        throw Error('No postId provided');
-    }
     backendRequestAuth({
         method: 'DELETE',
         uri: '/my/Data/Post/' + postId,
