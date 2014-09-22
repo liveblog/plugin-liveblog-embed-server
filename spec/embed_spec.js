@@ -7,6 +7,7 @@ var liveblogBackend = require('./helpers/liveblog_posts.js');
 var postCreateAndPublish = liveblogBackend.postCreateAndPublish;
 var postEdit = liveblogBackend.postEdit;
 var postDelete = liveblogBackend.postDelete;
+var postUnpublish = liveblogBackend.postUnpublish;
 
 // Protractor Params:
 var pp = protractor.getInstance().params;
@@ -103,7 +104,7 @@ describe('Embed', function() {
         //it
         pp.maxTimeout * 2);
 
-        it(' is updating to show just deleted post', function() {
+        it(' is updating to show what post was just deleted', function() {
             var postContent = randomText(),
                 postId;
             postCreateAndPublish({
@@ -139,6 +140,48 @@ describe('Embed', function() {
                         );
                     }, pp.maxTimeout,
                     'Just deleted post should disappear from page.'
+                );
+            });
+        },
+        //it
+        pp.maxTimeout * 2);
+
+        it(' is updating to show what post was just ubpublished', function() {
+            var postContent = randomText(),
+                postId;
+            postCreateAndPublish({
+                postContent: postContent
+            }, function(e, r, j, id) {
+                postId = id;
+            });
+            browser.wait(
+                function() {
+                    return browser.isElementPresent(
+                        by.cssContainingText(
+                            'div.liveblog-content p.post-text',
+                            postContent
+                    ));
+                },
+                pp.maxTimeout,
+                'Just added post should appear on page.'
+            ).then(function() {
+                postUnpublish({
+                    postId: postId
+                });
+                browser.wait(
+                    function() {
+                        return element.all(
+                            by.cssContainingText(
+                                'div.liveblog-content p.post-text',
+                                postContent
+                            )
+                        ).count().then(
+                            function(count) {
+                                return count === 0;
+                            }
+                        );
+                    }, pp.maxTimeout,
+                    'Just unpublished post should disappear from page.'
                 );
             });
         },
