@@ -9,6 +9,7 @@ var getIdFromHref = utils.getIdFromHref;
 exports.postCreate = postCreate;
 exports.postEdit = postEdit;
 exports.postPublish = postPublish;
+exports.postUnpublish = postUnpublish;
 exports.postDelete = postDelete;
 exports.postCreateAndPublish = postCreateAndPublish;
 
@@ -68,7 +69,7 @@ function postPublish(args, callback) {
     });
 }
 
-function postDelete(args, callback) {
+function postUnpublish(args, callback) {
     args = args || {};
     callback = callback || function() {};
     var blogId = args.blogId || protractor.getInstance().params.blogId,
@@ -77,9 +78,24 @@ function postDelete(args, callback) {
         throw Error('No postId provided');
     }
     backendRequestAuth({
+        method: 'POST',
+        uri: '/my/LiveDesk/Blog/' + blogId + '/Post/' + postId + '/Unpublish',
+        json: {}
+    }, function(e, r, j) {
+        callback(e, r, j);
+    });
+}
+
+function postDelete(args, callback) {
+    args = args || {};
+    callback = callback || function() {};
+    var postId = args.postId;
+    if (!postId) {
+        throw Error('No postId provided');
+    }
+    backendRequestAuth({
         method: 'DELETE',
         uri: '/my/Data/Post/' + postId,
-        //uri: '/my/LiveDesk/Blog/' + blogId + '/Post/' + postId,
         json: {}
     }, function(e, r, j) {
         callback(e, r, j);
