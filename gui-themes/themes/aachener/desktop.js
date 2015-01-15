@@ -11,7 +11,8 @@ define([
     'plugins/user-comments',
     'plugins/status',
     'tmpl!theme/container',
-    'tmpl!theme/item/base'
+    'tmpl!theme/item/base',
+    'tmpl!theme/plugins/permanent-link'
 ], function() {
     return {
         plugins: [
