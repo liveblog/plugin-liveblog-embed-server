@@ -12,7 +12,8 @@ define([
     'plugins/status',
     'tmpl!theme/container',
     'tmpl!theme/item/base',
-    'tmpl!theme/plugins/permanent-link'
+    'tmpl!theme/plugins/permanent-link',
+    'tmpl!theme/item/source/youtube'
 ], function() {
     return {
         plugins: [

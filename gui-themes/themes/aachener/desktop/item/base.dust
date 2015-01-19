@@ -10,18 +10,19 @@
     {+shareContainer}{/shareContainer}
 
     {+commentBefore}{/commentBefore}
+    {+contentMainFull}
     <div class="post-content-full">
-        {+contentFull}
-            {+contentCoreContainer}
-                <div class="post-core-content">
-                    {+contentCore}
-                    {/contentCore}
-                </div>
-            {/contentCoreContainer}
-            {+contentAttrContainer}
-            {/contentAttrContainer}
-        {/contentFull}
+    {+contentFull}
+        {+contentCoreContainer}
+            <div class="post-core-content">
+                {+contentCore}{/contentCore}
+            </div>
+        {/contentCoreContainer}
+        {+contentAttrContainer}{/contentAttrContainer}
+    {/contentFull}
     </div>
+    {/contentMainFull}
+    {+commentAfter}{/commentAfter}
 {/contentMainBody}
 
 {<contentSide}
