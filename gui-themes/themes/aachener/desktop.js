@@ -1,5 +1,9 @@
 'use strict';
-
+require.config({
+    paths: {
+        'typekitFont': '//use.typekit.net/oal1wjf'
+    }
+});
 define([
     'css!theme/liveblog',
     'plugins/button-pagination',
@@ -10,11 +14,10 @@ define([
     'plugins/wrappup-toggle',
     'plugins/user-comments',
     'plugins/status',
+    'plugins/typekit',
     'tmpl!theme/container',
-    'tmpl!theme/item/base',
-    'tmpl!theme/plugins/permanent-link',
-    'tmpl!theme/item/source/youtube'
-], function() {
+    'tmpl!theme/item/base'
+], function($) {
     return {
         plugins: [
             'button-pagination',
@@ -24,7 +27,8 @@ define([
             'social-share',
             'wrappup-toggle',
             'user-comments',
-            'status'
+            'status',
+            'typekit'
         ]
     };
 });

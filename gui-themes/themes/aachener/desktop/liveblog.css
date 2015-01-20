@@ -204,7 +204,7 @@
 }
 
 #livedesk-root .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li.usercomments {
-	background: #dddddd;
+	background: #ebebeb;
 	margin-bottom: 0px;
 	padding-bottom: 40px;
 }
@@ -222,7 +222,7 @@
     margin: 3px 0px 0px;
 }
 
-#livedesk-root .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-publisher-address, 
+#livedesk-root .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-publisher-address,
 #livedesk-root .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-datetime {
     font-family: Helvetica, Arial, sans-serif;
     color: #666666;
@@ -268,8 +268,10 @@
     padding: 10px;
     border: 1px solid #D0D0D0;
     position: absolute;
-    left: -3px;
-    bottom: 20px;
+    /*left: -3px;*/
+    /*bottom: 20px;*/
+    right: 20px;
+    bottom: -60px;
     z-index: 5;
     width: 140px;
     height: 24px;
@@ -329,8 +331,10 @@
     border: 1px solid #D0D0D0;
     padding: 4px 6px;
     width: 180px;
-    bottom: 18px;
-    left: 66px;
+    /*bottom: 18px;*/
+    /*left: 66px;*/
+    bottom: -37px;
+    right: 20px;
 }
 
 #livedesk-root .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-buttons input:focus {
@@ -338,21 +342,22 @@
 }
 
 #livedesk-root .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-comment {
-
+    margin-top: 16px;
+    font-size: 1.125em;
 }
 
 #livedesk-root .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-comment.comment-before {
-    padding-bottom: 5px;
+    /*padding-bottom: 16px;*/
 }
 
 #livedesk-root .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-comment.comment-after {
-    padding-top: 5px;
+    padding-top: 16px;
 }
 
 #livedesk-root .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-content-full {
     font-size: 1.125em;
-    line-height: 125%;
-    margin-top: 10px;
+    line-height: 140%;
+    margin-top: 16px;
 }
 
 #livedesk-root .liveblog-container .liveblog-content .liveblog-content-middle .liveblog-postlist li .post-publisher-avatar {
