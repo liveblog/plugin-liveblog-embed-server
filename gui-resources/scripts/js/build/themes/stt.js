@@ -1,1 +1,0 @@
-liveblog.define("themeFile",[],function(){return{environments:{mobile:"mobile",desktop:"desktop",quirks:"quirks","default":"desktop"}}});
