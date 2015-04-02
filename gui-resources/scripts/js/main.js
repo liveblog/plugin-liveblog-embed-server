@@ -2,27 +2,27 @@
 require.config({
     config: {
         'load-theme': {
-            themesPath:             '../../themes/',
+            themesPath:             '../../../gui-themes/themes/',
             buildPath:              './build/themes/'
         }
     },
     paths: {
         'jquery':                   'bower_components/jquery/dist/jquery',
         'json2':                    'bower_components/json2/json2',
-        'dustjs-linkedin':          'node_modules/dustjs-linkedin/dist/dust-full',
-        'dustjs-helpers':           'node_modules/dustjs-helpers/dist/dust-helpers',
+        'dustjs-linkedin':          '../../../node_modules/dustjs-linkedin/dist/dust-full',
+        'dustjs-helpers':           '../../../node_modules/dustjs-helpers/dist/dust-helpers',
         'dust':                     'lib/dust',
-        'jed':                      'node_modules/jed/jed',
-        'lodash.compat':            'node_modules/lodash/dist/lodash.compat',
-        'backbone':                 'node_modules/backbone/backbone',
+        'jed':                      '../../../node_modules/jed/jed',
+        'lodash.compat':            '../../../node_modules/lodash/dist/lodash.compat',
+        'backbone':                 '../../../node_modules/backbone/backbone',
         'backbone-custom':          'lib/backbone/backbone-custom',
-        'backbone.layoutmanager':   'node_modules/backbone.layoutmanager/backbone.layoutmanager',
-        'moment':                   'node_modules/moment/min/moment-with-langs',
+        'backbone.layoutmanager':   '../../../node_modules/backbone.layoutmanager/backbone.layoutmanager',
+        'moment':                   '../../../node_modules/moment/min/moment-with-langs',
         'moment-timezone':          'bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020',
         'waypoints':                'bower_components/jquery-waypoints/waypoints',
         //'font-awesome':             'bower_components/font-awesome/css/font-awesome.min',
         'font-awesome':             '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min',
-        'themeBase':                '../../themes/base',
+        'themeBase':                '../../../gui-themes/themes/base',
         'tmpl':                     'lib/require/tmpl',
         'i18n':                     'lib/require/i18n',
         'css':                      'lib/require/css'

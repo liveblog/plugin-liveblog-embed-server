@@ -15,12 +15,12 @@ define([
         //on blog config update show or hide the comment link
         utils.dispatcher.on('config-update.blog-view', function (view) {
             displayToggle(view.$('[data-gimme="blog.comment"]'),
-                view.model.get('EmbedConfig').UserComments);
+                view.model.get('meta').UserComments);
         });
         //after the blog is rendered
         utils.dispatcher.on('conditional-render.blog-view', function (view) {
             //add the comment link in the blog theme
-            dust.renderThemed('themeBase/plugins/user-comment-action', {UserComments: view.model.get('EmbedConfig').UserComments}, function(err, out) {
+            dust.renderThemed('themeBase/plugins/user-comment-action', {UserComments: view.model.get('meta').UserComments}, function(err, out) {
                 view.$('[data-gimme="blog.comment-action"]').html(out);
             });
             displayToggle(view.$('[data-gimme="blog.comment"]'), config.UserComments);

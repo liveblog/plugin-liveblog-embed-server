@@ -9,7 +9,7 @@ define([
 
     return Backbone.Model.extend(_.extend({
 
-        idAttribute: 'Id',
+        idAttribute: '_id',
 
         // The function to be called for polling
         poller: function(options) {

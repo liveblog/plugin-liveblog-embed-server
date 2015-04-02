@@ -11,7 +11,7 @@ define([
 
         syncParams: {
             headers: {
-                'X-Filter': 'Description, Title, EmbedConfig, Language.Code'
+                'Authorization': liveblog.auth
             },
             updates: {}
         },
@@ -19,14 +19,14 @@ define([
         pollInterval: 10000,
 
         urlRoot: function() {
-            return liveblog.servers.rest + '/resources/LiveDesk/Blog/';
+            return liveblog.servers.rest + '/blogs/';
         },
 
         initialize: function() {
             this.set('publishedPosts', new Posts([], {blogId: this.id}));
-            if (utils.isClient) {
-                this.startPolling();
-            }
+            // if (utils.isClient) {
+            //     this.startPolling();
+            // }
         },
 
         // The function to be called for polling.
@@ -44,11 +44,8 @@ define([
         },
 
         parse: function(data) {
-            if (_.isString(data.EmbedConfig)) {
-                data.EmbedConfig = JSON.parse(data.EmbedConfig);
-            }
-            if (_.isUndefined(data.EmbedConfig)) {
-                data.EmbedConfig = {};
+            if (_.isUndefined(data.meta)) {
+                data.meta = {};
             }
             return data;
         }

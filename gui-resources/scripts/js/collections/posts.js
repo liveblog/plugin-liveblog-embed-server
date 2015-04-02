@@ -13,17 +13,7 @@ define([
 
         syncParams: {
             headers: {
-                'X-Filter': 'PublishedOn, DeletedOn, Order, Id, ' +
-                            'CId, Content, CreatedOn, Type, ' +
-                            'AuthorName, Author.Source.Name, ' +
-                            'Author.Source.IsModifiable, ' +
-                            'AuthorImage, Meta, ' +
-                            'IsPublished, Creator.FullName, Author.Source.Type.Key, ' +
-                            'Creator.Address'
-//                            ['*', 'Author.Source.*', 'Creator.*'].join(',')
-            },
-            data: {
-                thumbSize: 'medium'
+                'Authorization': liveblog.auth
             },
             pagination: {},
             updates: {}
@@ -32,7 +22,7 @@ define([
         pollInterval: 10000,
 
         url: function() {
-            return liveblog.servers.rest + '/resources/LiveDesk/Blog/' + this.blogId + '/Post/Published';
+            return liveblog.servers.rest + '/blogs/' + this.blogId + '/posts';
         },
 
         initialize: function(models, options) {
@@ -42,18 +32,24 @@ define([
             // Cache the min 'Order' value between the collection posts.
             this.minPostOrder = 0;
 
-            if (utils.isClient) {
-                this.startPolling();
-            }
+            // if (utils.isClient) {
+            //     this.startPolling();
+            // }
         },
 
         parse: function(data, options) {
-            if (!_.isUndefined(options.data['cId.since'])) {
-                data.PostList = this.updateDataParse(data, options);
-            } else {
-                data.PostList = this.newPageDataParse(data, options);
-            }
-            return data.PostList;
+            var items = [];
+            // if (!_.isUndefined(options.data['cId.since'])) {
+            //     data.PostList = this.updateDataParse(data, options);
+            // } else {
+            //     data.PostList = this.newPageDataParse(data, options);
+            // }
+            _.each(data._items, function(post) {
+                _.each(post.groups[1].refs, function(item) {
+                    items.push(item.item);
+                });
+            })
+            return items;
         },
 
         updateDataParse: function(data, options) {
@@ -93,7 +89,7 @@ define([
 
             this.filterProps.total = parseInt(data.total, 10);
 
-            if (data.PostList.length) {
+            if (data._items.length) {
                 var minOrderPost = _.min(data.PostList, function(p) {
                                         return parseFloat(p.Order);
                                     });
@@ -109,6 +105,15 @@ define([
 
         updateLastCId: function(lastCId) {
             this.syncParams.updates['cId.since'] = lastCId;
+        },
+
+        updated: function(updated) {
+            if (updated) {
+                this.syncParams.updates['_updated'] = updated;
+                return this;
+            } else {
+                return this.syncParams.updates['_updated'];
+            }
         }
     });
 });

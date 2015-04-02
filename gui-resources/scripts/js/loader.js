@@ -90,7 +90,7 @@ var loadMain = function() {
         /*jshint unused:false*/
         // set the require object for development mode.
         window.require = liveblog.require;
-        liveblog.loadJs('node_modules/requirejs/require').setAttribute('data-main', liveblog.baseUrl + 'main.js');
+        liveblog.loadJs('../../../node_modules/requirejs/require').setAttribute('data-main', liveblog.baseUrl + 'main.js');
     }
 };
 // this is the callback after the version was loaded.
