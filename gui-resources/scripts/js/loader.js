@@ -1,4 +1,6 @@
 /* jshint maxparams: 6 */
+/*jshint -W020 */
+
 'use strict';
 
 liveblog.require = {};
@@ -16,6 +18,7 @@ var merge = function(obj, source) {
             }
         }
     }
+    return obj;
 };
 
 var qs = window.location.href;
@@ -68,7 +71,20 @@ liveblog.browserUrl = function(urlString) {
     });
     return urlString;
 };
+// set defaults
+liveblog = merge({
+    el: '[data-gimme="liveblog-embed-code"]',
+    paths: {
+        scripts: '/scripts/bower_components/embed/gui-resources/scripts/js/',
+        css: '/../../'
+    },
+    emulateprod: true,
+    fallback: {
+        language: 'en'
+    }
+}, liveblog);
 // fix servers frontend url
+// @TODO: remove this when is sure that is not needed anymore
 liveblog.servers.frontend = liveblog.browserUrl(liveblog.servers.frontend ?
                                                         liveblog.servers.frontend :
                                                         liveblog.servers.rest);

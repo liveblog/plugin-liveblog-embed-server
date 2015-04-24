@@ -12,9 +12,7 @@ define([
         model: Post,
 
         syncParams: {
-            headers: {
-                'Authorization': liveblog.auth
-            },
+            headers: {},
             pagination: {},
             updates: {}
         },
