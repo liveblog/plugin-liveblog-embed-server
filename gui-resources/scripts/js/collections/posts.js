@@ -48,7 +48,7 @@ define([
                 _.each(post.groups[1].refs, function(item) {
                     items.push(item.item);
                 });
-            })
+            });
             return items;
         },
 
@@ -109,10 +109,10 @@ define([
 
         updated: function(updated) {
             if (updated) {
-                this.syncParams.updates['_updated'] = updated;
+                this.syncParams.updates._updated = updated;
                 return this;
             } else {
-                return this.syncParams.updates['_updated'];
+                return this.syncParams.updates._updated;
             }
         }
     });
