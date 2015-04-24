@@ -14,7 +14,7 @@ define([
             }
         },
         urlRoot: function() {
-            return liveblog.servers.rest + '/users';
+            return liveblog.servers.rest + '/client_users';
         },
         parse: function(data) {
             return data;

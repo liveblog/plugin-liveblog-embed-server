@@ -19,7 +19,7 @@ define([
         pollInterval: 10000,
 
         urlRoot: function() {
-            return liveblog.servers.rest + '/blogs/';
+            return liveblog.servers.rest + '/client_blogs/';
         },
 
         initialize: function() {

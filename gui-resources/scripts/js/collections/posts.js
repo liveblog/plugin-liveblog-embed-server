@@ -22,7 +22,7 @@ define([
         pollInterval: 10000,
 
         url: function() {
-            return liveblog.servers.rest + '/blogs/' + this.blogId + '/posts';
+            return liveblog.servers.rest + '/client_blogs/' + this.blogId + '/posts';
         },
 
         initialize: function(models, options) {
