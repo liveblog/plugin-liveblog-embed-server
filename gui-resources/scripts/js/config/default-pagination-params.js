@@ -10,11 +10,10 @@ define({
         'query': {
             'filtered': {
                 'filter': {
-                    'and': [{
-                        'term': {
-                            'post_status': 'open'
-                        }
-                    }]
+                    'and': [
+                        {'not':{'term':{'deleted':true}}},
+                        {'term': {'post_status': 'open'}}
+                    ]
                 }
             }
         }

@@ -46,6 +46,7 @@ define([
                     post = item.item;
                     post.order = packaged.order;
                     post.post_status = packaged.post_status;
+                    post.deleted = packaged.deleted;
                     posts.push(item.item);
                 });
             });
@@ -113,7 +114,7 @@ define([
                 this.syncParams.updates.since = updated;
                 // @TODO: remove this part right here.
                 var source = _.clone(elasticSearchUpdateParams);
-                source.query.filtered.filter.and[1].range._updated.gt = updated;
+                source.query.filtered.filter.and[0].range._updated.gt = updated;
                 this.syncParams.updates.source = source;
                 return this;
             } else {
