@@ -5,13 +5,16 @@
 define([
     'underscore',
     'models/base-model',
+    'models/user',
     'lib/helpers/trim-tag',
     'lib/helpers/format-commentator',
     'lib/helpers/adjust-server-post'
-], function(_, BaseModel, trimTag, formatCommentator, adjustServerPost) {
+], function(_, BaseModel, UserModel, trimTag, formatCommentator, adjustServerPost) {
 
     return BaseModel.extend({
-
+        initialize: function() {
+            this.set('user', new UserModel({_id: this.get('original_creator')}));
+        },
         parse: function(data) {
             if (data.Meta) {
                 data.Meta = data.Meta
@@ -30,25 +33,26 @@ define([
                 data.Meta.annotation = this._manageAnnotations(data.Meta.annotation);
             }
             data.item = 'posttype/normal';
-            if (_.has(data.Author, 'Source') && _.has(data.Type, 'Key')) {
-                data = adjustServerPost(data);
-                if (data.Author.Source.IsModifiable ===  'True' ||
-                        data.Author.Source.Name === 'internal') {
-                    data.item = 'posttype/' + data.Type.Key;
-                } else if (data.Author.Source.Name === 'google'){
-                    data.item  = 'source/google/' + data.Meta.type;
-                } else {
-                    data.item = 'source/' + data.Author.Source.Name;
-                }
-                if (data.item === 'source/comments') {
-                    if (_.has(data.Meta, 'AuthorName')) {
-                        data.Meta.AuthorName = formatCommentator(data.Meta.AuthorName);
-                    }
-                    if (_.has(data, 'AuthorName')) {
-                        data.AuthorName = formatCommentator(data.AuthorName);
-                    }
-                }
-            }
+            // @TODO: figure a way to match the previous templates with the current `item_type`.
+            // if (_.has(data.Author, 'Source') && _.has(data.Type, 'Key')) {
+            //     data = adjustServerPost(data);
+            //     if (data.Author.Source.IsModifiable ===  'True' ||
+            //             data.Author.Source.Name === 'internal') {
+            //         data.item = 'posttype/' + data.Type.Key;
+            //     } else if (data.Author.Source.Name === 'google'){
+            //         data.item  = 'source/google/' + data.Meta.type;
+            //     } else {
+            //         data.item = 'source/' + data.Author.Source.Name;
+            //     }
+            //     if (data.item === 'source/comments') {
+            //         if (_.has(data.Meta, 'AuthorName')) {
+            //             data.Meta.AuthorName = formatCommentator(data.Meta.AuthorName);
+            //         }
+            //         if (_.has(data, 'AuthorName')) {
+            //             data.AuthorName = formatCommentator(data.AuthorName);
+            //         }
+            //     }
+            // }
 
             // For running Live Blog we can have just one server or two different ones:
             // * frontend: for the embed.

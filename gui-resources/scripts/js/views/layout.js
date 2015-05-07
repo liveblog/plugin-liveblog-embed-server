@@ -43,7 +43,7 @@ define([
             this.blogModel = new Blog({Id: liveblog.id});
             this.blogModel.fetch({
                 success: function() {
-                    var config = self.blogModel.get('EmbedConfig');
+                    var config = self.blogModel.get('meta');
                     if (_.has(self.blogModel.get('Language'), 'Code')) {
                         config.language = self.blogModel.get('Language').Code;
                     }

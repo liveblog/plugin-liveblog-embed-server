@@ -5,7 +5,7 @@ define([
     'backbone-custom',
     'lib/backbone/model-collection-common',
     'lib/poller',
-    'config/defaultPaginationParams'
+    'config/default-pagination-params'
 ], function(_, Backbone, modelCollectionCommon, poller, defaultPaginationParams) {
 
     return Backbone.Collection.extend(_.extend({

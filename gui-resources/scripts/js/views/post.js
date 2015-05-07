@@ -4,9 +4,10 @@ define([
     'underscore',
     'lib/utils',
     'views/base-view',
+    'views/user',
     'lib/lodash/defaults-deep',
     'views/post-templates'
-], function(_, utils, BaseView) {
+], function(_, utils, BaseView, UserView) {
 
     return BaseView.extend({
 
@@ -14,16 +15,21 @@ define([
         // instead of the default behaviour of inserting a `div` element
         // (Backbone.LayoutManager).
         el: false,
+        // The selector of the view root element.
+        userSel: '[data-gimme="post.username"]',
 
         initialize: function() {
             _.defaultsDeep(this, this.propertiesObj);
-            this.order = parseFloat(this.model.get('Order'));
+            this.order = parseFloat(this.model.get('order'));
 
             utils.dispatcher.trigger('initialize.post-view', this);
 
             this.setTemplate('themeBase/item/' + this.model.get('item'));
 
             this.listenTo(this.model, 'change:CId', this.update);
+
+            var userView = new UserView({model: this.model.get('user')});
+            this.setView(this.userSel, userView);
         },
 
         // If the model has changed re-render the view,
@@ -31,9 +37,7 @@ define([
         // unpublished or deleted, in which case the
         // event will be handled by posts view.
         update: function() {
-            if (!this.model.hasChanged('Order') &&
-                !this.model.hasChanged('DeletedOn') &&
-                !this.model.hasChanged('isPublished')) {
+            if (!this.model.hasChanged('deleted')) {
                 this.render();
             }
         },

@@ -127,7 +127,6 @@ define(['lib/utils', 'plugins/css', 'backbone'], function(utils, pluginCss, Back
         processPath = function(name, req, onload, config) {
             var configCss = config.config.css,
                 cssUrl = req.toUrl(name + '.css');
-
             if (liveblog.min) {
                 cssUrl = cssUrl.replace(liveblog.paths.build, liveblog.paths.themes);
             }
@@ -135,10 +134,9 @@ define(['lib/utils', 'plugins/css', 'backbone'], function(utils, pluginCss, Back
             if (liveblog.servers.css) {
                 cssUrl = cssUrl.replace(liveblog.servers.frontend, liveblog.browserUrl(liveblog.servers.css));
             }
-
             // make an absolute cssUrl from a cssUrl with ../ relative paths.
             while (/\/\.\.\//.test(cssUrl)){
-                cssUrl = cssUrl.replace(/[^\/]+\/+\.\.\//g, '');
+                cssUrl = cssUrl.replace(/[^\/]+\/+\.\.\//, '');
             }
             // make an absolute cssUrl from a cssUrl with ./ relative paths.
             cssUrl = cssUrl.replace(/\.\//g, '');

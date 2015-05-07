@@ -1,0 +1,21 @@
+/* jshint maxcomplexity: false */
+/* jshint maxstatements: false */
+'use strict';
+
+define([
+    'underscore',
+    'models/base-model'
+], function(_, BaseModel) {
+
+    return BaseModel.extend({
+        syncParams: {
+            headers: {}
+        },
+        urlRoot: function() {
+            return liveblog.servers.rest + '/client_users';
+        },
+        parse: function(data) {
+            return data;
+        }
+    });
+});

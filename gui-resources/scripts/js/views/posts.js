@@ -52,9 +52,9 @@ define([
                 this.listenTo(this.collection, 'reset', this.setViewOnReset);
                 this.listenTo(this.collection, 'add', this.checkPending);
                 this.listenTo(this.collection, 'remove', this.removePost);
-                this.listenTo(this.collection, 'change:Order', this.reorderPost);
-                this.listenTo(this.collection, 'change:DeletedOn', this.removePostFromCollection);
-                this.listenTo(this.collection, 'change:IsPublished', this.removePostFromCollection);
+                this.listenTo(this.collection, 'change:order', this.reorderPost);
+                this.listenTo(this.collection, 'change:deleted', this.removePostFromCollection);
+                // this.listenTo(this.collection, 'change:IsPublished', this.removePostFromCollection);
             }
 
             this.collection.fetchPage({reset: true});
@@ -118,8 +118,8 @@ define([
         },
 
         removePostFromCollection: function(post) {
-            if (!_.isUndefined(post.get('DeletedOn')) ||
-                post.get('IsPublished') === 'False') {
+            if (!_.isUndefined(post.get('deleted')) ||
+                post.get('post_status') === 'draft') {
                 this.collection.remove(post);
                 return true;
             }
@@ -239,7 +239,7 @@ define([
         // on post update.
         onlyOrderHasChanged: function(post) {
             return (_.size(post.changedAttributes()) > 2 &&
-                post.hasChanged('CId') && post.hasChanged('Order'));
+                post.hasChanged('_updated') && post.hasChanged('order'));
         },
 
         // Return the view for the first post in the list.

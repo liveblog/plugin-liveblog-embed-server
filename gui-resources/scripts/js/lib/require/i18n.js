@@ -55,6 +55,7 @@ define([
     return {
         pluginBuilder: 'lib/require/i18n-builder',
         load: function(name, req, onLoad, config) {
+            onLoad({});
             // Append '.json' if no filename given:
             if (!liveblog.language) {
                 liveblog.language = liveblog.fallback.language;
@@ -120,7 +121,8 @@ define([
                         return false;
                     }
                 };
-            Backbone.ajax(options);
+            //Backbone.ajax(options);
+            loadDate();
         },
         write: function(pluginName, moduleName, write) {
             if (moduleName in buildMap){

@@ -1,10 +1,10 @@
 {+mainContainer}
     <li class="{+itemClass}{/itemClass}" 
-        {#Id}data-gimme-postid="{Id}"{/Id} 
-        {#CId}data-gimme-cid="{CId}"{/CId} 
+        {#_id}data-gimme-postid="{_id}"{/_id} 
+        {#_updated}data-gimme-updated="{_updated}"{/_updated} 
         {+additionalAttributes}{/additionalAttributes}>
         {+main}
-            <a name="{Order}"></a>
+            <a name="{order}"></a>
             {+headerContainer}
                 <div class="post-header">
                 {+header}
@@ -65,11 +65,11 @@
 
 {! -- Main blocks !}
 {<createdDateContainer}
-    <span class="post-datetime"><time data-date="{CreatedOn}">{CreatedOn|post-date}</time></span>
+    <span class="post-datetime"><time data-date="{_created}">{_created|post-date}</time></span>
 {/createdDateContainer}
 
 {<publishedDateContainer}
-    <span class="post-datetime"><time data-date="{PublishedOn}">{PublishedOn|post-date}</time></span>
+    <span class="post-datetime"><time data-date="{_created}">{_created|post-date}</time></span>
 {/publishedDateContainer}
 
 {<postDateContainer}
@@ -81,7 +81,11 @@
 {/userNameContainer}
 
 {<publisherNameContainer}
-    <span class="post-publisher-name">{+publisherName}{Creator.FullName}{/publisherName}</span>
+    <span class="post-publisher-name">
+        {+publisherName}
+            <span data-gimme="post.username"></span>
+        {/publisherName}
+    </span>
 {/publisherNameContainer}
 
 {<verificationLabel}
@@ -136,7 +140,7 @@
 --!}
 
 {<contentText}
-    <p class="post-text">{Content|s}</p>
+    <p class="post-text">{text|s}</p>
 {/contentText}
 
 {!-- wrapup post only, for open add class "wrapup-open" to post --!}

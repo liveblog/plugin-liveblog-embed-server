@@ -4,8 +4,9 @@ define([
     'backbone-custom',
     'views/blog',
     'models/blog',
-    'load-theme'
-], function(_, Backbone, BlogView, Blog, loadTheme) {
+    'load-theme',
+    'models/user'
+], function(_, Backbone, BlogView, Blog, loadTheme, User) {
     return Backbone.Router.extend({
         'routes': {
             '*path': 'default'
@@ -13,9 +14,9 @@ define([
         'default': function(path) {
             // TODO: Throw error if blog id missing
             if (liveblog.id) {
-                var blog = new Blog({Id: liveblog.id});
+                var blog = new Blog({_id: liveblog.id});
                 blog.fetch({success: function() {
-                    var config = blog.get('EmbedConfig');
+                    var config = blog.get('meta');
                     if (_.has(blog.get('Language'), 'Code')) {
                         config.language = blog.get('Language').Code;
                     }

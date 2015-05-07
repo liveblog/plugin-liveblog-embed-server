@@ -66,19 +66,19 @@ define([
         },
 
         update: function() {
-            var embedConfig = this.model.get('EmbedConfig') || {};
+            var meta = this.model.get('meta') || {};
 
             // Show or hide the entire advertisement block.
-            if (!_.isUndefined(embedConfig.MediaToggle)) {
-                displayToggle(this.$('[data-gimme="blog.media-toggle"]'), embedConfig.MediaToggle);
+            if (!_.isUndefined(meta.MediaToggle)) {
+                displayToggle(this.$('[data-gimme="blog.media-toggle"]'), meta.MediaToggle);
             }
 
             // Set the target and image for the advertisement block.
-            if (embedConfig.MediaUrl) {
-                this.$('[data-gimme="blog.media-url"]').attr('href', embedConfig.MediaUrl);
+            if (meta.MediaUrl) {
+                this.$('[data-gimme="blog.media-url"]').attr('href', meta.MediaUrl);
             }
-            if (embedConfig.MediaImage) {
-                this.$('[data-gimme="blog.media-image"]').attr('src', embedConfig.MediaImage);
+            if (meta.MediaImage) {
+                this.$('[data-gimme="blog.media-image"]').attr('src', meta.MediaImage);
             }
 
             // Set blog title and description.
@@ -86,7 +86,7 @@ define([
             this.$('[data-gimme="blog.description"]').html(this.model.get('Description'));
 
             // Trigger update config.
-            if (!_.isEmpty(embedConfig)) {
+            if (!_.isEmpty(meta)) {
                 utils.dispatcher.trigger('config-update.blog-view', this);
             }
         },

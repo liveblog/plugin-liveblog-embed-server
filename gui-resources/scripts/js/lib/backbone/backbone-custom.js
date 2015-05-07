@@ -19,7 +19,6 @@ define([
             // Request a date format that all browsers can parse
             options.headers = _.isObject(options.headers) ? options.headers : {};
 
-            options.headers['X-Format-DateTime'] = 'yyyy-MM-ddTHH:mm:ss\'Z\'';
             // Add parameters provided in model.syncParams.headers
             // to the request header
             _.each(model.syncParams.headers, function(value, key) {
