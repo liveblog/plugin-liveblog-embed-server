@@ -20,7 +20,7 @@ define([
 
         initialize: function() {
             _.defaultsDeep(this, this.propertiesObj);
-            this.order = parseFloat(this.model.get('Order'));
+            this.order = parseFloat(this.model.get('order'));
 
             utils.dispatcher.trigger('initialize.post-view', this);
 

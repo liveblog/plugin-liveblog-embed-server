@@ -40,9 +40,12 @@ define([
 
         // pre-parse the posts with items in a lists with items ( aka posts ).
         preparse: function(data, options) {
-            var posts = [];
-            _.each(data._items, function(post) {
-                _.each(post.groups[1].refs, function(item) {
+            var posts = [], post;
+            _.each(data._items, function(packaged) {
+                _.each(packaged.groups[1].refs, function(item) {
+                    post = item.item;
+                    post.order = packaged.order;
+                    post.post_status = packaged.post_status;
                     posts.push(item.item);
                 });
             });

@@ -25,7 +25,7 @@ define([
             view.permalink = function(options) {
                 var _hashMark = (options && options.hashMark) ? options.hashMark : hashMark,
                     permalink = false,
-                    newHash = hash + '=' + parseFloat(view.model.get('Order'));
+                    newHash = hash + '=' + parseFloat(view.model.get('order'));
 
                 if (href.indexOf(_hashMark) === -1) {
                     permalink = href + _hashMark + newHash;
