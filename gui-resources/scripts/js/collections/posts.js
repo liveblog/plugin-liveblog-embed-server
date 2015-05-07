@@ -5,8 +5,9 @@ define([
     'collections/base-collection',
     'models/post',
     'lib/utils',
+    'moment',
     'config/elastic-search-update-params'
-], function(_, BaseCollection, Post, utils, elasticSearchUpdateParams) {
+], function(_, BaseCollection, Post, utils, moment, elasticSearchUpdateParams) {
 
     return BaseCollection.extend({
 
@@ -55,7 +56,7 @@ define([
 
         parse: function(data, options) {
             data.posts = this.preparse(data, options);
-            if (!_.isUndefined(options.data['since'])) {
+            if (!_.isUndefined(options.data.since)) {
                 data.posts = this.updateDataParse(data, options);
             } else {
                 data.posts = this.newPageDataParse(data, options);
@@ -67,7 +68,7 @@ define([
             this.updateLastUpdated(data);
             // Filter updates of posts: remove post updates from pages not yet shown.
             if (data.posts.length) {
-                var self = this;
+                //var self = this;
                 // @TODO: have this as an option.
                 // data.posts = data.posts.filter(function(p) {
                 //     if (p.order) {
