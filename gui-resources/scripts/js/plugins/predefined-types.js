@@ -1,3 +1,5 @@
+'use strict';
+
 define([
     'plugins',
     'dust',
