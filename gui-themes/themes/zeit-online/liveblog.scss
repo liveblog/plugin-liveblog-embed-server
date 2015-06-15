@@ -4,55 +4,46 @@
 @import "sass/functions";
 @import "sass/constants";
 @import "sass/mixins";
-@import "sass/fonts";
 
-/******************* outer page styles ****************/
-/******************************************************/
-//should be changed to fit the client requests
-body, html {
-	margin: 0;
-	padding: 0;
-}
+// ******************* outer page styles ****************/
+// ******************************************************/
 
-body {
-	background-color: #41464d;
-	color: $color-text;
+// @import "sass/fonts";
+
+// body, html {
+// 	margin: 0;
+// 	padding: 0;
+// }
+
+// body {
+// 	background-color: #41464d;
+// 	color: $color-text;
+// 	font-family: $font-tabletgothic;
+// 	font-size: $font-m;
+// 	line-height: $base-line-height;
+// 	margin: 0 auto;
+// 	max-width: $break-desktop-min;
+// 	min-width: em(300px);
+// }
+
+// ******************************************************/
+// ******************************************************/
+
+$postlist-minheight: 0;    // default 0
+$postlist-maxheight: none; // default none
+
+// posts styles
+$publisher-avatar-width: em(42px);
+
+// ******************************************************/
+// ******************************************************/
+
+#livedesk-root {
 	font-family: $font-tabletgothic;
-	font-size: $font-m;
+	font-size: 1rem;
 	line-height: $base-line-height;
 	margin: 0 auto;
 	max-width: $break-desktop-min;
-	min-width: em(300px);
-}
-
-/******************************************************/
-/******************************************************/
-
-$lb-font 	: $sans-fallbacks;
-$lb-width	: 100%;
-$lb-background: #fff;
-
-$postlist-minheight: 0;	//default 0
-$postlist-maxheight: none;	//default none
-
-
-/* POSTS STYLES */
-$text-size: 16px;
-$text-size-headings: 16px;
-$publisher-avatar-width: em(42px);
-$youtube-maxwidth: 100%;	//youtube post type
-
-
-/******************* do not change this ***************/
-/******************************************************/
-$user-text-size: em($text-size);
-$user-text-size-headings: em($text-size-headings);
-
-/******************************************************/
-/******************************************************/
-
-#livedesk-root {
-	width: $lb-width;
 
 	* {
 		@include box-sizing(border-box);
@@ -62,7 +53,7 @@ $user-text-size-headings: em($text-size-headings);
 .liveblog-container {
 	background-color: $color-body-bg;
 
-	/* reset global styles */
+	// reset global styles
 	h1, h2, h3, h4, h5, h6, p, ul, li {
 		margin: 0;
 		padding: 0;
@@ -164,7 +155,7 @@ $user-text-size-headings: em($text-size-headings);
 			padding-left: 0;
 		}
 
-		/* separate block styles */
+		// separate block styles
 		.post-time,
 		.post-datetime,
 		.post-publisher-name,
@@ -180,25 +171,22 @@ $user-text-size-headings: em($text-size-headings);
 			border-radius: 4px;
 			display: inline-block;
 			font-size: em(13px);
-			margin-left: (10 + 2 + 20) * -1px;;
+			margin-left: (10 + 1 + 20) * -1px;;
 			margin-right: 10px;
-			padding: 4px 12px 2px;
+			width: 90px;
+			padding: 4px 0 2px;
+			text-align: center;
 			text-transform: uppercase;
 			// cheap trick
-			border-left: 12px solid $trout;
-			direction: rtl;
-			max-width: 89px;
-			overflow: hidden;
-			padding-left: 0;
-			text-align: right;
 			white-space: nowrap;
+			overflow: hidden;
 
 			@include respond-min($break-tablet-min) {
-				margin-left: (10 + 2 + 32) * -1px;
+				margin-left: (10 + 1 + 32) * -1px;
 			}
 
 			@include respond-min($break-desktop-min) {
-				margin-left: (42 + 2 + 32) * -1px;
+				margin-left: (45 + 32) * -1px;
 			}
 
 			&:hover {
@@ -207,12 +195,6 @@ $user-text-size-headings: em($text-size-headings);
 			}
 		}
 		.post-datetime {
-			// more cheap tricks
-			direction: rtl;
-			display: inline-block;
-			overflow: hidden;
-			text-indent: em(-72px);
-			white-space: nowrap;
 		}
 		.post-publisher-name {
 			display: block;
@@ -220,7 +202,6 @@ $user-text-size-headings: em($text-size-headings);
 			margin-top: 1em;
 		}
 		.post-buttons {
-			display: none;
 			position: absolute;
 			right: 0;
 			bottom: em(10px);
@@ -228,14 +209,21 @@ $user-text-size-headings: em($text-size-headings);
 			@include respond-min($break-phablet-min) {
 				bottom: em(20px);
 			}
-
+			@include respond-min($break-tablet-min) {
+				display: none;
+			}
+		}
+		&:hover {
+			.post-buttons {
+				display: block;
+			}
 		}
 		.sf-share {
-			font-size: em(12px);
-			line-height: 1.5;
+			font-size: em(14px);
+			line-height: 2;
 			color: inherit;
 			background: rgba(0,0,0,0.1) url("img/share.png") no-repeat 0 0;
-			padding: 10px 0 10px 48px;
+			padding: 5px 0 5px 48px;
 			float: right;
 			overflow: hidden;
 			width: 48px;
@@ -247,8 +235,9 @@ $user-text-size-headings: em($text-size-headings);
 			}
 		}
 		.share-box {
-			padding: 8px 20px 8px 10px;
+			color: $zon_grey;
 			float: right;
+			padding: 9px 20px 0 10px;
 
 			// fix funky plugin behaviour
 			display: none;
@@ -262,7 +251,6 @@ $user-text-size-headings: em($text-size-headings);
 
 				&:before {
 					content: "/";
-					color: $zon_grey;
 					margin: 0 .75em;
 				}
 				&:first-child:before {
@@ -273,19 +261,20 @@ $user-text-size-headings: em($text-size-headings);
 
 			.social {
 				font-weight: bold;
+				display: inline-block;
+				border-bottom: 1px solid transparent;
 
 				@include hover() {
 					border-bottom: 1px solid currentColor;
 				}
-
-				&.facebook { color: $color-facebook; }
-				&.twitter { color: $color-twitter; }
-				&.linkedin { color: $color-linkedin; }
-				&.pinterest { background: url(img/social_pinterest_color.png) no-repeat; }
-				&.google { color: $color-google; }
-				&.email { color: $color-email; }
-				&:last-child { margin-right: 0; }
 			}
+
+			.facebook { color: $color-facebook; }
+			.twitter { color: $color-twitter; }
+			.linkedin { color: $color-linkedin; }
+			.pinterest { color: $color-pinterest; }
+			.google { color: $color-google; }
+			.email { color: $color-email; }
 		}
 
 		.verification-label {
@@ -329,7 +318,7 @@ $user-text-size-headings: em($text-size-headings);
 			display: block;
 		}
 
-		/* end of separate block styles */
+		// end of separate block styles
 		.post-header {
 			@include clearfix();
 			color: $zon_grey;
@@ -401,7 +390,7 @@ $user-text-size-headings: em($text-size-headings);
 			}
 		}
 
-		/* POST SPECIFIC STYLES */
+		// post specific styles
 		&.normal {
 			.post-core-content {
 				.post-text {
@@ -527,9 +516,6 @@ $user-text-size-headings: em($text-size-headings);
 					margin-top: .5em;
 				}
 			}
-			.post-external {
-				max-width: $youtube-maxwidth;
-			}
 			.post-frame-container {
 				position: relative;
 				padding-bottom: 56.25%;
@@ -548,9 +534,6 @@ $user-text-size-headings: em($text-size-headings);
 			}
 		}
 		&.wrapup {
-			.post-header, .post-footer {
-				display: none;
-			}
 			.big-toggle {
 				display: block;
 				width: 21px;
@@ -560,7 +543,6 @@ $user-text-size-headings: em($text-size-headings);
 			}
 			.post-text {
 				font-weight: bold;
-				color: #262626;
 				padding-left: 40px;
 			}
 		}
@@ -569,13 +551,23 @@ $user-text-size-headings: em($text-size-headings);
 				background-position: 0 -21px;
 			}
 		}
+		&.wrapup,
 		&.advertisement {
 			.post-header, .post-footer {
-				// display: none;
+				display: none;
+			}
+			.liveblog-post:before {
+				content: '';
+				position: absolute;
+				width: 2px;
+				height: 100%;
+				background-color: #ccc;
+				top: 0;
+				left: -1px;
+				z-index: 1;
 			}
 		}
-		// misuse for demo purpose
-		&.advertisement {
+		&.scorecard {
 			color: $white;
 			background-color: $live-blog-highlight;
 
@@ -585,18 +577,30 @@ $user-text-size-headings: em($text-size-headings);
 			.post-time {
 				color: $zon_dark_grey;
 				background-color: $white;
-				border-color: $white; // fake rule
 				@include hover() {
 					color: $live-blog-highlight;
 				}
 			}
 			.post-content {
+				text-align: center;
+				h1 {
+					@include font-smoothing();
+					font-family: $font-tabletgothic;
+					font-size: rem(86px);
+					line-height: 1;
+					margin-top: 34px;
+
+					@include respond-min($break-tablet-min) {
+						font-size: rem(160px);
+						margin-top: 25px;
+					}
+				}
 				a {
 					color: $white;
 					border-bottom-color: rgba($white, 0.5);
 					@include hover() {
-						color: $zon_lighter_grey;
-						border-bottom-color: rgba($zon_lighter_grey, 0.5);
+						color: $zon_light_grey;
+						border-bottom-color: rgba($zon_light_grey, 0.5);
 					}
 				}
 			}
@@ -604,11 +608,11 @@ $user-text-size-headings: em($text-size-headings);
 				background-position: 0% 100%;
 			}
 			.share-box {
-				span {
-					&:before {
-						color: inherit;
-					}
-				}
+				color: inherit;
+			}
+			.social {
+				color: inherit;
+				@include font-smoothing();
 			}
 			.liveblog-post {
 				&:before {
@@ -625,7 +629,7 @@ $user-text-size-headings: em($text-size-headings);
 		&.usercomments {
 			.post-publisher-avatar {
 				background: url(img/comment-icon.png) no-repeat 0 0;
-				border-color: $lb-background;
+				border-color: #fff;
 			}
 			.post-publisher-avatar-img {
 				display: none;
@@ -658,23 +662,23 @@ $user-text-size-headings: em($text-size-headings);
 			padding-bottom: 20px;
 			padding-top: 20px;
 			text-align: center;
+		}
+		.load-more {
+			@include zon-button-light();
+		}
+		.loading-image {
+			min-width: 50px;
+			height: 35px;
+			vertical-align: top;
+			display: none;
+			background: url(img/loading-large.gif) no-repeat 0 0;
+		}
+		&.loading {
 			.load-more {
-				@include zon-button-light();
+				display: none;
 			}
 			.loading-image {
-				min-width: 50px;
-				height: 35px;
-				vertical-align: top;
-				display: none;
-				background: url(img/loading-large.gif) no-repeat 0 0;
-			}
-			&.loading {
-				.load-more {
-					display: none;
-				}
-				.loading-image {
-					display: inline-block;
-				}
+				display: inline-block;
 			}
 		}
 
@@ -700,12 +704,6 @@ $user-text-size-headings: em($text-size-headings);
 			.source-icon { background: #fff url(img/soundcloud-16px.png) no-repeat 0 0;}
 		}
 
-		&:hover {
-			.post-buttons {
-				display: block;
-			}
-		}
-
 		.attributes,
 		.link-preview,
 		.post-external {
@@ -715,43 +713,22 @@ $user-text-size-headings: em($text-size-headings);
 		// only valid for button pagination
 		&:nth-last-child(0n+2) {
 			.liveblog-post:after {
-				height: calc(100% - 56px);
+				content: none;
+				// height: calc(100% - 56px);
 
-				@include respond-min($break-phablet-min) {
-					height: calc(100% - 100px);
-				}
+				// @include respond-min($break-phablet-min) {
+				// 	height: calc(100% - 96px);
+				// }
 			}
 		}
-
-        /* @TODO: css for the scorecard demo */
-        &.scorecard {
-            background: #df694a;
-            h1 {
-                color: #fff;
-            }
-            div {
-                color: #fff;
-            }
-        }
 	}
 }
 
 .liveblog-post {
 	margin: 0 auto;
 	max-width: em((660 + 20 * 2) * 1px);
-	padding: em(20px);
+	padding: em(20px) em(20px) em(54px);
 	position: relative;
-
-	@include respond-min($break-phablet-min) {
-		padding-top: em(56px);
-		padding-bottom: em(56px);
-	}
-
-	@include respond-min($break-tablet-min) {
-		max-width: em((660 + 32 * 2) * 1px);
-		padding-left: em(32px);
-		padding-right: em(32px);
-	}
 
 	&:after {
 		content: '';
@@ -763,12 +740,24 @@ $user-text-size-headings: em($text-size-headings);
 		top: em(56px);
 		left: -1px;
 		z-index: 1;
+	}
 
-		@include respond-min($break-phablet-min) {
-			top: em(100px);
+	@include respond-min($break-phablet-min) {
+		padding-top: em(52px);
+		padding-bottom: em(64px);
+
+		&:after {
+			top: em(96px);
 		}
-		@include respond-min($break-tablet-min) {
-			height: calc(100% - 24px);
+	}
+
+	@include respond-min($break-tablet-min) {
+		max-width: em((660 + 32 * 2) * 1px);
+		padding-left: em(32px);
+		padding-right: em(32px);
+
+		&:after {
+			height: calc(100% - 26px);
 		}
 	}
 }

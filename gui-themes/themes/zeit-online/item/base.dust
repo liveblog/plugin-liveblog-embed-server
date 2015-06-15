@@ -26,8 +26,10 @@
 		{+splitedDateContainer}{/splitedDateContainer}
 	</div>
 	<div class="post-header-user">
-		{+userNameContainer}{/userNameContainer}
-		{+userAvatar}{/userAvatar}
+		{+userInfo}
+			{+userNameContainer}{/userNameContainer}
+			{+userAvatar}{/userAvatar}
+		{/userInfo}
 	</div>
 {/header}
 
@@ -38,7 +40,7 @@
 {/share}
 
 {<splitedDateContainer}
-    <span class="post-datetime">{PublishedOn|splitted-post-date}</span>
+	<span class="post-datetime">{PublishedOn|splitted-post-date}</span>
 {/splitedDateContainer}
 
 {<splitedTimeContainer}

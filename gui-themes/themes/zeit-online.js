@@ -11,7 +11,7 @@ define([
     'tmpl!theme/container',
     'tmpl!theme/item/base',
     'tmpl!theme/plugins/social-share',
-    'tmpl!theme/item/predefined/scorecard'    
+    'tmpl!theme/item/predefined/scorecard'
 ], function(dust, gt, moment) {
     'use strict';
 
