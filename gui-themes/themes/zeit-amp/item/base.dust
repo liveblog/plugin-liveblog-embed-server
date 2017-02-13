@@ -81,7 +81,7 @@
 {/publisherNameContainer}
 
 {<splitedDateContainer}
-    <time itemprop="datePublished" datetime="{PublishedOn}" class="post-datetime">{PublishedOn|splitted-post-date}</time>
+    <time itemprop="datePublished" datetime="{PublishedOn|unix}" class="post-datetime">{PublishedOn|splitted-post-date}</time>
 {/splitedDateContainer}
 
 {<splitedTimeContainer}
