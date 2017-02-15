@@ -90,7 +90,7 @@
 
 {<verificationLabel}{/verificationLabel}
 
-{<additionalAttributes}{#Id}id="post-{Id}" data-sort-time="{Id}"{/Id} itemprop="liveBlogUpdate" itemscope itemtype="http://schema.org/BlogPosting" itemref="publisher"{/additionalAttributes}
+{<additionalAttributes}{#Id}id="post-{Id}" {/Id}data-sort-time="{PublishedOn|unix}" itemprop="liveBlogUpdate" itemscope itemtype="http://schema.org/BlogPosting" itemref="publisher"{/additionalAttributes}
 
 {<userAvatar}
     <div class="post-publisher-avatar">
