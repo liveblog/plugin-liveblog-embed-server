@@ -5,9 +5,10 @@ define([
     'plugins/pagination',
     'dust',
     'lib/utils',
+    'lib/helpers/display-toggle',
     'tmpl!themeBase/plugins/after-button-pagination',
     'tmpl!themeBase/plugins/before-button-pagination'
-], function(Backbone, plugins, paginationPlugin, dust, utils) {
+], function(Backbone, plugins, paginationPlugin, dust, utils, displayToggle) {
     delete plugins.pagination;
     plugins['button-pagination'] = function(config) {
         paginationPlugin(config);
@@ -17,16 +18,19 @@ define([
                 data = {};
 
             dust.renderThemed('themeBase/plugins/before-button-pagination', data, function(err, out) {
-                view.$el.before(out);
+                    var  el = Backbone.$(out);
+                    displayToggle(el, false);
+                    view.$el.prepend(el);
             });
 
-            if ( view.hasNextPage() ) {
+            if (view.hasNextPage()) {
                 // view.nextPage().done(function() {
                 //     console.log( current, view.collection.models[current] );
                 // });
-
+                var lastOrder = parseFloat(view.collection.models[view.collection.models.length - 1].get('Order'));
+                data.lastPermalink = '?liveblog.item.id=' + lastOrder + '#livedesk-root';
                 dust.renderThemed('themeBase/plugins/after-button-pagination', data, function(err, out) {
-                    view.$el.after(out);
+                    view.$el.append(Backbone.$(out));
                 });
             }
         });
