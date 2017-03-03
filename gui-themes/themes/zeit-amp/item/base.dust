@@ -136,7 +136,3 @@
         </div>
     </a>
 {/extenalAmpImageContainer}
-
-{<contentText}
-    <p class="post-text">{Content|s|amp}</p>
-{/contentText}
