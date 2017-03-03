@@ -17,8 +17,7 @@ define([
                 data = {};
 
             dust.renderThemed('themeBase/plugins/before-button-pagination', data, function(err, out) {
-                    var  el = Backbone.$(out);
-                    view.$el.prepend(el);
+                view.$el.prepend(Backbone.$(out));
             });
 
             if (view.hasNextPage()) {
