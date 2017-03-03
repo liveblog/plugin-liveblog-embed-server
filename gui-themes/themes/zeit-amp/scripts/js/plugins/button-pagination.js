@@ -13,17 +13,13 @@ define([
         paginationPlugin(config);
 
         utils.dispatcher.once('add-all.posts-view', function(view) {
-            var current = view.collection.length,
-                data = {};
+            var data = {};
 
             dust.renderThemed('themeBase/plugins/before-button-pagination', data, function(err, out) {
                 view.$el.prepend(Backbone.$(out));
             });
 
             if (view.hasNextPage()) {
-                // view.nextPage().done(function() {
-                //     console.log( current, view.collection.models[current] );
-                // });
                 var lastOrder = parseFloat(view.collection.models[view.collection.models.length - 1].get('Order'));
                 data.lastPermalink = '?liveblog.item.id=' + lastOrder + '#livedesk-root';
                 dust.renderThemed('themeBase/plugins/after-button-pagination', data, function(err, out) {
