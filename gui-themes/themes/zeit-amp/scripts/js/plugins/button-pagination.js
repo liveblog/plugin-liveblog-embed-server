@@ -5,10 +5,9 @@ define([
     'plugins/pagination',
     'dust',
     'lib/utils',
-    'lib/helpers/display-toggle',
     'tmpl!themeBase/plugins/after-button-pagination',
     'tmpl!themeBase/plugins/before-button-pagination'
-], function(Backbone, plugins, paginationPlugin, dust, utils, displayToggle) {
+], function(Backbone, plugins, paginationPlugin, dust, utils) {
     delete plugins.pagination;
     plugins['button-pagination'] = function(config) {
         paginationPlugin(config);
@@ -19,7 +18,6 @@ define([
 
             dust.renderThemed('themeBase/plugins/before-button-pagination', data, function(err, out) {
                     var  el = Backbone.$(out);
-                    displayToggle(el, false);
                     view.$el.prepend(el);
             });
 
