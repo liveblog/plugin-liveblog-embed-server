@@ -12,18 +12,19 @@ define([
     plugins['button-pagination'] = function(config) {
         paginationPlugin(config);
 
-        utils.dispatcher.once('add-all.posts-view', function(view) {
-            var data = {};
+        utils.dispatcher.once('after-render.blog-view', function(view) {
+            var data = {},
+                postsView = view.getView('[data-gimme="posts.view"]');
 
             dust.renderThemed('themeBase/plugins/before-button-pagination', data, function(err, out) {
-                view.$el.prepend(Backbone.$(out));
+                view.$el.find('#zon-live-list').prepend(Backbone.$(out));
             });
 
-            if (view.hasNextPage()) {
-                var lastOrder = parseFloat(view.collection.models[view.collection.models.length - 1].get('Order'));
+            if (postsView.hasNextPage()) {
+                var lastOrder = parseFloat(postsView.collection.models[postsView.collection.models.length - 1].get('Order'));
                 data.lastPermalink = '?liveblog.item.id=' + lastOrder + '#livedesk-root';
                 dust.renderThemed('themeBase/plugins/after-button-pagination', data, function(err, out) {
-                    view.$el.append(Backbone.$(out));
+                    view.$el.find('#zon-live-list').append(Backbone.$(out));
                 });
             }
         });
