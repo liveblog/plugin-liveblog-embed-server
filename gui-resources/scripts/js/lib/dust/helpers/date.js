@@ -30,7 +30,7 @@ define(['dust/core', 'lib/gettext', 'moment', 'moment-timezone'], function(dust,
         }
         return date.tz(gt.pgettext('moment', 'timezone')).format(gt.pgettext('moment', 'closed-date'));
     };
-    dust.filters['unix'] = function(string) {
+    dust.filters.unix = function(string) {
         var date = moment(string);
         return date.format('X');
     };
