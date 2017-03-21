@@ -18,14 +18,15 @@ define([
             }
 
             var images = view.$('img'),
-                img, width, height, index;
+                img,
+                index;
 
             for (index = images.length; index--;) {
                 // @TODO get width and height of image if missing
                 img = images.eq(index);
-                width = img.attr('width') || 400;
-                height = img.attr('height') || 300;
-                img.replaceWith('<amp-img src="' + img.attr('src') + '" width="' + width + '" height="' + height + '" layout="responsive"></amp-img>');
+                if (img.attr('width') && img.attr('height')) {
+                    img.replaceWith('<amp-img src="' + img.attr('src') + '" width="' + img.attr('width') + '" height="' + img.attr('height') + '" layout="responsive"></amp-img>');
+                }
             }
         });
     };
