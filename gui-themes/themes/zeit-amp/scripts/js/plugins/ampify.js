@@ -12,20 +12,21 @@ define([
 
             switch (view.$el.attr('class')) {
                 case 'link':
-                    var icon = view.$('.source-icon img');
+                    var icon = view.$('.source-icon img, .source-icon amp-img');
                     icon.replaceWith('<amp-img src="' + icon.attr('src') + '" width="16" height="16" layout="fixed"></amp-img>');
                     break;
             }
 
             var images = view.$('img'),
-                img, width, height, index;
+                img,
+                index;
 
             for (index = images.length; index--;) {
                 // @TODO get width and height of image if missing
                 img = images.eq(index);
-                width = img.attr('width') || 400;
-                height = img.attr('height') || 300;
-                img.replaceWith('<amp-img src="' + img.attr('src') + '" width="' + width + '" height="' + height + '" layout="responsive"></amp-img>');
+                if (img.attr('width') && img.attr('height')) {
+                    img.replaceWith('<amp-img src="' + img.attr('src') + '" width="' + img.attr('width') + '" height="' + img.attr('height') + '" layout="responsive"></amp-img>');
+                }
             }
         });
     };
