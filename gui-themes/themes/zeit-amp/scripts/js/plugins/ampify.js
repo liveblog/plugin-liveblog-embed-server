@@ -12,7 +12,7 @@ define([
 
             switch (view.$el.attr('class')) {
                 case 'link':
-                    var icon = view.$('.source-icon img');
+                    var icon = view.$('.source-icon img, .source-icon amp-img');
                     icon.replaceWith('<amp-img src="' + icon.attr('src') + '" width="16" height="16" layout="fixed"></amp-img>');
                     break;
             }
