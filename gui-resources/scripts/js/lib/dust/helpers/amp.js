@@ -13,12 +13,12 @@ define(['dust/core', 'lib/utils'], function(dust, utils) {
                         size = {height: -1, width: -1},
                         found = false;
 
-                    for(var i=0, count = bypassExtensions.length; i < count; i++) {
-                        if(src.substr(src.length-4) === bypassExtensions[i]) {
+                    for (var i = 0, count = bypassExtensions.length; i < count; i++) {
+                        if (src.substr(src.length - 4) === bypassExtensions[i]) {
                             bypass = true;
                         }
                     }
-                    if(bypass) {
+                    if (bypass) {
                         return at;
                     }
                     try {
@@ -51,7 +51,7 @@ define(['dust/core', 'lib/utils'], function(dust, utils) {
                     }
                     return 'src="' + src + '" height="' + size.height + '" width="' + size.width + '"';
                 });
-                if(bypass) {
+                if (bypass) {
                     return all;
                 }
                 return '<amp-img layout="responsive"' + attr + '/>';
