@@ -173,7 +173,8 @@ define(['lib/utils', 'plugins/css', 'backbone'], function(utils, pluginCss, Back
     cssAPI.load = function(name, req, onload, config) {
         var cssUrl = processPath(name, req, onload, config);
         if (utils.isServer) {
-            pluginCss.setData('<link type="text/css" rel="stylesheet" href="' + cssUrl + '">');
+
+            pluginCss.setData('<link type="text/css" rel="stylesheet" href="' + cssUrl + '?version=1.6.122">');
             onload();
         }
         if (utils.isClient) {
